@@ -6,16 +6,19 @@ const team = [
     name: 'Antonio Cumberbatch',
     role: 'Founder & Technical Lead',
     bio: 'Antonio architected and led the full V3 rebuild — from infrastructure design on Azure to API layer and product strategy. He holds 7 Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
+    photo: null,
   },
   {
     name: 'Rakib Hasan',
     role: 'UI/UX Designer & Frontend Developer',
-    bio: 'Rakib designed the medical and admin portals across all active versions of the EMR, translating complex clinical workflows into clean, usable interfaces. He brings a strong eye for detail and consistency across every screen in the system.',
+    bio: 'For 3 Stripes Technology, I designed a comprehensive healthcare management system centered around the user. From structuring complex Electronic Medical Records (EMR) to crafting an accessible patient portal, my goal was to create a clean, minimalist interface that reduces cognitive load for medical professionals and patients alike.',
+    photo: '/images/Rakib%20Hasan.jpeg',
   },
   {
     name: 'Naeem Hasan',
     role: 'Full-Stack Developer',
-    bio: 'Naeem built and maintained the core application layer across the EMR\'s development lifecycle, contributing to everything from data modelling to real-time features. He is the primary developer on ongoing maintenance and feature delivery.',
+    bio: "Naeem built and maintained the core application layer across the EMR's development lifecycle, contributing to everything from data modelling to real-time features. He is the primary developer on ongoing maintenance and feature delivery.",
+    photo: null,
   },
 ];
 
@@ -96,9 +99,13 @@ const versions = [
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;">
         {team.map(person => (
           <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
-            <div style="width:80px;height:80px;border-radius:50%;background:var(--color-surface-2);border:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-            </div>
+            {person.photo ? (
+              <img src={person.photo} alt={person.name} width="80" height="80" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);margin-bottom:1rem;flex-shrink:0;" />
+            ) : (
+              <div style="width:80px;height:80px;border-radius:50%;background:var(--color-surface-2);border:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+              </div>
+            )}
             <p style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.25rem;">{person.name}</p>
             <p style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);margin:0 0 0.875rem;">{person.role}</p>
             <p style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{person.bio}</p>
@@ -132,10 +139,10 @@ const versions = [
       <h2>Current State</h2>
       <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of over 10 doctors.</p>
 
-      <h2>Why Caribbean Medical Practices Should Care</h2>
-      <p>Healthcare IT in the Caribbean has historically defaulted to paper records or expensive international EMR platforms that were not designed for the region. Most foreign EMR vendors built for US compliance requirements, US patient volumes, and US billing structures. Caribbean practices end up paying for complexity they do not need and missing context that actually matters to how they operate.</p>
-      <p>3ST EMR was built from the ground up by a Caribbean team for Caribbean practices. The architecture choices &mdash; server-driven pagination, Azure WAF infrastructure, TypeScript end-to-end &mdash; are not theoretical best practices. They came directly from running the product through three versions with real doctors and real patient records in production.</p>
-      <p>If you are a medical practice in the Caribbean exploring a move away from paper or looking for an EMR that fits how your team actually works, Antonio leads the product and can walk you through the platform.</p>
+      <h2>Sound familiar?</h2>
+      <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
+      <p>3ST EMR was built from the ground up with local practices in mind. Three versions, real feedback from real doctors, and a product that's actually used day to day rather than bought and abandoned.</p>
+      <p>If you're a medical practice still running on paper or a system that doesn't fit your workflow, Antonio leads the product and can walk you through the platform directly.</p>
 
     </div>
   </section>

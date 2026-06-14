@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="ARC Cloud Portfolio — Case Study"
+  description="How Antonio Cumberbatch built his personal portfolio on Azure, starting with the Cloud Resume Challenge and evolving it into a full production platform in 2026."
+>
+
+  <section style="padding:4rem 1.5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
+        <div style="width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
+          <img src="/images/ARC%20Logo.jpg" alt="ARC Cloud Consulting logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+        </div>
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">ARC Cloud Consulting</p>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Cloud Infrastructure &middot; Azure &middot; Personal Project</span>
+          <div style="margin-top:0.625rem;">
+            <a href="https://www.antoniocumberbatch.com" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
+              Visit Site <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.5rem;">This Portfolio is the Project</h1>
+
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;">
+        {[['Version 2', 'Rebuilt in 2026'], ['Azure CDN', 'Global Delivery'], ['Fully Automated', 'CI/CD Pipeline'], ['Serverless', 'Visit Counter']].map(([val, label]) => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:1.125rem;font-weight:800;color:var(--color-accent);">{val}</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:2rem 1.5rem 5rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+
+      <h2>Where It Started</h2>
+      <p>A few years ago, when I was getting serious about Azure and what it could actually do, I came across the <a href="https://www.youtube.com/watch?v=ieYrBWmkfno" target="_blank" rel="noopener noreferrer">Cloud Resume Challenge</a> put out by Gwyn on the A Cloud Guru platform. The concept was simple but smart: instead of just studying for certifications, you prove you understand cloud by building something real on it. A resume hosted on Azure, a CDN in front of it, a serverless backend tracking your visitor count, the whole thing deployed from code. No shortcuts, no drag-and-drop.</p>
+      <p>I built it. It worked. And more importantly, it forced me to actually understand how Azure services talk to each other, not just what they are on a multiple choice exam.</p>
+
+      <h2>What Changed in 2026</h2>
+      <p>A lot. The original version was a single HTML page. It did what it was supposed to do, but it was built by someone still learning the platform. By 2026 I had completed 7 Azure certifications including the Solutions Architect Expert, built production platforms for clients across healthcare, logistics, and enterprise IT, and had a very different idea of what this portfolio should look like and what it should be capable of.</p>
+      <p>Version 2 is a full multi-page portfolio with a proper CI/CD deployment pipeline, global CDN delivery, AI-powered chat, push notification support, and a visual identity built around the ARC brand. The infrastructure decisions I made for client projects are the same decisions running under this site. That was intentional.</p>
+
+      <h2>Skills in Action</h2>
+      <p>Every feature on this portfolio exists for a reason. Here is what is running under the hood and what it demonstrates.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin:1.75rem 0;">
+        {[
+          {
+            title: 'Azure Blob Storage + Front Door CDN',
+            skill: 'Cloud Hosting and Global Delivery',
+            detail: 'The site is hosted on Azure Blob Storage and served through Azure Front Door, Microsoft\'s global CDN network. Visitors anywhere in the world load it from the closest edge location. This is the same setup I configure for client platforms.'
+          },
+          {
+            title: 'Automated Deployment Pipeline',
+            skill: 'CI/CD and DevOps',
+            detail: 'Every update to the portfolio triggers an automated pipeline on GitHub Actions. The site builds and deploys to Azure without a single manual step. Nothing gets missed, nothing gets uploaded in the wrong order, and the CDN cache clears automatically when changes go live.'
+          },
+          {
+            title: 'Serverless Visit Counter',
+            skill: 'Serverless Architecture and Databases',
+            detail: 'The live visitor count you see on the homepage is powered by Azure Functions and Cosmos DB. No server running 24/7. A small function wakes up when the page loads, reads and updates the count, and goes back to sleep. Cost is near zero, availability is near 100%.'
+          },
+          {
+            title: 'Smart Caching Strategy',
+            skill: 'CDN Architecture',
+            detail: 'Different types of files on this site cache for different durations. Pages never cache so visitors always see the latest version. Design assets cache indefinitely because they never change without a new filename. Getting this right is the difference between a CDN that helps and one that causes problems.'
+          },
+          {
+            title: 'AI Chat Integration',
+            skill: 'Automation and AI Workflows',
+            detail: 'The chat widget on the site connects directly to an n8n automation workflow. It is a live example of what I build for clients who want AI-powered support, lead capture, or internal tooling without hiring a development team to maintain custom infrastructure.'
+          },
+          {
+            title: 'Push Notifications',
+            skill: 'Web Platform and Engagement',
+            detail: 'Visitors can subscribe to push notifications via OneSignal. New blog posts and updates reach subscribers directly on their device. Setting this up properly on a static site requires understanding service workers, same-origin restrictions, and CDN configuration. It took about a day to get right.'
+          },
+        ].map(item => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;">
+            <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);margin:0 0 0.375rem;">{item.skill}</p>
+            <p style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{item.title}</p>
+            <p style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{item.detail}</p>
+          </div>
+        ))}
+      </div>
+
+      <h2>The Point</h2>
+      <p>The best way to prove you know how to build something is to have built it yourself. The infrastructure running this portfolio is the same thinking I bring to every client project: the right cloud services for the job, deployed properly, automated from day one, and built to scale without drama.</p>
+      <p>If you are looking at this site and thinking your business could use some of what you are seeing, that is kind of the idea. Reach out.</p>
+
+    </div>
+  </section>
+
+  <!-- TECH TAGS -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.875rem;">Built With</p>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.625rem;">
+        {['Astro', 'Azure Blob Storage', 'Azure Front Door', 'Azure Functions', 'Cosmos DB', 'GitHub Actions', 'OneSignal', 'n8n'].map(tag => (
+          <span style="font-family:var(--font-mono);font-size:0.8125rem;background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-muted);padding:0.375rem 0.875rem;border-radius:6px;">{tag}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:1rem;">Want this kind of infrastructure for your business?</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">ARC builds and manages cloud infrastructure on Azure. From hosting and CDN setup to automated deployments and serverless backends.</p>
+      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Let's Talk
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -192,19 +192,19 @@ function badgeStyle(status: string): string {
   <section style="padding:0 1.5rem 3rem;">
     <div class="prose" style="max-width:900px;margin:0 auto;">
       <h2>Centralise first. Automate second.</h2>
-      <p>The core architectural decision on this engagement was sequencing. Building automations on top of isolated spreadsheets meant every workflow was fragile &mdash; one missing cell update could break a chain. We built the automation layer first to prove the logic, then migrated everything onto a single Azure PostgreSQL database.</p>
-      <p>Once the migration is complete, the automations no longer depend on human data entry. They read from and write to the same source of truth the portal reads from. The portal was always the end goal; the automation layer was the proof of concept that got us there.</p>
-      <p>n8n handles all automation logic and writes directly to the database via its native Postgres node. NestJS sits as a thin API layer handling only authentication, dashboard reads, and real-time notifications. No automation logic lives in the API layer &mdash; this keeps the system debuggable and the two concerns cleanly separated.</p>
+      <p>The core decision on this engagement was sequencing. Building automations on top of isolated spreadsheets meant every workflow was fragile. One missing cell update could break the chain. We built the automation layer first to prove the logic, then migrated everything onto a single Azure PostgreSQL database.</p>
+      <p>Once the migration is complete, the automations no longer depend on human data entry. They read from and write to the same source of truth the portal reads from. The portal was always the end goal. The automation layer was the proof of concept that got us there.</p>
+      <p>n8n handles all automation logic and writes directly to the database. A lightweight API layer sits on top handling authentication, dashboard reads, and real-time notifications. No automation logic lives in the API layer. This keeps the system clean and easy to debug as it grows.</p>
     </div>
   </section>
 
   <!-- WHY CARIBBEAN BUSINESSES SHOULD CARE -->
   <section style="padding:0 1.5rem 4rem;">
     <div class="prose" style="max-width:900px;margin:0 auto;">
-      <h2>Why Caribbean Businesses Should Care</h2>
-      <p>Most growing businesses across the Caribbean reach the same inflection point. The spreadsheets that worked at 5 staff do not work at 25. Every department is running its own file. Nothing connects, nothing audits, and automation is not possible because there is no shared source of truth to build on top of.</p>
-      <p>The approach here &mdash; centralise data first, automate second, then build the portal that gives leadership visibility across all of it &mdash; is directly applicable to any Caribbean company operating across multiple business functions. It does not require expensive enterprise software or a dedicated internal IT team. It requires a clear architecture, the right tooling, and a team that can build and embed alongside your operation.</p>
-      <p>ARC builds embedded technical teams for Caribbean businesses at this stage. If your organisation is growing past informal tooling and you are ready to consolidate, Antonio is the right person to start that conversation with.</p>
+      <h2>Sound familiar?</h2>
+      <p>Most growing businesses across the Caribbean hit the same wall around the same time. The spreadsheets that worked when the team was small start breaking down once you're operating across multiple departments. Nothing connects, nothing has history, and you can't automate a process that depends on someone remembering to update a cell.</p>
+      <p>What we built for Qualitech is a real model for how to fix that: centralise the data first, layer automation on top, then give leadership a portal to see across all of it. No expensive enterprise software. No six-month implementation. Just the right architecture and a team that builds alongside you.</p>
+      <p>If your operation is at that stage, let's talk.</p>
     </div>
   </section>
 
