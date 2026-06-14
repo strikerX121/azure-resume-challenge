@@ -26,9 +26,12 @@ jobs:
         run: npm run build
 
       - name: Log in to Azure
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.ARC_RESUME_AZURE_CREDENTIALS }}
+        run: |
+          az login --service-principal \
+            --username ${{ secrets.ARC_RESUME_CLIENT_ID }} \
+            --password ${{ secrets.ARC_RESUME_CLIENT_SECRET }} \
+            --tenant ${{ secrets.ARC_RESUME_TENANT_ID }}
+          az account set --subscription ${{ secrets.ARC_RESUME_SUBSCRIPTION_ID }}
 
       - name: Upload HTML (no-cache)
         run: |
