@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const workstreams = [
+  {
+    name: 'WooCommerce Store Build',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Full WooCommerce store on WordPress covering the complete product catalogue, inventory management, and order processing. Built from zero — no prior web presence existed.',
+    tags: ['WordPress', 'WooCommerce', 'Bluehost'],
+  },
+  {
+    name: 'Secure Payment Processing',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Integrated secure payment processing for the Caribbean market, allowing customers to pay online for parts, accessories, and lifestyle products.',
+    tags: ['WooCommerce Payments', 'Payment Gateway'],
+  },
+  {
+    name: 'Azure Cloud Infrastructure',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Azure cloud hosting for performance and reliability. Site serves product listings, images, and checkout flows with consistent uptime.',
+    tags: ['Azure', 'Cloud Hosting'],
+  },
+  {
+    name: 'Multi-Site WooCommerce Expansion',
+    status: 'IN_DEV',
+    statusLabel: 'In Scope',
+    desc: 'Multi-site WooCommerce setup to serve customers across different Caribbean regions with localised experiences and pricing.',
+    tags: ['WooCommerce Multisite', 'Caribbean E-Commerce'],
+  },
+  {
+    name: 'n8n Order Automation',
+    status: 'IN_DEV',
+    statusLabel: 'In Scope',
+    desc: 'Automation workflows to streamline order management and customer communication — reducing manual handling of order confirmations, shipping updates, and follow-ups.',
+    tags: ['n8n', 'Order Automation', 'Email Workflows'],
+  },
+];
+
+function badgeStyle(status: string): string {
+  if (status === 'DELIVERED') return 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);';
+  if (status === 'ACTIVE')    return 'background:rgba(59,130,246,0.12);color:#60a5fa;border:1px solid rgba(59,130,246,0.25);';
+  return 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);';
+}
+---
+
+<BaseLayout
+  title="The Jimny Shop — Case Study"
+  description="Full e-commerce and digital infrastructure for a Trinidad-based Suzuki Jimny specialist. Built from zero to live WooCommerce store under ARC Cloud Consulting."
+>
+
+  <!-- HEADER -->
+  <section style="padding:4rem 1.5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
+        <div style="width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
+          <img src="/images/TheJimnyShop.jpg" alt="The Jimny Shop logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+        </div>
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">The Jimny Shop</p>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">E-Commerce &middot; WordPress &middot; WooCommerce</span>
+          <div style="margin-top:0.625rem;">
+            <a href="https://thejimnyshop.com/" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
+              Visit Site <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.5rem;">The Jimny Shop — E-Commerce &amp; Digital Infrastructure</h1>
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;">
+        {[['E-Commerce', 'Status: Live'], ['WooCommerce', 'Platform'], ['Retail IT', 'Type']].map(([val, label]) => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:1.25rem;font-weight:800;color:var(--color-accent);">{val}</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+
+      <h2>The Client</h2>
+      <p>The Jimny Shop is a Trinidad-based specialist retailer focused on Suzuki Jimny parts, accessories, and lifestyle products. The business had a clear market — an active community of Jimny owners across the Caribbean — but no digital infrastructure to serve them online.</p>
+
+      <h2>The Problem</h2>
+      <p>The business needed a complete digital infrastructure built from the ground up. No existing web presence, no e-commerce capability, no payment processing, and no system for managing product inventory or customer orders online. Everything the business needed to sell online had to be created.</p>
+
+    </div>
+  </section>
+
+  <!-- WHAT WAS BUILT -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">What Was Built</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        {workstreams.map(w => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+              <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0;">{w.name}</h3>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;white-space:nowrap;${badgeStyle(w.status)}`}>{w.statusLabel}</span>
+            </div>
+            <p style="font-size:0.9rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{w.desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.375rem;padding-top:0.25rem;border-top:1px solid var(--color-border);">
+              {w.tags.map(tag => (
+                <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-surface-2);color:var(--color-text-muted);padding:0.1875rem 0.5rem;border-radius:4px;">{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S NEXT -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+      <h2>What&apos;s Next</h2>
+      <p>The Jimny Shop is expanding. A multi-site WooCommerce setup is in scope to serve customers across different Caribbean regions with localised experiences. n8n automation workflows are also being explored to streamline order management and customer communication. This is an ongoing ARC engagement &mdash; not a completed project.</p>
+      <h2>Stack</h2>
+      <p>WordPress, WooCommerce, Bluehost, Azure. Digital transformation of the retail operation from offline to online-first under ARC Cloud Consulting managed services.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Need an e-commerce setup?</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">ARC builds and manages WooCommerce stores for Caribbean retailers. From zero to live, with the automation and infrastructure to scale.</p>
+      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Start the Conversation
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

@@ -1,0 +1,91 @@
+﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const services = [
+  {
+    label: 'ARC Cloud Consulting',
+    tagline: 'Cloud transformation for Caribbean businesses.',
+    desc: 'End-to-end Azure architecture, cloud migration, AI automation, and custom software. Remote-first delivery team covering full-stack development, UX/UI design, n8n automation, and WordPress.',
+    for: 'Regional SMBs, enterprises moving to cloud, businesses wanting AI/automation.',
+    engagement: 'Project-based or monthly retainer.',
+    cta: 'Book a Discovery Call',
+    href: '/contact',
+  },
+  {
+    label: '3 Stripes Tech EMR',
+    tagline: "Caribbean's first cloud EMR built for regional healthcare.",
+    desc: 'Cloud-based Electronic Medical Records designed around how Caribbean doctors actually work. 25-day free trial. Pricing starts at $99 USD/user/month.',
+    for: 'Medical practices, clinics, and hospitals across the Caribbean.',
+    engagement: '$99 USD/user/month.',
+    cta: 'Visit 3 Stripes Tech →',
+    href: 'https://www.3stripestech.com/',
+    target: '_blank',
+    rel: 'noopener noreferrer',
+    extraNote: 'Or email <a href="mailto:antonio.cumberbatch@3stripestech.com" style="color:var(--color-accent);">antonio.cumberbatch@3stripestech.com</a> to arrange a demo directly.',
+  },
+  {
+    label: 'AI & Automation Workshops',
+    tagline: 'Practical AI for business teams.',
+    desc: 'Hands-on workshops tailored to the AI tools your team actually uses — Microsoft Copilot, Claude, or Google Workspace AI (Gemini, NotebookLM, and more). Covers practical use cases for business operations, delivered in-person or remotely across the Caribbean.',
+    for: 'Corporate teams, SMB owners, and department leads.',
+    engagement: 'Custom pricing based on team size and scope.',
+    cta: 'Enquire About a Workshop',
+    href: '/contact',
+  },
+];
+---
+
+<BaseLayout
+  title="Services — Antonio Cumberbatch"
+  description="Cloud transformation, healthcare EMR, and AI automation workshops. Three focused offerings for Caribbean businesses."
+>
+
+  <section style="padding:4rem 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Services</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Three Ways to Work Together</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Cloud architecture, healthcare software, and AI automation — focused on the Caribbean market.</p>
+    </div>
+  </section>
+
+  <section style="padding:0 1.5rem 5rem;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:2rem;">
+      {services.map((s, i) => (
+        <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;overflow:hidden;">
+          <div style="padding:2.5rem;border-bottom:1px solid var(--color-border);">
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);display:block;margin-bottom:0.625rem;">0{i + 1}</span>
+            <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;margin:0 0 0.5rem;">{s.label}</h2>
+            <p style="font-size:1.0625rem;color:var(--color-accent);margin:0 0 1.25rem;font-weight:500;">{s.tagline}</p>
+            <p style="font-size:1rem;color:#D1CDC6;line-height:1.7;max-width:680px;margin:0;">{s.desc}</p>
+          </div>
+          <div style="padding:1.75rem 2.5rem;display:grid;grid-template-columns:1fr 1fr auto;gap:1.5rem;align-items:center;">
+            <div>
+              <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-muted);margin:0 0 0.375rem;">Best for</p>
+              <p style="font-size:0.9375rem;color:var(--color-text);margin:0;">{s.for}</p>
+            </div>
+            <div>
+              <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-muted);margin:0 0 0.375rem;">Engagement</p>
+              <p style="font-size:0.9375rem;color:var(--color-text);margin:0;">{s.engagement}</p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.625rem;align-items:flex-start;">
+              <a href={s.href} target={s.target} rel={s.rel} style="background:var(--color-accent);color:#fff;padding:0.75rem 1.5rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;white-space:nowrap;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+                {s.cta}
+              </a>
+              {s.extraNote && <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0;" set:html={s.extraNote}></p>}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  @media (max-width: 768px) {
+    [style*="grid-template-columns:1fr 1fr auto"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+

@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro cache
+.astro/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# OS / macOS artefacts
+.DS_Store
+Thumbs.db
+__MACOSX/
+
+# Claude Code local settings
+.claude/
+
+# Azure Functions local settings (contains secrets)
+api/local.settings.json

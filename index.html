@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+   <!-- Basic Page Needs -->
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   <title>Antonio Cumberbatch | Azure Cloud Resume</title>
+   <meta name="description" content="Antonio Cumberbatch — Cloud Solutions Architect, Azure Specialist, and Founder of ARC Cloud Consulting.">
+   <meta name="author" content="Antonio Cumberbatch">
+
+   <!-- CSS -->
+   <link rel="stylesheet" href="css/default.css">
+   <link rel="stylesheet" href="css/layout.css">
+   <link rel="stylesheet" href="css/media-queries.css">
+   <link rel="stylesheet" href="css/magnific-popup.css">
+   <link rel="stylesheet" href="css/custom.css">
+
+   <!-- Scripts -->
+   <script src="js/modernizr.js"></script>
+   <script src="js/custom.js"></script>
+   <script src="main.js"></script>
+
+   <!-- Favicons -->
+   <link rel="shortcut icon" href="favicon.png">
+</head>
+
+<body>
+
+<!-- n8n Chat Widget -->
+<link href="https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css" rel="stylesheet" />
+<script type="module">
+   import { createChat } from 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js';
+   createChat({
+      webhookUrl: 'https://automate.antoniocumberbatch.com/webhook/42b76170-0c5b-48b0-9932-78591565a136/chat'
+   });
+</script>
+
+<!-- ============================================================
+     HEADER / HERO
+     ============================================================ -->
+<header id="home">
+   <nav id="nav-wrap">
+      <a class="mobile-btn" href="#nav-wrap" title="Show navigation">Show navigation</a>
+      <a class="mobile-btn" href="#" title="Hide navigation">Hide navigation</a>
+      <ul id="nav" class="nav">
+         <li class="current"><a class="smoothscroll" href="#home">Home</a></li>
+         <li><a class="smoothscroll" href="#about">About</a></li>
+         <li><a class="smoothscroll" href="#resume">Resume</a></li>
+         <li><a class="smoothscroll" href="#portfolio">Portfolio</a></li>
+         <li><a class="smoothscroll" href="#team">Team</a></li>
+         <li>
+            <button class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">☾ Dark</button>
+         </li>
+      </ul>
+   </nav>
+
+   <div class="row banner">
+      <div class="banner-text">
+         <h1 class="responsive-headline">
+            Hi, I'm Antonio :)
+            <span class="typewriter-line">
+               <span id="typewriter-text"></span><span class="typewriter-cursor"></span>
+            </span>
+         </h1>
+         <p>and this page has been viewed <a id="counter">—</a> times :)</p>
+         <ul class="social">
+            <li><a href="https://www.antoniocumberbatch.com" target="_blank"><i class="fa fa-external-link"></i></a></li>
+            <li><a href="https://www.linkedin.com/in/antonio-c-484433137/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="https://www.instagram.com/arc.cloudconsulting/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="https://github.com/strikerX121/azure-resume-challenge" target="_blank"><i class="fa fa-github"></i></a></li>
+         </ul>
+      </div>
+   </div>
+
+   <p class="scrolldown">
+      <a class="smoothscroll" href="#about"><i class="icon-down-circle"></i></a>
+   </p>
+</header>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section id="about">
+   <div class="row">
+      <div class="three columns reveal-left">
+         <img class="profile-pic" src="images/me.png" alt="Antonio Cumberbatch" />
+      </div>
+      <div class="nine columns main-col reveal">
+         <h2>ABOUT ME</h2>
+         <p>
+            Hi, I'm Antonio Cumberbatch, <span>Solutions Assessment Consultant at <a href="https://www.linkedin.com/in/antonio-c-484433137/" target="_blank">Microsoft</a></span>,
+            focused on assisting organizations understand the benefits of cloud technologies and driving smooth migrations to Azure Cloud.
+            Once customers reach the cloud, I help them ensure their infrastructure aligns with the 5 Pillars of cloud best practices:
+            Cost Optimization, Security, Operational Excellence, Reliability, and Performance.
+         </p>
+         <p>
+            I also founded <span><a href="https://www.antoniocumberbatch.com" target="_blank">ARC Cloud Consulting</a></span>, where my team delivers end-to-end cloud transformation,
+            AI automation, and cybersecurity solutions for businesses across the Caribbean and beyond.
+         </p>
+         <p>
+            This page was built as part of the <span><a href="https://github.com/madebygps/azure-resume" target="_blank">Cloud Guru Azure Resume Challenge</a></span> and has since
+            evolved into a live showcase of my cloud skills, powered by Azure Blob Storage, Azure Functions, and Cosmos DB.
+         </p>
+      </div>
+   </div>
+</section>
+
+<!-- ============================================================
+     STATS BAR
+     ============================================================ -->
+<div id="stats">
+   <div class="stats-grid">
+      <div class="stat-card reveal">
+         <span class="stat-number" data-count="11">0</span><span class="stat-suffix">+</span>
+         <span class="stat-label">Years Experience</span>
+      </div>
+      <div class="stat-card reveal">
+         <span class="stat-number" data-count="8">0</span>
+         <span class="stat-label">Azure Certifications</span>
+      </div>
+      <div class="stat-card reveal">
+         <span class="stat-number" data-count="6">0</span><span class="stat-suffix">+</span>
+         <span class="stat-label">Projects Delivered</span>
+      </div>
+      <div class="stat-card reveal">
+         <span class="stat-number" data-count="20">0</span><span class="stat-suffix">+</span>
+         <span class="stat-label">Clients Served</span>
+      </div>
+   </div>
+</div>
+
+<!-- ============================================================
+     SKILLS
+     ============================================================ -->
+<div id="skills">
+   <div class="skills-wrapper">
+      <div class="section-header reveal">
+         <h2 class="section-title">Core <span>Skills</span></h2>
+         <div class="section-divider"></div>
+      </div>
+      <div class="skills-cloud reveal">
+         <span class="skill-tag">Microsoft Azure</span>
+         <span class="skill-tag">Azure Active Directory</span>
+         <span class="skill-tag">Azure Virtual Desktop</span>
+         <span class="skill-tag">Azure Networking</span>
+         <span class="skill-tag">Azure Security Center</span>
+         <span class="skill-tag">Microsoft Purview</span>
+         <span class="skill-tag">Azure Monitor</span>
+         <span class="skill-tag">Azure Cosmos DB</span>
+         <span class="skill-tag">Azure Functions</span>
+         <span class="skill-tag">Azure Blob Storage</span>
+         <span class="skill-tag">Microsoft 365</span>
+         <span class="skill-tag">Power BI</span>
+         <span class="skill-tag">Solution Assessments</span>
+         <span class="skill-tag">Cloud Migration</span>
+         <span class="skill-tag">DLP Implementation</span>
+         <span class="skill-tag">AI Automation</span>
+         <span class="skill-tag">n8n Workflows</span>
+         <span class="skill-tag">Infrastructure as Code</span>
+         <span class="skill-tag">Network Operations</span>
+         <span class="skill-tag">Technical Training</span>
+         <span class="skill-tag">Pre-Sales Consulting</span>
+         <span class="skill-tag">CRM & Forecasting</span>
+      </div>
+   </div>
+</div>
+
+<!-- ============================================================
+     RESUME — CERTIFICATIONS + WORK EXPERIENCE
+     ============================================================ -->
+<section id="resume">
+
+   <!-- Certifications -->
+   <div class="row education">
+      <div class="three columns header-col reveal-left">
+         <h1><span>Certifications</span></h1>
+      </div>
+      <div class="nine columns main-col">
+         <div class="cert-grid">
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg" alt="Microsoft Certified Expert" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-305</div>
+               <h3>Azure Solutions Architect Expert</h3>
+               <span class="cert-date">May 2024</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-specialty-badge.svg" alt="Microsoft Certified Specialty" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-140</div>
+               <h3>Azure Virtual Desktop Specialty</h3>
+               <span class="cert-date">September 2023</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg" alt="Microsoft Certified Associate" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-700</div>
+               <h3>Azure Network Engineer Associate</h3>
+               <span class="cert-date">June 2023</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg" alt="Microsoft Certified Associate" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-500</div>
+               <h3>Azure Security Engineer Associate</h3>
+               <span class="cert-date">April 2023</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg" alt="Microsoft Certified Associate" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-104</div>
+               <h3>Azure Administrator Associate</h3>
+               <span class="cert-date">April 2022</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg" alt="Microsoft Certified Fundamentals" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AI-900</div>
+               <h3>Azure AI Fundamentals</h3>
+               <span class="cert-date">March 2024</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <img class="cert-badge-img" src="https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg" alt="Microsoft Certified Fundamentals" onerror="this.style.display='none'" />
+               <div class="cert-badge-icon">AZ-900</div>
+               <h3>Azure Fundamentals</h3>
+               <span class="cert-date">March 2021</span>
+            </div>
+
+            <div class="cert-card reveal">
+               <div class="cert-badge-icon" style="font-size:28px;margin-bottom:12px;">🪟</div>
+               <div class="cert-badge-icon">M20740</div>
+               <h3>Installation, Storage &amp; Compute with Windows Server 2016</h3>
+               <span class="cert-date">July 2021</span>
+            </div>
+
+         </div>
+      </div>
+   </div>
+
+   <!-- Work Experience -->
+   <div class="row work" style="margin-top: 60px;">
+      <div class="three columns header-col reveal-left">
+         <h1><span>Work</span></h1>
+      </div>
+      <div class="nine columns main-col">
+         <div class="timeline">
+
+            <div class="timeline-item reveal">
+               <h3>Apeiron Sumus</h3>
+               <p class="info">Solution Assessment Consultant, Team Mentor &amp; Tech Expert
+                  <span>&bull;</span> <em class="date">March 2024 – Present</em>
+               </p>
+               <ul>
+                  <li>Lead and manage Microsoft Azure and Security Solution Assessment projects from initiation to completion, ensuring successful execution for enterprise customers.</li>
+                  <li>Generate lead flow by managing and executing data collection for Microsoft customers, including remote installation, configuration, and discovery tool deployment.</li>
+                  <li>Orchestrate the full Solution Assessment process, coordinating efforts across accounts and ensuring timely deliverables.</li>
+                  <li>Provide expert consulting on Microsoft solutions, aligning offerings with client business needs — particularly in cloud adoption and transformation.</li>
+                  <li>Maintain ongoing relationships with existing accounts, creating brand awareness around Solution Assessments and ensuring client satisfaction.</li>
+                  <li>Mentor and guide junior team members on the Solution Assessment process, best practices, and technical leadership during team meetings.</li>
+                  <li>Support complex troubleshooting efforts for critical Microsoft Azure-related issues, providing actionable solutions and technical guidance.</li>
+                  <li>Analyze data collected during assessments, deliver insights, and communicate findings to clients and internal teams.</li>
+                  <li>Maintain business forecasting by managing an accurate pipeline and updating activity logs for all active assessments.</li>
+                  <li>Utilize Microsoft Office, CRM software, and Power BI to manage tasks, report on performance metrics, and ensure efficient project execution.</li>
+                  <li>Collaborate with cross-functional teams to align technical strategies with business objectives and provide high-level cloud security and performance consultations.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>Digicel Group</h3>
+               <p class="info">Group Cloud Administrator <span>&bull;</span> <em class="date">April 2023 – March 2024</em></p>
+               <ul>
+                  <li>Monitored and managed Azure Cloud Operations, providing real-time performance monitoring and optimization of Azure services.</li>
+                  <li>Deployed and managed virtual machines via Azure portals, performing daily maintenance, upgrades, and patching tasks.</li>
+                  <li>Led customer system migrations to upgraded versions, ensuring minimal downtime and seamless transitions.</li>
+                  <li>Authored both non-technical and technical documentation to assist internal teams and external clients.</li>
+                  <li>Provided expert knowledge in computer networking and cloud infrastructure management.</li>
+                  <li>Created documentation for installed cloud systems and trained clients on effective administration practices.</li>
+                  <li>Conducted presentations and training for pre-sales, post-sales, and client onboarding purposes.</li>
+                  <li>Proactively stayed up-to-date with emerging technologies and cloud solutions to enhance performance.</li>
+                  <li>Applied methodical troubleshooting skills to quickly resolve cloud and application-related issues.</li>
+                  <li>Researched and implemented timely solutions to customer issues, ensuring deadlines and SLAs were met.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>PBS Technologies</h3>
+               <p class="info">Systems Engineer <span>&bull;</span> <em class="date">January 2021 – April 2023</em></p>
+               <ul>
+                  <li>Installed and configured complex physical and virtual environments for enterprise clients.</li>
+                  <li>Deployed and managed computer software and systems to optimize business performance.</li>
+                  <li>Led customer system migrations to upgraded versions with minimal disruptions.</li>
+                  <li>Authored technical and non-technical documentation for internal and customer use.</li>
+                  <li>Provided technical expertise in networking and cloud infrastructure management.</li>
+                  <li>Trained customers on system administration, empowering them to manage their own environments.</li>
+                  <li>Conducted presentations for pre-sales and post-sales technical support.</li>
+                  <li>Proactively stayed updated with new technology trends and cloud solutions.</li>
+                  <li>Applied troubleshooting skills to resolve technical issues efficiently and within SLA.</li>
+                  <li>Researched and implemented timely solutions to meet client deadlines.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>PBS Technologies (Formerly Massy Technologies InfoCom)</h3>
+               <p class="info">NOC Engineer — Network Operating Centre <span>&bull;</span> <em class="date">September 2019 – January 2021</em></p>
+               <ul>
+                  <li>Technical ownership of Network Management System, Intrusion Detection System, and data backup systems.</li>
+                  <li>Administered and maintained the network management and intrusion detection infrastructure.</li>
+                  <li>Managed and maintained the organizational data backup system to ensure business continuity.</li>
+                  <li>Researched new hardware and software solutions to enhance existing environments.</li>
+                  <li>Provided overall technical support for the organization's information systems and associated services.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>St. Clair Medical Centre</h3>
+               <p class="info">I.T. Officer <span>&bull;</span> <em class="date">September 2016 – June 2019</em></p>
+               <ul>
+                  <li>Managed the purchasing, upgrading, and migration of all Windows Servers and networking equipment.</li>
+                  <li>Provided remote and in-person support to all users, ensuring minimal downtime.</li>
+                  <li>Administered antivirus solutions (McAfee) and firewall configurations (Fortinet).</li>
+                  <li>Maintained desktops and laptops by building, imaging, and resolving system issues.</li>
+                  <li>Collaborated with external vendors to maintain the functionality of technical infrastructure.</li>
+                  <li>Managed the company website and monitored surveillance systems.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>Bishops Anstey High School East &amp; Trinity College East</h3>
+               <p class="info">Technology Education Teacher's Assistant / I.T. Technician <span>&bull;</span> <em class="date">October 2014 – August 2016</em></p>
+               <ul>
+                  <li>Assisted teachers by ensuring classroom environments were equipped and prepared for students.</li>
+                  <li>Helped resolve technical issues with classroom equipment and educational data systems.</li>
+                  <li>Performed troubleshooting and preventive maintenance of the school's computer systems.</li>
+               </ul>
+            </div>
+
+            <div class="timeline-item reveal">
+               <h3>Caura Hospital — On The Job Training Programme</h3>
+               <p class="info">Secretary Assistant <span>&bull;</span> <em class="date">August 2014 – September 2014</em></p>
+               <ul>
+                  <li>Assisted departments with organizing digital and hardcopy files for administrative purposes.</li>
+                  <li>Resolved basic I.T. issues for staff members to support daily operations.</li>
+               </ul>
+            </div>
+
+         </div>
+      </div>
+   </div>
+
+</section>
+
+<!-- ============================================================
+     PORTFOLIO
+     ============================================================ -->
+<div id="portfolio">
+   <div class="section-header reveal">
+      <h2 class="section-title">Client <span>Portfolio</span></h2>
+      <div class="section-divider"></div>
+      <p style="color:var(--text-sub);font-size:15px;max-width:600px;margin:0 auto;">
+         A selection of cloud, security, AI, and web projects delivered for clients across the Caribbean and beyond.
+      </p>
+   </div>
+
+   <div class="portfolio-grid">
+
+      <a href="portfolio/wiman-dlp.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-security">
+            <span>🔐</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">Security &amp; Compliance</div>
+            <h3>Wiman — Data Loss Prevention</h3>
+            <p>Designed and implemented a comprehensive DLP strategy and documentation framework using Microsoft Purview to protect sensitive organizational data and meet compliance requirements.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Microsoft Purview</span>
+               <span class="portfolio-tag">DLP</span>
+               <span class="portfolio-tag">Azure Security</span>
+               <span class="portfolio-tag">Compliance</span>
+            </div>
+         </div>
+      </a>
+
+      <a href="portfolio/qualitech-ai.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-ai">
+            <span>🤖</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">AI &amp; Automation</div>
+            <h3>Qualitech — AI Automation Suite</h3>
+            <p>Scoped and proposed an AI-powered business automation platform leveraging Microsoft AI services and n8n workflows to streamline operations and eliminate manual processes across key business functions.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Azure AI</span>
+               <span class="portfolio-tag">n8n</span>
+               <span class="portfolio-tag">Automation</span>
+               <span class="portfolio-tag">Microsoft 365</span>
+            </div>
+         </div>
+      </a>
+
+      <a href="portfolio/qualitech-web.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-web">
+            <span>🌐</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">Web &amp; Cloud Infrastructure</div>
+            <h3>Qualitech — Web Presence &amp; Cloud Hosting</h3>
+            <p>Designed and proposed a modern, cloud-hosted web presence strategy including Azure Static Web Apps deployment, performance optimization, and scalable content delivery infrastructure.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Azure Static Web Apps</span>
+               <span class="portfolio-tag">CDN</span>
+               <span class="portfolio-tag">Web Design</span>
+               <span class="portfolio-tag">Azure DNS</span>
+            </div>
+         </div>
+      </a>
+
+      <a href="portfolio/jimney-shop.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-ecommerce">
+            <span>🛒</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">E-Commerce &amp; Retail IT</div>
+            <h3>Jimney Shop — Cloud &amp; IT Infrastructure</h3>
+            <p>Delivered a comprehensive IT and cloud infrastructure solution enabling digital commerce capabilities, secure payment processing, and streamlined retail operations for a growing e-commerce business.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Azure</span>
+               <span class="portfolio-tag">E-commerce</span>
+               <span class="portfolio-tag">Cloud Infrastructure</span>
+               <span class="portfolio-tag">Digital Transformation</span>
+            </div>
+         </div>
+      </a>
+
+      <a href="portfolio/emr-web-app.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-healthcare">
+            <span>🏥</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">Healthcare IT</div>
+            <h3>EMR Web Application <span class="placeholder-badge">✦ Coming Soon</span></h3>
+            <p>Architected and developed a large-scale Electronic Medical Records (EMR) platform enabling digital patient management, clinical workflows, and secure health data storage for a healthcare organization.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Azure</span>
+               <span class="portfolio-tag">Web App</span>
+               <span class="portfolio-tag">Healthcare IT</span>
+               <span class="portfolio-tag">HIPAA Compliance</span>
+            </div>
+         </div>
+      </a>
+
+      <a href="portfolio/logistics-platform.html" class="portfolio-card reveal">
+         <div class="portfolio-card-thumb thumb-logistics">
+            <span>🚚</span>
+         </div>
+         <div class="portfolio-card-body">
+            <div class="portfolio-card-cat">Logistics &amp; Supply Chain</div>
+            <h3>Logistics Management Platform <span class="placeholder-badge">✦ Coming Soon</span></h3>
+            <p>Built a comprehensive logistics management platform enabling real-time shipment tracking, inventory management, route optimization, and API integrations across the supply chain ecosystem.</p>
+            <div class="portfolio-tags">
+               <span class="portfolio-tag">Azure</span>
+               <span class="portfolio-tag">Web App</span>
+               <span class="portfolio-tag">API Integration</span>
+               <span class="portfolio-tag">Real-time Tracking</span>
+            </div>
+         </div>
+      </a>
+
+   </div>
+</div>
+
+<!-- ============================================================
+     TEAM
+     ============================================================ -->
+<div id="team">
+   <div class="section-header reveal">
+      <h2 class="section-title">Meet the <span>Team</span></h2>
+      <div class="section-divider"></div>
+      <p style="color:var(--text-sub);font-size:15px;max-width:600px;margin:0 auto;">
+         The people behind ARC Cloud Consulting — a dedicated team of cloud, security, and automation specialists.
+      </p>
+   </div>
+
+   <div class="team-grid">
+
+      <div class="team-card reveal">
+         <div class="team-avatar">AC</div>
+         <h3>Antonio Cumberbatch</h3>
+         <span class="team-role">Founder &amp; Lead Consultant</span>
+         <div class="team-skills">
+            <span class="team-skill">Azure Architecture</span>
+            <span class="team-skill">Solution Assessments</span>
+            <span class="team-skill">Cloud Strategy</span>
+            <span class="team-skill">AI Automation</span>
+         </div>
+      </div>
+
+      <div class="team-card reveal">
+         <div class="team-avatar">TM</div>
+         <h3>Team Member</h3>
+         <span class="team-role">Cloud Architect</span>
+         <div class="team-skills">
+            <span class="team-skill">Azure IaaS</span>
+            <span class="team-skill">Networking</span>
+            <span class="team-skill">DevOps</span>
+            <span class="team-skill">IaC</span>
+         </div>
+      </div>
+
+      <div class="team-card reveal">
+         <div class="team-avatar">TM</div>
+         <h3>Team Member</h3>
+         <span class="team-role">Security Specialist</span>
+         <div class="team-skills">
+            <span class="team-skill">Azure Security</span>
+            <span class="team-skill">Microsoft Purview</span>
+            <span class="team-skill">DLP</span>
+            <span class="team-skill">Compliance</span>
+         </div>
+      </div>
+
+      <div class="team-card reveal">
+         <div class="team-avatar">TM</div>
+         <h3>Team Member</h3>
+         <span class="team-role">Automation Engineer</span>
+         <div class="team-skills">
+            <span class="team-skill">n8n</span>
+            <span class="team-skill">Azure Functions</span>
+            <span class="team-skill">API Integration</span>
+            <span class="team-skill">Power Automate</span>
+         </div>
+      </div>
+
+   </div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+   <div class="row">
+      <div class="twelve columns">
+         <ul class="social-links">
+            <li><a href="https://www.linkedin.com/in/antonio-c-484433137/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+            <li><a href="https://www.instagram.com/arc.cloudconsulting/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+            <li><a href="https://github.com/strikerX121/azure-resume-challenge" target="_blank"><i class="fa fa-github"></i></a></li>
+         </ul>
+         <p style="text-align:center;margin-top:14px;">
+            &copy; 2024 Antonio Cumberbatch &mdash; ARC Cloud Consulting. Built on Azure.
+         </p>
+      </div>
+      <div id="go-top">
+         <a class="smoothscroll" title="Back to Top" href="#home"><i class="icon-up-open"></i></a>
+      </div>
+   </div>
+</footer>
+
+<!-- Java Script -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/jquery-1.10.2.min.js"><\/script>')</script>
+<script type="text/javascript" src="js/jquery-migrate-1.2.1.min.js"></script>
+<script src="js/jquery.flexslider.js"></script>
+<script src="js/waypoints.js"></script>
+<script src="js/jquery.fittext.js"></script>
+<script src="js/magnific-popup.js"></script>
+<script src="js/init.js"></script>
+
+</body>
+</html>

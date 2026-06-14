@@ -1,0 +1,443 @@
+﻿﻿---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import meImg from '../assets/images/me.png';
+
+let recentPosts = [];
+try {
+  const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+  recentPosts = allPosts
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, 3);
+} catch (e) {}
+
+const stats = [
+  { value: '11+', label: 'Years Experience' },
+  { value: '8', label: 'Azure Certifications' },
+  { value: '6+', label: 'Projects Delivered' },
+  { value: '20+', label: 'Clients Served' },
+];
+
+const featuredWork = [
+  {
+    title: 'SASSI Logistics Platform',
+    category: 'Logistics & Supply Chain',
+    desc: 'Full-stack forwarding platform serving 200+ active users. AI-powered support chatbot, client portal, and admin dashboard.',
+    tags: ['Azure', 'n8n', 'GPT-4'],
+    href: '/work/sassi',
+    logo: '/images/logos/sassi-logo.svg',
+    logoBg: '#fff',
+  },
+  {
+    title: '3 Stripes Tech EMR',
+    category: 'Healthcare IT',
+    desc: "Caribbean's first regional EMR built for how doctors actually work. 11 doctors, 7,000+ patient records, near-paperless.",
+    tags: ['NestJS', 'React', 'Azure Front Door'],
+    href: '/work/3-stripes-tech',
+    logo: '/images/logos/3st-logo.svg',
+    logoBg: '#0F1624',
+  },
+  {
+    title: 'Qualitech — QT Digital',
+    category: 'AI & Automation',
+    desc: 'Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal across 5 business functions.',
+    tags: ['n8n', 'Retell AI', 'Azure'],
+    href: '/work/qualitech',
+    logo: '/images/logos/qualitech-logo.png',
+    logoBg: '#fff',
+  },
+];
+
+const services = [
+  {
+    icon: null,
+    iconLabel: 'AZ',
+    title: 'Cloud Architecture & Azure',
+    desc: 'End-to-end Azure infrastructure design, migration, and optimisation for Caribbean businesses.',
+  },
+  {
+    icon: null,
+    iconLabel: 'AI',
+    title: 'Custom Software & AI Automation',
+    desc: 'Full-stack web apps, n8n workflows, and AI integrations that eliminate manual processes.',
+  },
+  {
+    icon: null,
+    iconLabel: 'CB',
+    title: 'Caribbean Tech Consulting',
+    desc: 'Microsoft Solution Assessments, pre-sales advisory, and technology strategy for regional businesses.',
+  },
+];
+---
+
+<BaseLayout isHomepage={true}>
+
+  <!-- HERO -->
+  <section class="hero-grid" style="min-height:90vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:5rem 1.5rem;background:linear-gradient(160deg,#0F1B3D 0%,var(--color-navy) 100%);">
+    <div style="max-width:1200px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr auto;gap:3rem;align-items:center;" class="hero-inner">
+      <div>
+        <div class="reveal" style="display:inline-flex;align-items:center;gap:0.5rem;background:rgba(255,107,43,0.12);border:1px solid rgba(255,107,43,0.25);border-radius:100px;padding:0.375rem 0.875rem;margin-bottom:1.5rem;">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent);animation:pulse 2s infinite;"></span>
+          <span style="font-size:0.8125rem;font-weight:500;color:var(--color-accent);">Available for new projects</span>
+        </div>
+
+        <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4.5rem);font-weight:800;line-height:1.1;margin-bottom:1.5rem;color:var(--color-text);">
+          Caribbean roots.<br />
+          <span style="color:var(--color-accent);">Global solutions.</span>
+        </h1>
+
+        <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:520px;margin-bottom:1.5rem;line-height:1.7;">
+          Cloud architect, consultant, and founder. Building digital infrastructure for businesses across the Caribbean and beyond.
+        </p>
+
+        <p class="reveal" style="font-size:0.9375rem;color:var(--color-text-muted);margin-bottom:2rem;">
+          This page has been visited <span id="visit-counter" style="color:var(--color-accent);font-weight:700;">—</span> times.
+        </p>
+
+        <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1rem;">
+          <a href="/work" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+            See My Work
+          </a>
+          <a href="/services" style="background:transparent;color:var(--color-text);padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;border:1px solid var(--color-border);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--color-accent)';this.style.color='var(--color-accent)'" onmouseout="this.style.borderColor='var(--color-border)';this.style.color='var(--color-text)'">
+            Work With Me
+          </a>
+        </div>
+      </div>
+
+      <!-- Profile photo -->
+      <div class="reveal hero-photo-wrap" style="flex-shrink:0;">
+        <div style="width:280px;height:280px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,107,43,0.4);box-shadow:0 0 0 8px rgba(255,107,43,0.08),0 16px 48px rgba(0,0,0,0.5);">
+          <Image src={meImg} width={280} height={280} alt="Antonio Cumberbatch" loading="eager" fetchpriority="high" style="width:100%;height:100%;object-fit:cover;object-position:center top;" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF BAR / STATS -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:3rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2rem;text-align:center;">
+      {stats.map((s, i) => (
+        <div class="reveal">
+          <div
+            class="counter"
+            data-target={s.value.replace(/\D/g, '')}
+            data-suffix={s.value.replace(/\d/g, '')}
+            style="font-family:var(--font-display);font-size:2.75rem;font-weight:800;color:var(--color-accent);line-height:1;"
+          >
+            {s.value}
+          </div>
+          <div style="font-size:0.9375rem;color:var(--color-text-muted);margin-top:0.375rem;">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section style="padding:4rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.375rem;">Credentials</p>
+        <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;">8 Microsoft Certifications</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+        {[
+          { code: 'AZ-305', name: 'Azure Solutions Architect Expert', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg', active: true },
+          { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-specialty-badge.svg', active: false },
+          { code: 'AZ-700', name: 'Azure Network Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
+          { code: 'AZ-500', name: 'Azure Security Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
+          { code: 'AZ-104', name: 'Azure Administrator Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
+          { code: 'AI-900', name: 'Azure AI Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', active: true },
+          { code: 'AZ-900', name: 'Azure Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', active: true },
+          { code: 'M20740', name: 'Windows Server 2016', badge: null, active: true },
+        ].map(cert => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;display:flex;align-items:center;gap:0.875rem;">
+            {cert.badge
+              ? <Image src={cert.badge} width={44} height={44} alt={cert.code} style="width:44px;height:44px;object-fit:contain;flex-shrink:0;" />
+              : <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#x1FA9F;</div>
+            }
+            <div style="flex:1;min-width:0;">
+              <p style="font-size:0.6875rem;font-weight:700;color:var(--color-accent);margin:0 0 0.2rem;letter-spacing:0.05em;">{cert.code}</p>
+              <p style="font-size:0.8125rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;line-height:1.3;">{cert.name}</p>
+              <span style={`display:inline-flex;align-items:center;gap:0.3rem;font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${cert.active ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
+                {cert.active && <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span>}
+                {cert.active ? 'Active' : 'Retired'}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED WORK -->
+  <section style="padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:3rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Selected Work</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;margin-bottom:0.75rem;">Projects That Ship</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
+        {featuredWork.map(p => (
+          <a href={p.href} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:block;">
+            <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.875rem;">
+              <div style={`width:40px;height:40px;border-radius:8px;background:${p.logoBg};border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;`}>
+                <img src={p.logo} alt={p.title + ' logo'} width="32" height="32" style="width:32px;height:32px;object-fit:contain;" />
+              </div>
+              <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category}</span>
+            </div>
+            <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin-bottom:1.25rem;">{p.desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.25rem;">
+              {p.tags.map(tag => (
+                <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-surface-2);color:var(--color-text-muted);padding:0.25rem 0.625rem;border-radius:4px;">{tag}</span>
+              ))}
+            </div>
+            <span style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">View case study &rarr;</span>
+          </a>
+        ))}
+      </div>
+
+      <div class="reveal" style="text-align:center;">
+        <a href="/work" style="font-size:0.9375rem;font-weight:600;color:var(--color-accent);text-decoration:none;">View all work &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT I DO -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:3rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">What I Do</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;">How I Can Help</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {services.map(s => (
+          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+            <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.25);border-radius:10px;font-family:var(--font-display);font-size:0.75rem;font-weight:800;color:var(--color-accent);letter-spacing:0.05em;margin-bottom:1rem;">{s.iconLabel}</div>
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin-bottom:0.75rem;">{s.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin:0;">{s.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- LATEST FROM THE BLOG -->
+  <section style="padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:3rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Writing</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;">Latest from the Blog</h2>
+      </div>
+
+      {recentPosts.length > 0 ? (
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
+          {recentPosts.map(post => (
+            <a href={`/blog/${post.slug}`} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:block;">
+              <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{post.data.category}</span>
+              <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0.625rem 0 0.75rem;">{post.data.title}</h3>
+              <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin-bottom:1rem;">{post.data.description}</p>
+              <span style="font-size:0.8125rem;color:var(--color-text-muted);">{new Date(post.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
+          {[1,2,3].map(() => (
+            <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+              <div style="height:0.75rem;background:var(--color-surface-2);border-radius:4px;width:40%;margin-bottom:1rem;"></div>
+              <div style="height:1.25rem;background:var(--color-surface-2);border-radius:4px;width:80%;margin-bottom:0.75rem;"></div>
+              <div style="height:0.875rem;background:var(--color-surface-2);border-radius:4px;width:100%;margin-bottom:0.5rem;"></div>
+              <div style="height:0.875rem;background:var(--color-surface-2);border-radius:4px;width:70%;"></div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div class="reveal" style="text-align:center;">
+        <a href="/blog" style="font-size:0.9375rem;font-weight:600;color:var(--color-accent);text-decoration:none;">View all posts &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="padding:4rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Client Feedback</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;">What Clients Say</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {[
+          {
+            quote: 'Testimonial coming soon.',
+            name: 'Client Name',
+            title: 'Role, Company',
+          },
+          {
+            quote: 'Testimonial coming soon.',
+            name: 'Client Name',
+            title: 'Role, Company',
+          },
+          {
+            quote: 'Testimonial coming soon.',
+            name: 'Client Name',
+            title: 'Role, Company',
+          },
+        ].map(t => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-accent)" opacity="0.4"><path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.956.76-3.022.66-1.065 1.515-1.867 2.558-2.403L9.373 5c-.8.396-1.56.898-2.26 1.505-.71.607-1.34 1.305-1.9 2.094s-.98 1.68-1.25 2.69-.346 2.04-.217 3.1c.168 1.4.62 2.52 1.356 3.35.735.84 1.652 1.26 2.748 1.26.965 0 1.766-.29 2.4-.878.628-.576.94-1.365.94-2.368l.002.003zm9.124 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.13-1.54-.022-.16-.94.09-1.95.75-3.02.66-1.06 1.514-1.86 2.557-2.4L18.547 5c-.8.396-1.555.898-2.26 1.505-.708.607-1.34 1.305-1.894 2.094-.556.79-.97 1.68-1.24 2.69-.273 1-.345 2.04-.217 3.1.168 1.4.62 2.52 1.356 3.35.735.84 1.652 1.26 2.748 1.26.965 0 1.766-.29 2.4-.878.628-.576.94-1.365.94-2.368l.002.003z"/></svg>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;font-style:italic;">"{t.quote}"</p>
+            <div>
+              <p style="font-weight:700;color:var(--color-text);margin:0 0 0.125rem;font-size:0.9375rem;">{t.name}</p>
+              <p style="font-size:0.8125rem;color:var(--color-accent);margin:0;">{t.title}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL SUBSCRIBE -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;">
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.0625rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">Get new posts by email</p>
+          <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0;">Cloud architecture, AI automation, and building in the Caribbean — delivered to your inbox.</p>
+        </div>
+        <div style="min-width:260px;">
+          <style>
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview {
+              background: transparent !important;
+              border: none !important;
+              box-shadow: none !important;
+              margin-top: 0 !important;
+              padding: 0 !important;
+              border-radius: 0 !important;
+            }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-heading { display: none !important; }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field {
+              margin-top: 0 !important;
+            }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input {
+              background-color: rgba(255,255,255,0.06) !important;
+              border: 1px solid rgba(255,255,255,0.15) !important;
+              color: #fff !important;
+              font-family: "Inter", sans-serif !important;
+              text-align: left !important;
+              padding: 0 0.75rem !important;
+              border-radius: 6px !important;
+            }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input::placeholder,
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input:-ms-input-placeholder {
+              color: rgba(255,255,255,0.4) !important;
+            }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button {
+              background-color: #FF6B2B !important;
+              color: #fff !important;
+              font-family: "Inter", sans-serif !important;
+              font-weight: 600 !important;
+              font-size: 0.9375rem !important;
+              border-radius: 6px !important;
+            }
+            .arc-followit-hp .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .powered-by-line {
+              color: rgba(255,255,255,0.3) !important;
+              font-family: "Inter", sans-serif !important;
+              font-size: 0.6875rem !important;
+              justify-content: flex-start !important;
+              margin-top: 6px !important;
+            }
+          </style>
+          <div class="arc-followit-hp">
+            <div class="followit--follow-form-container" attr-a attr-b attr-c attr-d attr-e attr-f>
+              <form action="https://api.follow.it/subscription-form/ODV6eXovbUxrM0pVemdEMWdkaTlCTDZOREx0aEtPTUR6aEZCMCtJYW8xQUc1aXF5SkxJaWFCVStYL3R2TWt3VXQxVUFJYVRUN1pENHNpWTUrbThqWUpmYVpzR01DNEN1SWtDVVc4WDFZcjJpQnpLVkp3TEljcHg1WjFPaWhpSit8eFIrWjdmbnZQYlNrL1FEWklIOWZUbzQwWWpwbnQ3STdCV0taa2ZPV0NYVT0=/8" method="post">
+                <div class="form-preview">
+                  <div class="preview-heading"><h5>Subscribe</h5></div>
+                  <div class="preview-input-field"><input type="email" name="email" required placeholder="your@email.com" spellcheck="false" /></div>
+                  <div class="preview-submit-button"><button type="submit">Subscribe</button></div>
+                </div>
+              </form>
+              <a href="https://follow.it" class="powered-by-line" target="_blank" rel="noopener">Powered by <img src="https://follow.it/images/colored-logo.svg" alt="follow.it" height="12px" style="margin-left:5px;opacity:0.5;" /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEB PUSH NUDGE -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:12px;padding:1.5rem 1.75rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+        <p style="font-size:0.9375rem;color:var(--color-text);margin:0;">Get notified when I publish new case studies and insights.</p>
+        <button
+          onclick="OneSignalDeferred.push(function(os){os.Slidedown.promptPush();})"
+          style="background:var(--color-accent);color:#fff;padding:0.625rem 1.25rem;border-radius:6px;font-weight:600;font-size:0.875rem;border:none;cursor:pointer;"
+        >
+          Subscribe
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2.5rem;font-weight:800;margin-bottom:1rem;">Have a project in mind?<br />Let's talk.</h2>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);margin-bottom:2rem;">From cloud architecture to AI automation — let's build something that actually ships.</p>
+      <a class="reveal" href="/contact" style="background:var(--color-accent);color:#fff;padding:0.9375rem 2.25rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:1rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Start a Conversation
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr !important; }
+    .hero-photo-wrap { display: flex; justify-content: center; order: -1; }
+    .hero-photo-wrap > div { width: 180px !important; height: 180px !important; }
+  }
+</style>
+
+<script>
+  // Visit counter from Azure Function
+  fetch('https://getresumecounterworking.azurewebsites.net/api/GetResumeCounter?code=aJSHAD2jrBoMcu32Dj4Q6b92qrhLPifESafqPZl5cdUJaQKTwdQjug==')
+    .then(r => r.json())
+    .then(data => {
+      const el = document.getElementById('visit-counter');
+      if (el && data.count != null) el.textContent = data.count.toLocaleString();
+    })
+    .catch(() => {});
+
+  // Counter animation on scroll
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target || '0');
+        const suffix = el.dataset.suffix || '';
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 30);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+</script>
+

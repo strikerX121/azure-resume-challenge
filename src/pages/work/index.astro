@@ -1,0 +1,125 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = [
+  {
+    title: 'Qualitech — QT Digital',
+    category: 'AI & Automation',
+    year: 2026,
+    desc: 'Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal across 5 business functions.',
+    tags: ['n8n', 'Retell AI', 'Twilio', 'Azure'],
+    href: '/work/qualitech',
+    stat: '5 departments automated',
+    logo: '/images/logos/qualitech-logo.png',
+    logoBg: '#fff',
+  },
+  {
+    title: '3 Stripes Tech EMR',
+    category: 'Healthcare IT',
+    year: 2025,
+    desc: "Caribbean's first cloud EMR built for how regional doctors actually work. 11 doctors, 7,000+ patient records, near-paperless.",
+    tags: ['NestJS', 'React 19', 'Azure Front Door', 'PostgreSQL'],
+    href: '/work/3-stripes-tech',
+    stat: '7,000+ records',
+    logo: '/images/logos/3st-logo.svg',
+    logoBg: '#0F1624',
+  },
+  {
+    title: 'SASSI Logistics Platform',
+    category: 'Logistics & Supply Chain',
+    year: 2024,
+    desc: 'Full-stack package forwarding platform serving 200+ active users. Client portal, admin dashboard, AI support chatbot, and SNS purchase service.',
+    tags: ['Azure', 'n8n', 'GPT-4', 'PostgreSQL'],
+    href: '/work/sassi',
+    stat: '200+ users',
+    logo: '/images/logos/sassi-logo.svg',
+    logoBg: '#fff',
+  },
+  {
+    title: 'The Jimny Shop',
+    category: 'E-Commerce · WordPress',
+    year: 2024,
+    desc: 'Full WooCommerce store built from the ground up — product catalogue, order management, secure payments, and Azure hosting. Ongoing managed IT under ARC.',
+    tags: ['WordPress', 'WooCommerce', 'Azure', 'E-Commerce'],
+    href: '/work/jimny-shop',
+    stat: 'Live Store',
+    logo: '/images/TheJimnyShop.jpg',
+    logoBg: '#fff',
+  },
+  {
+    title: 'Wiman — Microsoft 365 Infrastructure',
+    category: 'Managed IT · Microsoft 365',
+    year: 2023,
+    desc: 'Microsoft 365 identity federation, endpoint management, and licensing architecture for Wiman Inc. SAML 2.0 SSO, Intune enrollment, and a lean M365 licensing model.',
+    tags: ['Microsoft Entra ID', 'Microsoft Intune', 'SAML 2.0', 'Microsoft 365'],
+    href: '/work/wiman-dlp',
+    stat: 'Remote Endpoint Mgmt',
+    logo: '/images/logos/wiman-logo.png',
+    logoBg: '#fff',
+  },
+];
+---
+
+<BaseLayout
+  title="Work — Antonio Cumberbatch"
+  description="Case studies from ARC Cloud Consulting — logistics platforms, healthcare EMRs, AI automation, and enterprise security projects."
+>
+
+  <section style="padding:4rem 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Case Studies</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Projects That Ship.</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Real problems. Real solutions. Real numbers.</p>
+    </div>
+  </section>
+
+  <section style="padding:0 1.5rem 5rem;">
+    <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;">
+      {projects.map((p) => (
+        <a href={p.href} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;">
+          <div>
+            <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:0.875rem;">
+              <div style={`width:44px;height:44px;border-radius:8px;background:${p.logoBg};border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;`}>
+                <img src={p.logo} alt={p.title + ' logo'} width="36" height="36" style="width:36px;height:36px;object-fit:contain;" />
+              </div>
+              <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category}</span>
+              <span style="font-size:0.75rem;color:var(--color-text-muted);">· {p.year}</span>
+            </div>
+            <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h2>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin:0 0 1.25rem;max-width:640px;">{p.desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+              {p.tags.map(tag => (
+                <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-surface-2);color:var(--color-text-muted);padding:0.25rem 0.625rem;border-radius:4px;">{tag}</span>
+              ))}
+            </div>
+          </div>
+          <div style="text-align:right;flex-shrink:0;">
+            <div style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin-bottom:0.25rem;">{p.stat}</div>
+            <div style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">View case study &rarr;</div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Have a project like these?</h2>
+      <a class="reveal" href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Let's Talk
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  @media (max-width: 640px) {
+    a[style*="grid-template-columns:1fr auto"] {
+      grid-template-columns: 1fr !important;
+    }
+    div[style*="text-align:right"] {
+      text-align: left !important;
+    }
+  }
+</style>

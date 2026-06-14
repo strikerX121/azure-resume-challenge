@@ -1,0 +1,233 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+
+const stats = [
+  { value: '11+', label: 'Years Experience' },
+  { value: '8', label: 'Azure Certifications' },
+  { value: '6+', label: 'Projects Delivered' },
+  { value: '20+', label: 'Clients Served' },
+];
+
+const howIWork = [
+  {
+    iconLabel: 'R1',
+    title: 'Remote-first, always',
+    body: "I've been working remotely since before it was standard. ARC's delivery team spans Trinidad, Bangladesh, and beyond. The work doesn't require me to be in the room — it requires the right architecture, the right team, and clear communication.",
+  },
+  {
+    iconLabel: 'BF',
+    title: 'Build first, iterate fast',
+    body: 'Every project starts with a working prototype, not a slide deck. The goal is always to put something real in front of the client as fast as possible and refine from there. That\'s how SASSI went from a manual WhatsApp operation to a 200-user platform. That\'s how 3ST went from APEX Oracle to a production Turborepo monorepo.',
+  },
+  {
+    iconLabel: 'ET',
+    title: 'Embedded, not transactional',
+    body: "The best client relationships aren't vendor relationships. ARC operates as an embedded technical team — inside the client's operation, not outside looking in. Qualitech doesn't have an IT department. They have ARC.",
+  },
+];
+
+const certs = [
+  { code: 'AZ-305', name: 'Azure Solutions Architect Expert',                        date: 'May 2024',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg',        active: true  },
+  { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty',                          date: 'Sep 2023',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-specialty-badge.svg',     active: false },
+  { code: 'AZ-700', name: 'Azure Network Engineer Associate',                         date: 'Jun 2023',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg',     active: true  },
+  { code: 'AZ-500', name: 'Azure Security Engineer Associate',                        date: 'Apr 2023',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg',     active: true  },
+  { code: 'AZ-104', name: 'Azure Administrator Associate',                            date: 'Apr 2022',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg',     active: true  },
+  { code: 'AI-900', name: 'Azure AI Fundamentals',                                    date: 'Mar 2024',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg',  active: true  },
+  { code: 'AZ-900', name: 'Azure Fundamentals',                                       date: 'Mar 2021',      badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg',  active: true  },
+  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',      badge: null, active: false, label: 'Legacy' },
+];
+
+const aboutSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Antonio Cumberbatch',
+  jobTitle: 'Cloud Architect & Consultant',
+  url: 'https://www.antoniocumberbatch.com',
+  sameAs: [
+    'https://www.linkedin.com/in/antonio-c-484433137/',
+    'https://www.instagram.com/arc.cloudconsulting/',
+  ],
+  worksFor: {
+    '@type': 'Organization',
+    name: 'ARC Cloud Consulting',
+  },
+  knowsAbout: [
+    'Microsoft Azure',
+    'Cloud Architecture',
+    'AI Automation',
+    'n8n',
+    'NestJS',
+    'Caribbean Tech Consulting',
+  ],
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'TT',
+  },
+};
+---
+
+<BaseLayout
+  title="About — Antonio Cumberbatch"
+  description="Cloud architect, consultant, and founder from Trinidad and Tobago. 11+ years building infrastructure, products, and teams across the Caribbean."
+  ogType="profile"
+  canonicalUrl="https://www.antoniocumberbatch.com/about"
+>
+
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+
+  <!-- SECTION 1 — HERO -->
+  <section style="min-height:45vh;display:flex;align-items:center;padding:5rem 1.5rem 4rem;background:linear-gradient(160deg,#0F1B3D 0%,var(--color-navy) 100%);">
+    <div style="max-width:1200px;margin:0 auto;width:100%;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.875rem;">About</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.1;margin-bottom:1.25rem;color:var(--color-text);">
+        Builder. Consultant.<br /><span style="color:var(--color-accent);">Caribbean Tech.</span>
+      </h1>
+      <p class="reveal" style="font-size:1.125rem;color:var(--color-text-muted);max-width:520px;line-height:1.6;">
+        11 years in. Still building things that didn&apos;t exist before.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 2 — THE STORY -->
+  <section style="padding:5rem 1.5rem;">
+    <div style="max-width:860px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">The Story</p>
+
+      <p class="reveal" style="font-size:1.0625rem;color:#B8C8E8;line-height:1.85;margin-bottom:1.75rem;">
+        Antonio started in tech in 2014 as a Teaching Assistant and IT Technician at Bishops Anstey High School East and Trinity College East in Trinidad. From there he moved into healthcare IT as an IT Officer at St. Clair Medical Centre &mdash; managing Windows Servers, networking, firewalls, and the company&apos;s entire technology infrastructure for three years. That&apos;s where the foundation was built: real infrastructure, real stakes, no safety net.
+      </p>
+
+      <p class="reveal" style="font-size:1.0625rem;color:#B8C8E8;line-height:1.85;margin-bottom:1.75rem;">
+        The path into cloud was deliberate. NOC Engineer at Massy Technologies InfoCom, then Systems Engineer at PBS Technologies, then Group Cloud Administrator at Digicel Group &mdash; where he managed Azure operations across the Caribbean. Each role was a layer on top of the last. By the time he reached Apeiron Sumus in 2024, leading Microsoft Azure and Security Solution Assessments for enterprise customers, the foundation was 8 Azure certifications deep and over a decade wide.
+      </p>
+
+      <p class="reveal" style="font-size:1.0625rem;color:#B8C8E8;line-height:1.85;margin-bottom:2.5rem;">
+        In 2023 Antonio founded ARC Cloud Consulting &mdash; not as a side project, but as a technical delivery engine. A remote team covering cloud architecture, full-stack development, UX/UI design, and n8n automation. Every client project he runs goes through ARC. The SASSI logistics platform. The Qualitech digital transformation. The Wiman Microsoft 365 infrastructure. And 3 Stripes Technologies &mdash; the EMR platform he co-founded to give Caribbean healthcare providers software that was actually built for them.
+      </p>
+
+      <p class="reveal" style="font-size:1.25rem;font-weight:700;color:var(--color-accent);line-height:1.5;border-left:3px solid var(--color-accent);padding-left:1.25rem;">
+        Based in Trinidad. Working from wherever. Building for the Caribbean and beyond.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION 3 — STATS BAR -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:3rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:2rem;text-align:center;">
+      {stats.map(s => (
+        <div class="reveal">
+          <div
+            class="counter"
+            data-target={s.value.replace(/\D/g, '')}
+            data-suffix={s.value.replace(/\d/g, '')}
+            style="font-family:var(--font-display);font-size:2.75rem;font-weight:800;color:var(--color-accent);line-height:1;"
+          >
+            {s.value}
+          </div>
+          <div style="font-size:0.9375rem;color:var(--color-text-muted);margin-top:0.375rem;">{s.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SECTION 4 — HOW I WORK -->
+  <section style="padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:3rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">How I Work</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;">The way I operate.</h2>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {howIWork.map(item => (
+          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+            <div style="display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.25);border-radius:10px;font-family:var(--font-display);font-size:0.75rem;font-weight:800;color:var(--color-accent);letter-spacing:0.05em;margin-bottom:1rem;">{item.iconLabel}</div>
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin-bottom:0.75rem;">{item.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5 — THE NOMAD LAYER -->
+  <section style="background:var(--color-surface-2);padding:5rem 1.5rem;">
+    <div style="max-width:860px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Currently</p>
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:1.5rem;">Building from the road.</h2>
+      <p class="reveal" style="font-size:1.0625rem;color:#B8C8E8;line-height:1.85;margin-bottom:2rem;">
+        Trinidad is home base. But the work goes where I go. Medell&iacute;n and Playa Venao, Panama are on the horizon. The setup is simple &mdash; a laptop, a reliable connection, and a team that doesn&apos;t need me in the office to ship. If anything, the travel sharpens the perspective. Building digital infrastructure for Caribbean businesses while working remotely across Latin America is its own kind of proof of concept.
+      </p>
+      <!-- TODO: add travel/nomad photo here when available -->
+    </div>
+  </section>
+
+  <!-- SECTION 6 — CERTIFICATIONS -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:0.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.375rem;">Certifications</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:0.375rem;">8 Microsoft Certifications</h2>
+        <p style="font-size:0.9375rem;color:var(--color-text-muted);margin-bottom:2rem;">8 Microsoft credentials. 7 currently active.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+        {certs.map(cert => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;display:flex;align-items:center;gap:0.875rem;">
+            {cert.badge
+              ? <Image src={cert.badge} width={44} height={44} alt={cert.code} style="width:44px;height:44px;object-fit:contain;flex-shrink:0;" />
+              : <div style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;">&#x1FA9F;</div>
+            }
+            <div style="flex:1;min-width:0;">
+              <p style="font-size:0.6875rem;font-weight:700;color:var(--color-accent);margin:0 0 0.2rem;letter-spacing:0.05em;">{cert.code}</p>
+              <p style="font-size:0.8125rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;line-height:1.3;">{cert.name}</p>
+              <span style={`display:inline-flex;align-items:center;gap:0.3rem;font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${cert.active ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
+                {cert.active && <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span>}
+                {(cert as any).label ?? (cert.active ? 'Active' : 'Retired')}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7 — CTA STRIP -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:2rem;">See the work. Work together.</h2>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+        <a href="/work" style="background:var(--color-accent);color:#fff;padding:0.875rem 2rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+          See My Work
+        </a>
+        <a href="/services" style="background:transparent;color:var(--color-text);padding:0.875rem 2rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;border:1px solid var(--color-border);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--color-accent)';this.style.color='var(--color-accent)'" onmouseout="this.style.borderColor='var(--color-border)';this.style.color='var(--color-text)'">
+          Work With Me
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  const counters = document.querySelectorAll('.counter');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target as HTMLElement;
+        const target = parseInt(el.dataset.target || '0');
+        const suffix = el.dataset.suffix || '';
+        let current = 0;
+        const step = Math.ceil(target / 40);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 30);
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObserver.observe(c));
+</script>

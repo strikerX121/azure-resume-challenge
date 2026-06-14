@@ -1,0 +1,158 @@
+﻿---
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalUrl?: string;
+  isHomepage?: boolean;
+  isBlogPost?: boolean;
+  pubDate?: string;
+}
+
+const {
+  title = 'Antonio Cumberbatch — Cloud Architect & Consultant',
+  description = 'Cloud architect, consultant, and founder. Building digital infrastructure for businesses across the Caribbean and beyond.',
+  ogImage = '/images/me.png',
+  ogType = 'website',
+  canonicalUrl,
+  isHomepage = false,
+  isBlogPost = false,
+  pubDate,
+} = Astro.props;
+
+const siteUrl = 'https://www.antoniocumberbatch.com';
+const canonical = canonicalUrl ?? siteUrl + Astro.url.pathname;
+const fullOgImage = ogImage.startsWith('http') ? ogImage : siteUrl + ogImage;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Antonio Cumberbatch',
+  url: siteUrl,
+  jobTitle: 'Cloud Architect & Consultant',
+  description: description,
+  sameAs: [
+    'https://www.linkedin.com/in/antonio-c-484433137/',
+    'https://www.instagram.com/arc.cloudconsulting/',
+  ],
+};
+
+const articleSchema = isBlogPost ? {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description: description,
+  author: { '@type': 'Person', name: 'Antonio Cumberbatch' },
+  datePublished: pubDate,
+  url: canonical,
+} : null;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+  <link rel="apple-touch-icon" href="/favicon.jpg" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={fullOgImage} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:type" content={ogType} />
+  <meta property="og:site_name" content="Antonio Cumberbatch" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Sitemap -->
+  <link rel="sitemap" href="/sitemap.xml" />
+
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="Antonio Cumberbatch — Blog" href="/rss.xml" />
+
+  <!-- Google Fonts (async to avoid render-blocking) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" /></noscript>
+
+  <!-- JSON-LD Schema -->
+  {isHomepage && (
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+  )}
+  {isBlogPost && articleSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+  )}
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B7EJB7Y1HL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B7EJB7Y1HL');
+  </script>
+
+  <!-- OneSignal Web Push -->
+  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <script>
+    window.OneSignalDeferred = window.OneSignalDeferred || [];
+    OneSignalDeferred.push(async function(OneSignal) {
+      await OneSignal.init({
+        appId: "e7e4cd9f-52cd-4fae-836a-45605b70aaa5",
+        safari_web_id: "web.onesignal.auto.170dfd78-50f3-4c48-aaba-810262274b60",
+        notifyButton: {
+          enable: true,
+          position: 'bottom-left',
+        },
+      });
+    });
+  </script>
+
+  <slot name="head" />
+</head>
+<body>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+
+  <!-- n8n Chat Widget — lazy-loaded after page is idle to keep it off the critical path -->
+  <script>
+    function loadN8nChat() {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css';
+      document.head.appendChild(link);
+      import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js').then(({ createChat }) => {
+        createChat({ webhookUrl: 'https://automate.antoniocumberbatch.com/webhook/42b76170-0c5b-48b0-9932-78591565a136/chat' });
+      });
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadN8nChat, { timeout: 4000 });
+    } else {
+      window.addEventListener('load', function() { setTimeout(loadN8nChat, 1500); });
+    }
+  </script>
+
+  <!-- Scroll reveal -->
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
+

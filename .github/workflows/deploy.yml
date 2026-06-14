@@ -1,0 +1,92 @@
+name: Deploy to Azure Blob Storage
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Astro site
+        run: npm run build
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Upload HTML (no-cache)
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              -s dist \
+              -d '$web' \
+              --pattern "*.html" \
+              --content-cache-control "no-cache, no-store, must-revalidate" \
+              --overwrite true
+
+      - name: Upload _astro assets (immutable)
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              -s dist \
+              -d '$web' \
+              --pattern "_astro/*" \
+              --content-cache-control "public, max-age=31536000, immutable" \
+              --overwrite true
+
+      - name: Upload images (1-week cache)
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              -s dist \
+              -d '$web' \
+              --pattern "images/*" \
+              --content-cache-control "public, max-age=604800" \
+              --overwrite true
+
+      - name: Upload remaining static files
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+              -s dist \
+              -d '$web' \
+              --overwrite true
+
+      - name: Purge Azure Front Door CDN
+        uses: azure/cli@v2
+        with:
+          azcliversion: latest
+          inlineScript: |
+            az afd endpoint purge \
+              --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+              --profile-name ${{ secrets.AZURE_FRONT_DOOR_PROFILE }} \
+              --endpoint-name ${{ secrets.AZURE_FRONT_DOOR_ENDPOINT }} \
+              --content-paths "/*"

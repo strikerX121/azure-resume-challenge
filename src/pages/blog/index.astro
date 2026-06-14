@@ -1,0 +1,63 @@
+﻿---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const categories = ['All', ...new Set(posts.map(p => p.data.category))];
+
+function readTime(body: string) {
+  const words = body.split(/\s+/).length;
+  return Math.ceil(words / 200);
+}
+---
+
+<BaseLayout
+  title="Blog — Antonio Cumberbatch"
+  description="Cloud architecture, AI automation, building in public, and consulting from the Caribbean. Real projects, real numbers."
+>
+
+  <section style="padding:4rem 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Writing</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Cloud. AI. Caribbean. Building in Public.</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Real projects, real decisions, real numbers. No fluff.</p>
+      <a href="/rss.xml" class="reveal" style="display:inline-flex;align-items:center;gap:0.375rem;margin-top:1rem;font-size:0.8125rem;color:var(--color-text-muted);text-decoration:none;" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text-muted)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 010 4.36 2.18 2.18 0 010-4.36M4 4.44A15.56 15.56 0 0119.56 20h-2.83A12.73 12.73 0 004 7.27V4.44m0 5.66a9.9 9.9 0 019.9 9.9h-2.83A7.07 7.07 0 004 12.93V10.1z"/></svg>
+        RSS Feed
+      </a>
+    </div>
+  </section>
+
+  <section style="padding:0 1.5rem 5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+
+      {posts.length === 0 ? (
+        <p style="color:var(--color-text-muted);text-align:center;padding:4rem 0;">No posts yet — check back soon.</p>
+      ) : (
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;">
+          {posts.map(post => (
+            <a href={`/blog/${post.slug}`} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:flex;flex-direction:column;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;">
+                <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{post.data.category}</span>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">{readTime(post.body)} min read</span>
+              </div>
+              <h2 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;line-height:1.4;">{post.data.title}</h2>
+              <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;flex:1;margin:0 0 1.25rem;">{post.data.description}</p>
+              <div style="display:flex;align-items:center;justify-content:space-between;">
+                <time style="font-size:0.8125rem;color:var(--color-text-muted);">
+                  {new Date(post.data.pubDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                </time>
+                <span style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">Read &rarr;</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+
+    </div>
+  </section>
+
+</BaseLayout>
+

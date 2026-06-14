@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const team = [
+  {
+    name: 'Antonio Cumberbatch',
+    role: 'Founder & Technical Lead',
+    bio: 'Antonio architected and led the full V3 rebuild — from infrastructure design on Azure to API layer and product strategy. He holds 7 Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
+  },
+  {
+    name: 'Rakib Hasan',
+    role: 'UI/UX Designer & Frontend Developer',
+    bio: 'Rakib designed the medical and admin portals across all active versions of the EMR, translating complex clinical workflows into clean, usable interfaces. He brings a strong eye for detail and consistency across every screen in the system.',
+  },
+  {
+    name: 'Naeem Hasan',
+    role: 'Full-Stack Developer',
+    bio: 'Naeem built and maintained the core application layer across the EMR\'s development lifecycle, contributing to everything from data modelling to real-time features. He is the primary developer on ongoing maintenance and feature delivery.',
+  },
+];
+
+const versions = [
+  {
+    label: 'V1',
+    status: 'Retired',
+    heading: 'V1 — Retired',
+    body: 'The first version was built on a low-code Oracle platform. It proved the concept but hit a ceiling quickly — the platform wasn\'t suited to the kind of custom clinical logic the product needed as requirements matured.',
+  },
+  {
+    label: 'V2',
+    status: 'Retired',
+    heading: 'V2 — Retired',
+    body: 'V2 was a proper web application and was publicly presented at the T&T Medical Research Conference at the Radisson Hotel. Feedback from the medical community was positive. But the product had a critical architectural problem: patient record lists loaded the entire dataset client-side on every request. At 7,000+ records, that meant 5–10 second load times on a core workflow. The codebase wasn\'t built to fix that without a full rewrite. So we did a full rewrite.',
+  },
+  {
+    label: 'V3',
+    status: 'Live',
+    heading: 'V3 — Current (Launched 2025)',
+    body: 'V3 is not an iteration of V2. It\'s a complete ground-up rebuild with a monorepo architecture, TypeScript end-to-end, and a properly separated API and frontend layer. The core technical decision was moving to server-driven pagination — list views query only what they need, with server-enforced limits and validated response contracts. Load times on the same dataset dropped from 5–10 seconds to under a second.\n\nThe platform runs on Azure with a WAF layer in front of the frontend. During early production, automated bot traffic was spiking compute usage to 80–100% CPU. Adding a WAF dropped baseline resource usage to 30–40% and eliminated the impact on real users entirely. That removed an entire class of infrastructure risk.',
+  },
+];
+---
+
+<BaseLayout
+  title="3 Stripes Tech EMR — Case Study"
+  description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
+>
+
+  <!-- HERO BANNER -->
+  <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:rgba(15,22,36,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
+      <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Healthcare IT &middot; Azure &middot; Full-Stack Product</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.15;">3 Stripes Technologies EMR</h1>
+      <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:600px;">A cloud-based EMR built from the ground up for Caribbean medical practices.</p>
+      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.5);margin:0;font-style:italic;">Three versions. Four years. One platform doctors actually use.</p>
+    </div>
+    <span style="position:absolute;bottom:0.875rem;right:1rem;font-size:0.6875rem;color:rgba(255,255,255,0.2);font-style:italic;">[Hero image — add as background-image when available]</span>
+  </div>
+
+  <!-- NAV + STATS -->
+  <section style="padding:2.5rem 1.5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
+        <div style="width:80px;height:80px;border-radius:12px;background:#0F1624;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
+          <img src="/images/logos/3st-logo.svg" alt="3 Stripes Technologies logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+        </div>
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Healthcare IT &middot; Azure &middot; Full-Stack Product</span>
+          <div style="margin-top:0.625rem;">
+            <a href="https://www.3stripestech.com/" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
+              Visit Site <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
+        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records'], ['10+', 'Doctors on Platform']].map(([val, label]) => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section style="padding:2rem 1.5rem 3rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.75rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">The Team</p>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Built by three people.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;">
+        {team.map(person => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
+            <div style="width:80px;height:80px;border-radius:50%;background:var(--color-surface-2);border:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <p style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.25rem;">{person.name}</p>
+            <p style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);margin:0 0 0.875rem;">{person.role}</p>
+            <p style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{person.bio}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section style="padding:0 1.5rem 5rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+
+      <h2>The Problem</h2>
+      <p>Caribbean medical practices were managing patient records on paper or on foreign EMR systems that weren't built for how regional doctors actually work — not for the documentation patterns, the practice sizes, or the local infrastructure constraints. We built 3ST EMR to close that gap.</p>
+
+      <h2>Three Versions to Get It Right</h2>
+
+      {versions.map(v => (
+        <div style="margin-bottom:2rem;">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.625rem;">
+            <h3 style="margin:0;">{v.heading}</h3>
+            <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;white-space:nowrap;${v.status === 'Live' ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>{v.status}</span>
+          </div>
+          {v.body.split('\n\n').map(para => (
+            <p>{para}</p>
+          ))}
+        </div>
+      ))}
+
+      <h2>Current State</h2>
+      <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of over 10 doctors.</p>
+
+      <h2>Why Caribbean Medical Practices Should Care</h2>
+      <p>Healthcare IT in the Caribbean has historically defaulted to paper records or expensive international EMR platforms that were not designed for the region. Most foreign EMR vendors built for US compliance requirements, US patient volumes, and US billing structures. Caribbean practices end up paying for complexity they do not need and missing context that actually matters to how they operate.</p>
+      <p>3ST EMR was built from the ground up by a Caribbean team for Caribbean practices. The architecture choices &mdash; server-driven pagination, Azure WAF infrastructure, TypeScript end-to-end &mdash; are not theoretical best practices. They came directly from running the product through three versions with real doctors and real patient records in production.</p>
+      <p>If you are a medical practice in the Caribbean exploring a move away from paper or looking for an EMR that fits how your team actually works, Antonio leads the product and can walk you through the platform.</p>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Built for Caribbean practices. Ready to scale.</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">If you're a medical practice in the region and want to see the platform live, reach out.</p>
+      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Book a Demo
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

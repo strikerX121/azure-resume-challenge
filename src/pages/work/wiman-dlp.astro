@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const workstreams = [
+  {
+    name: 'Google Workspace ↔ Microsoft Entra ID Federation',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Configured a SAML 2.0 trust between Google Workspace (IdP) and Microsoft Entra ID (SP), allowing users to authenticate to Windows and all Microsoft 365 services using a single set of Google credentials. Eliminates a separate Microsoft identity layer while keeping identity management inside Google Admin.',
+    tags: ['Microsoft Entra ID', 'SAML 2.0 Federation', 'Google Workspace SSO'],
+  },
+  {
+    name: 'Microsoft Intune Endpoint Management',
+    status: 'ACTIVE',
+    statusLabel: 'Active',
+    desc: 'End-user device enrolled in Microsoft Intune with policy-driven compliance, remote script execution, and software deployment managed through the portal. Enables IT administration and remediation without physical access to the device.',
+    tags: ['Microsoft Intune', 'Remote PowerShell', 'Endpoint Policy Management'],
+  },
+  {
+    name: 'M365 Licensing & Subscription Architecture',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Designed a lean licensing model separating the end-user seat from the administrative account. The admin operates via portal roles without consuming a paid license. Billing consolidated under a Microsoft Customer Agreement with recurring billing properly configured.',
+    tags: ['Microsoft 365', 'MCA Billing', 'License Architecture'],
+  },
+  {
+    name: 'Wiman.com — Company Website',
+    status: 'DELIVERED',
+    statusLabel: 'Delivered',
+    desc: 'Designed and built the full company website at wiman.com using WordPress. Covers the organisation\'s public web presence including branding, page structure, and content. Delivered as a standalone engagement under the broader ARC managed relationship.',
+    tags: ['WordPress', 'Web Development', 'CMS'],
+  },
+];
+---
+
+<BaseLayout
+  title="Wiman — Microsoft 365 Identity & Endpoint Management"
+  description="Identity federation, endpoint management, and M365 licensing architecture for Wiman Inc."
+>
+
+  <!-- HEADER -->
+  <section style="padding:4rem 1.5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
+        <div style="width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
+          <img src="/images/logos/wiman-logo.png" alt="Wiman logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+        </div>
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">Wiman Inc.</p>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Managed IT Infrastructure &middot; Microsoft 365</span>
+          <div style="margin-top:0.625rem;">
+            <a href="https://wimaninc.com/" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
+              Visit Site <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.25rem;">Wiman — Microsoft 365 Identity &amp; Endpoint Management</h1>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:2rem;">
+        {['Microsoft Entra ID', 'Google Workspace SSO', 'Microsoft Intune', 'SAML 2.0', 'Microsoft 365'].map(tag => (
+          <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-muted);padding:0.25rem 0.625rem;border-radius:4px;">{tag}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+      <h2>The Problem</h2>
+      <p>Small businesses that adopt Microsoft 365 without a dedicated IT function frequently run into the same category of issues: authentication environments configured once and never maintained, licensing arrangements that quietly lapse, and endpoint management that only gets attention when something breaks. When something does break — a domain federation failure, an expired local credential, a locked account — there is often no internal resource to diagnose and resolve it without vendor escalation or onsite intervention.</p>
+      <p>This engagement was brought in to stabilise an M365 environment, implement remote endpoint management, and establish a lightweight but resilient identity architecture — one that stays accessible to an administrator even when the end-user authentication layer fails.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WAS BUILT -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.5rem;">
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">What Was Built</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        {workstreams.map(w => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
+              <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0;">{w.name}</h3>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;white-space:nowrap;${w.status === 'DELIVERED' ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(59,130,246,0.12);color:#60a5fa;border:1px solid rgba(59,130,246,0.25);'}`}>{w.statusLabel}</span>
+            </div>
+            <p style="font-size:0.9rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{w.desc}</p>
+            <div style="display:flex;flex-wrap:wrap;gap:0.375rem;padding-top:0.25rem;border-top:1px solid var(--color-border);">
+              {w.tags.map(tag => (
+                <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-surface-2);color:var(--color-text-muted);padding:0.1875rem 0.5rem;border-radius:4px;">{tag}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS MATTERS FOR CARIBBEAN BUSINESSES -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+      <h2>Why Caribbean Businesses Should Care</h2>
+      <p>Most small and mid-sized organisations in the region are running Microsoft 365 without anyone accountable for the underlying identity and device layer. Licenses are assigned without a plan. Admin accounts share the same domain as end users. Devices aren't enrolled in any management system. This isn't negligence — it's the natural state when a business buys a SaaS product without an IT function to configure it properly.</p>
+      <p>The gap shows up when something goes wrong: a password expires, a subscription lapses, a device needs to be wiped remotely. Without a remote management layer in place before the incident, the options are limited and expensive.</p>
+      <p>The architecture built for this engagement is a practical model for any small organisation on Microsoft 365: federated identity through a provider they already use, endpoint management that enables remote remediation, and a licensing structure that doesn't pay for seats the business doesn't need. It's not complex to set up — it just has to be set up intentionally.</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Managing Microsoft 365 for your organisation?</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">Identity federation, endpoint management, and licensing architecture for Caribbean businesses.</p>
+      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Start the Conversation
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

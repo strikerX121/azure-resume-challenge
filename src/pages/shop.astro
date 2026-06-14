@@ -1,0 +1,317 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const packages = [
+  {
+    title: 'Discovery Call',
+    priceUSD: 150,
+    priceTTD: '~TTD 1,020',
+    duration: '60 minutes',
+    desc: 'Strategy session covering cloud architecture, AI automation, or custom software. Walk away with a clear action plan.',
+    includes: ['60-min video call', 'Written action plan', 'Resource recommendations', 'Follow-up email'],
+    featured: false,
+  },
+  {
+    title: 'Cloud Readiness Audit',
+    priceUSD: 500,
+    priceTTD: '~TTD 3,400',
+    duration: '5-7 business days',
+    desc: 'Full Azure environment review with a written report and prioritised recommendations. Know exactly where you stand and what to fix.',
+    includes: ['Azure environment assessment', 'Security posture review', 'Written report (PDF)', 'Priority recommendations', '30-min debrief call'],
+    featured: true,
+  },
+  {
+    title: 'AI Workflow Consultation',
+    priceUSD: 200,
+    priceTTD: '~TTD 1,360',
+    duration: '90 minutes',
+    desc: 'Deep dive into automating a specific business process with n8n, GPT-4, or custom integrations. We map the workflow, identify the tools, and outline the build.',
+    includes: ['90-min working session', 'Workflow diagram', 'Tool recommendations', 'Build estimate'],
+    featured: false,
+  },
+];
+---
+
+<BaseLayout
+  title="Shop — Antonio Cumberbatch"
+  description="Book a discovery call, cloud audit, or AI consultation. Pay online via PayPal, Wise, or bank transfer."
+>
+
+  <!-- PAGE HEADER -->
+  <section style="padding:4rem 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Shop</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Book a Session</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Select a package, pick how you want to pay, and you&apos;re booked. TTD and USD accepted.</p>
+    </div>
+  </section>
+
+  <!-- PACKAGE CARDS -->
+  <section style="padding:0 1.5rem 5rem;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;">
+      {packages.map(pkg => (
+        <div class="card-lift reveal" style={`background:var(--color-surface);border:2px solid ${pkg.featured ? 'var(--color-accent)' : 'var(--color-border)'};border-radius:12px;padding:2rem;position:relative;display:flex;flex-direction:column;`}>
+          {pkg.featured && (
+            <span style="position:absolute;top:-1px;left:1.5rem;transform:translateY(-50%);background:var(--color-accent);color:#fff;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:100px;">Most Popular</span>
+          )}
+          <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;margin:0 0 0.5rem;">{pkg.title}</h2>
+          <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.375rem;">
+            <span style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--color-accent);">${pkg.priceUSD}</span>
+            <span style="font-size:1rem;color:var(--color-text-muted);">USD</span>
+          </div>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">{pkg.priceTTD} &middot; {pkg.duration}</p>
+          <p style="font-size:0.9375rem;color:#D1CDC6;line-height:1.6;margin-bottom:1.5rem;flex:1;">{pkg.desc}</p>
+          <ul style="list-style:none;padding:0;margin:0 0 1.75rem;display:flex;flex-direction:column;gap:0.5rem;">
+            {pkg.includes.map(item => (
+              <li style="display:flex;align-items:center;gap:0.625rem;font-size:0.9rem;color:var(--color-text-muted);">
+                <span style="color:var(--color-accent);font-size:1rem;">&#x2713;</span>
+                {item}
+              </li>
+            ))}
+          </ul>
+          <button
+            class="pay-now-btn"
+            data-title={pkg.title}
+            data-price={pkg.priceUSD}
+            data-ttd={pkg.priceTTD}
+            style={`width:100%;background:${pkg.featured ? 'var(--color-accent)' : 'transparent'};color:${pkg.featured ? '#fff' : 'var(--color-accent)'};border:${pkg.featured ? 'none' : '2px solid var(--color-accent)'};padding:0.875rem;border-radius:8px;font-weight:700;font-size:0.9375rem;cursor:pointer;transition:all 0.2s;`}
+          >
+            Pay Now
+          </button>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- PAYMENT MODAL -->
+  <div
+    id="payment-modal"
+    style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;padding:1rem;"
+  >
+    <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;position:relative;display:flex;flex-direction:column;">
+
+      <!-- Modal Header -->
+      <div style="padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--color-border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-shrink:0;">
+        <div>
+          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;margin:0 0 0.25rem;">Choose how to pay</h3>
+          <p id="modal-package-info" style="font-size:0.875rem;color:var(--color-accent);margin:0;font-weight:600;"></p>
+        </div>
+        <button id="modal-close-btn" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:6px;cursor:pointer;padding:0.4375rem;line-height:0;flex-shrink:0;color:var(--color-text-muted);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+
+      <!-- Tab Bar -->
+      <div style="display:flex;border-bottom:1px solid var(--color-border);flex-shrink:0;" id="modal-tab-bar">
+        <button class="modal-tab-btn" data-tab="paypal" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid var(--color-accent);color:#fff;transition:all 0.15s;">PayPal</button>
+        <button class="modal-tab-btn" data-tab="wise" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);transition:all 0.15s;">Wise / Bank</button>
+        <button class="modal-tab-btn" data-tab="other" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);transition:all 0.15s;">Other</button>
+      </div>
+
+      <!-- Tab: PayPal -->
+      <div id="modal-tab-paypal" style="padding:1.5rem;display:block;">
+        <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Pay securely via PayPal. Credit/debit cards accepted through PayPal checkout.</p>
+        <div id="paypal-container-3NAMF9GC3ZGZS" style="min-height:48px;"></div>
+        <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--color-border);text-align:center;">
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Or scan to pay via PayPal app</p>
+          <img
+            src="/images/paypal-qr.png"
+            alt="PayPal QR Code — AC Services"
+            style="width:180px;height:180px;border-radius:10px;border:2px solid var(--color-border);display:block;margin:0 auto;"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+          />
+          <div style="display:none;width:180px;height:180px;border-radius:10px;border:2px dashed var(--color-border);align-items:center;justify-content:center;margin:0 auto;font-size:0.75rem;color:var(--color-text-muted);text-align:center;padding:1rem;">
+            Save QR image to<br/>public/images/paypal-qr.png
+          </div>
+          <p style="font-size:0.75rem;color:var(--color-text-muted);margin-top:0.5rem;">AC Services</p>
+        </div>
+        <div id="paypal-success" style="display:none;text-align:center;padding:1.5rem 0;border-top:1px solid var(--color-border);margin-top:1.5rem;">
+          <p style="font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.5rem;">Payment received!</p>
+          <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Lock in your time slot below.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
+             style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;">
+            Book Your Session &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Tab: Wise / Bank -->
+      <div id="modal-tab-wise" style="padding:1.5rem;display:none;">
+        <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Wire transfer in USD via Wise. Include your package name in the transfer reference.</p>
+        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+          {[
+            ['Account Name', 'Antonio Cumberbatch'],
+            ['Routing (Wire &amp; ACH)', '084009519'],
+            ['Account Number', '845783836016678'],
+            ['Swift / BIC', 'TRWIUS35XXX'],
+            ['Bank Address', 'Wise US Inc, 108 W 13th St, Wilmington, DE 19801, US'],
+          ].map(([label, value]) => (
+            <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:8px;padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;flex-wrap:wrap;">
+              <span style="font-size:0.75rem;color:var(--color-text-muted);min-width:120px;" set:html={label}></span>
+              <span style="font-size:0.875rem;font-weight:600;color:var(--color-text);text-align:right;" set:html={value}></span>
+            </div>
+          ))}
+        </div>
+        <p style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:1.25rem;">After sending, email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> with your transfer reference so your booking can be confirmed.</p>
+        <div style="margin-top:1.25rem;padding:1.25rem;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;text-align:center;">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Ready to lock in your slot?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Send your transfer first, then book your time below. Antonio will confirm once payment clears.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
+             style="background:var(--color-accent);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
+            Book Your Session &rarr;
+          </a>
+        </div>
+      </div>
+
+      <!-- Tab: Other -->
+      <div id="modal-tab-other" style="padding:1.5rem;display:none;">
+        <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Payoneer</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;line-height:1.5;">Enter your email below and Antonio will send you a Payoneer payment request directly. You can pay by card without needing a Payoneer account.</p>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+            <input id="payoneer-email" type="email" placeholder="your@email.com"
+              style="flex:1;min-width:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:6px;padding:0.5rem 0.75rem;color:var(--color-text);font-size:0.8125rem;outline:none;font-family:inherit;" />
+            <button id="payoneer-btn"
+              style="background:var(--color-accent);color:#fff;border:none;border-radius:6px;padding:0.5rem 1rem;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;">
+              Request Link
+            </button>
+          </div>
+          <p id="payoneer-status" style="font-size:0.75rem;color:var(--color-text-muted);margin:0.625rem 0 0;display:none;"></p>
+          <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0.875rem 0 0;line-height:1.55;">Once payment is confirmed, you&apos;ll receive an email with your booking link within 24 hours on business days. You can also email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> with your Payoneer transaction reference to speed up confirmation.</p>
+        </div>
+        <div style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;padding:1.25rem;margin-bottom:1rem;text-align:center;">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Ready to lock in your slot?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Once your payment is confirmed, book your time below.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
+             style="background:var(--color-accent);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
+            Book Your Session &rarr;
+          </a>
+        </div>
+        <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Prefer something else?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0;">Email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> to arrange payment before booking.</p>
+        </div>
+        <div style="margin-top:1.25rem;padding:1.25rem;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;text-align:center;">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Ready to lock in your slot?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Once your payment is sorted, book your time below and Antonio will confirm the session.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
+             style="background:var(--color-accent);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
+            Book Your Session &rarr;
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PayPal SDK -->
+  <script is:inline src="https://www.paypal.com/sdk/js?client-id=BAAj1g1FYZaMpXovU5cNihay3Ws4SxSWefAUtXGWKOFmCIh-yoyibJfZIYXk9ttMahuXUlIwyov7EQEDDY&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
+
+  <!-- Modal logic -->
+  <script is:inline>
+    (function () {
+      var paypalInitialized = false;
+
+      function openModal(title, price, ttd) {
+        var modal = document.getElementById('payment-modal');
+        document.getElementById('modal-package-info').textContent = title + ' — $' + price + ' USD (' + ttd + ')';
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        switchTab('paypal');
+      }
+
+      function closeModal() {
+        document.getElementById('payment-modal').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      function switchTab(name) {
+        var tabs = ['paypal', 'wise', 'other'];
+        tabs.forEach(function (t) {
+          var panel = document.getElementById('modal-tab-' + t);
+          var btn = document.querySelector('#modal-tab-bar [data-tab="' + t + '"]');
+          if (panel) panel.style.display = t === name ? 'block' : 'none';
+          if (btn) {
+            btn.style.borderBottom = t === name ? '2px solid var(--color-accent)' : '2px solid transparent';
+            btn.style.color = t === name ? '#fff' : 'rgba(255,255,255,0.45)';
+          }
+        });
+
+        if (name === 'paypal' && !paypalInitialized && typeof paypal !== 'undefined') {
+          try {
+            paypal.HostedButtons({
+              hostedButtonId: '3NAMF9GC3ZGZS',
+              onApprove: function () {
+                var container = document.getElementById('paypal-container-3NAMF9GC3ZGZS');
+                if (container) container.style.display = 'none';
+                var qrSection = container && container.nextElementSibling;
+                if (qrSection) qrSection.style.display = 'none';
+                var success = document.getElementById('paypal-success');
+                if (success) success.style.display = 'block';
+              }
+            }).render('#paypal-container-3NAMF9GC3ZGZS');
+            paypalInitialized = true;
+          } catch (e) {}
+        } else if (name === 'paypal' && !paypalInitialized) {
+          var poll = setInterval(function () {
+            if (typeof paypal !== 'undefined') {
+              clearInterval(poll);
+              try {
+                paypal.HostedButtons({
+                  hostedButtonId: '3NAMF9GC3ZGZS',
+                  onApprove: function () {
+                    var container = document.getElementById('paypal-container-3NAMF9GC3ZGZS');
+                    if (container) container.style.display = 'none';
+                    var qrSection = container && container.nextElementSibling;
+                    if (qrSection) qrSection.style.display = 'none';
+                    var success = document.getElementById('paypal-success');
+                    if (success) success.style.display = 'block';
+                  }
+                }).render('#paypal-container-3NAMF9GC3ZGZS');
+                paypalInitialized = true;
+              } catch (e) {}
+            }
+          }, 150);
+        }
+      }
+
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.pay-now-btn');
+        if (btn) {
+          openModal(btn.dataset.title, btn.dataset.price, btn.dataset.ttd);
+          return;
+        }
+        var closeBtn = e.target.closest('#modal-close-btn');
+        if (closeBtn) { closeModal(); return; }
+
+        var tabBtn = e.target.closest('#modal-tab-bar [data-tab]');
+        if (tabBtn) { switchTab(tabBtn.dataset.tab); return; }
+
+        var payoneerBtn = e.target.closest('#payoneer-btn');
+        if (payoneerBtn) {
+          var emailInput = document.getElementById('payoneer-email');
+          var statusEl = document.getElementById('payoneer-status');
+          var email = emailInput ? emailInput.value.trim() : '';
+          if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            if (statusEl) { statusEl.textContent = 'Please enter a valid email address.'; statusEl.style.display = 'block'; }
+            return;
+          }
+          var pkgInfo = document.getElementById('modal-package-info') ? document.getElementById('modal-package-info').textContent : 'Package';
+          var subject = encodeURIComponent('Payoneer Payment Request — ' + pkgInfo);
+          var body = encodeURIComponent('Hi Antonio,\n\nPlease send me a Payoneer payment request for: ' + pkgInfo + '\n\nMy email: ' + email + '\n\nThanks.');
+          window.location.href = 'mailto:antonio.cumberbatch@arccloudconsulting.com?subject=' + subject + '&body=' + body;
+          if (statusEl) { statusEl.textContent = 'Opening your email client — Antonio will send the Payoneer request within 24 hours.'; statusEl.style.display = 'block'; }
+          return;
+        }
+
+        var modal = document.getElementById('payment-modal');
+        if (e.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+      });
+    })();
+  </script>
+
+</BaseLayout>

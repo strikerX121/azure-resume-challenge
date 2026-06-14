@@ -1,0 +1,263 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const workExperience = [
+  {
+    org: 'ARC Cloud Consulting',
+    role: 'Founder & Technical Lead',
+    period: '2023 &ndash; Present',
+    logo: 'https://logo.clearbit.com/arccloudconsulting.com',
+    bullets: [
+      'Founded and operate a remote delivery team serving Caribbean businesses across cloud, automation, and custom software.',
+      'Architected and delivered the SASSI logistics platform (200+ active users, valued at $70,000&ndash;$90,000 USD), the Qualitech AI automation suite, and the Wiman Microsoft 365 infrastructure engagement.',
+      'Manage all commercial relationships, project scoping, technical architecture, and team coordination across active accounts.',
+      'Operate as an embedded technology and innovation department for retainer clients &mdash; not a vendor, a technical partner.',
+      'Team covers: full-stack development, UX/UI design, n8n automation, WordPress/WooCommerce, and project coordination.',
+    ],
+  },
+  {
+    org: '3 Stripes Technologies',
+    role: 'Co-Founder & Technical Director',
+    period: '2022 &ndash; Present',
+    logo: 'https://logo.clearbit.com/3stripestech.com',
+    bullets: [
+      'Co-founded the company to build the Caribbean&apos;s first cloud-based EMR platform designed around how regional doctors actually work.',
+      'Rebuilt the product three times (APEX Oracle &rarr; Express/CRA &rarr; Turborepo monorepo) based on real user feedback and performance requirements at scale.',
+      'Architected the V3 platform: Turborepo + pnpm, TypeScript end-to-end, NestJS, React 19 + Vite, Drizzle ORM, PostgreSQL, BullMQ, Socket.io, Azure infrastructure.',
+      'Resolved a critical performance issue loading 7,000 patient records client-side on every request &mdash; implemented server-driven pagination reducing load times from 5&ndash;10 seconds to under one second.',
+      'Deployed Azure Front Door as a WAF layer after bot traffic spiked server CPU to 80&ndash;100% &mdash; dropped resource usage to a consistent 30&ndash;40%.',
+      'Current live client: ABC Paediatrics &mdash; 11 doctors, 7,000+ patient records, near-paperless operation. Pricing: $99 USD/user/month.',
+    ],
+  },
+  {
+    org: 'Apeiron Sumus',
+    role: 'Solution Assessment Consultant, Team Mentor & Tech Expert',
+    period: 'March 2024 &ndash; Present',
+    logo: 'https://logo.clearbit.com/apeironsumus.com',
+    bullets: [
+      'Lead and manage Microsoft Azure and Security Solution Assessment projects from initiation to completion, ensuring successful execution for enterprise customers.',
+      'Generate lead flow by managing and executing data collection for Microsoft customers, including remote installation, configuration, and discovery tool deployment.',
+      'Orchestrate the full Solution Assessment process, coordinating efforts across accounts and ensuring timely deliverables.',
+      'Provide expert consulting on Microsoft solutions, aligning offerings with client business needs &mdash; particularly in cloud adoption and transformation.',
+      'Maintain ongoing relationships with existing accounts, creating brand awareness around Solution Assessments and ensuring client satisfaction.',
+      'Mentor and guide junior team members on the Solution Assessment process, best practices, and technical leadership during team meetings.',
+      'Support complex troubleshooting efforts for critical Microsoft Azure-related issues, providing actionable solutions and technical guidance.',
+      'Analyze data collected during assessments, deliver insights, and communicate findings to clients and internal teams.',
+      'Maintain business forecasting by managing an accurate pipeline and updating activity logs for all active assessments.',
+      'Utilize Microsoft Office, CRM software, and Power BI to manage tasks, report on performance metrics, and ensure efficient project execution.',
+      'Collaborate with cross-functional teams to align technical strategies with business objectives and provide high-level cloud security and performance consultations.',
+    ],
+  },
+  {
+    org: 'Digicel Group',
+    role: 'Group Cloud Administrator',
+    period: 'April 2023 &ndash; March 2024',
+    logo: 'https://logo.clearbit.com/digicelgroup.com',
+    bullets: [
+      'Monitored and managed Azure Cloud Operations, providing real-time performance monitoring and optimization of Azure services.',
+      'Deployed and managed virtual machines via Azure portals, performing daily maintenance, upgrades, and patching tasks.',
+      'Led customer system migrations to upgraded versions, ensuring minimal downtime and seamless transitions.',
+      'Authored both non-technical and technical documentation to assist internal teams and external clients.',
+      'Provided expert knowledge in computer networking and cloud infrastructure management.',
+      'Created documentation for installed cloud systems and trained clients on effective administration practices.',
+      'Conducted presentations and training for pre-sales, post-sales, and client onboarding purposes.',
+      'Proactively stayed up-to-date with emerging technologies and cloud solutions to enhance performance.',
+      'Applied methodical troubleshooting skills to quickly resolve cloud and application-related issues.',
+      'Researched and implemented timely solutions to customer issues, ensuring deadlines and SLAs were met.',
+    ],
+  },
+  {
+    org: 'PBS Technologies',
+    role: 'Systems Engineer',
+    period: 'January 2021 &ndash; April 2023',
+    logo: 'https://logo.clearbit.com/pbs.group',
+    bullets: [
+      'Installed and configured complex physical and virtual environments for enterprise clients.',
+      'Deployed and managed computer software and systems to optimize business performance.',
+      'Led customer system migrations to upgraded versions with minimal disruptions.',
+      'Authored technical and non-technical documentation for internal and customer use.',
+      'Provided technical expertise in networking and cloud infrastructure management.',
+      'Trained customers on system administration, empowering them to manage their own environments.',
+      'Conducted presentations for pre-sales and post-sales technical support.',
+      'Proactively stayed updated with new technology trends and cloud solutions.',
+      'Applied troubleshooting skills to resolve technical issues efficiently and within SLA.',
+      'Researched and implemented timely solutions to meet client deadlines.',
+    ],
+  },
+  {
+    org: 'PBS Technologies (formerly Massy Technologies InfoCom)',
+    role: 'NOC Engineer &mdash; Network Operating Centre',
+    period: 'September 2019 &ndash; January 2021',
+    logo: 'https://logo.clearbit.com/pbs.group',
+    bullets: [
+      'Technical ownership of Network Management System, Intrusion Detection System, and data backup systems.',
+      'Administered and maintained the network management and intrusion detection infrastructure.',
+      'Managed and maintained the organizational data backup system to ensure business continuity.',
+      'Researched new hardware and software solutions to enhance existing environments.',
+      'Provided overall technical support for the organization&apos;s information systems and associated services.',
+    ],
+  },
+  {
+    org: 'St. Clair Medical Centre',
+    role: 'I.T. Officer',
+    period: 'September 2016 &ndash; June 2019',
+    logo: 'https://logo.clearbit.com/medcorpltd.com',
+    bullets: [
+      'Managed the purchasing, upgrading, and migration of all Windows Servers and networking equipment.',
+      'Provided remote and in-person support to all users, ensuring minimal downtime.',
+      'Administered antivirus solutions (McAfee) and firewall configurations (Fortinet).',
+      'Maintained desktops and laptops by building, imaging, and resolving system issues.',
+      'Collaborated with external vendors to maintain the functionality of technical infrastructure.',
+      'Managed the company website and monitored surveillance systems.',
+    ],
+  },
+  {
+    org: 'Bishops Anstey High School East & Trinity College East',
+    role: 'Technology Education Teaching Assistant / I.T. Technician',
+    period: 'October 2014 &ndash; August 2016',
+    logo: 'https://logo.clearbit.com/batce.edu.tt',
+    bullets: [
+      'Assisted teachers by ensuring classroom environments were equipped and prepared for students.',
+      'Helped resolve technical issues with classroom equipment and educational data systems.',
+      'Performed troubleshooting and preventive maintenance of the school&apos;s computer systems.',
+    ],
+  },
+  {
+    org: 'Caura Hospital &mdash; On The Job Training Programme',
+    role: 'Secretary Assistant',
+    period: 'August 2014 &ndash; September 2014',
+    logo: 'https://logo.clearbit.com/health.gov.tt',
+    bullets: [
+      'Assisted departments with organizing digital and hardcopy files for administrative purposes.',
+      'Resolved basic I.T. issues for staff members to support daily operations.',
+    ],
+  },
+];
+
+const certs = [
+  { code: 'AZ-305', name: 'Azure Solutions Architect Expert',                         date: 'May 2024',       level: 'Expert',       active: true  },
+  { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty',                           date: 'Sep 2023',       level: 'Specialty',    active: false },
+  { code: 'AZ-700', name: 'Azure Network Engineer Associate',                          date: 'Jun 2023',       level: 'Associate',    active: true  },
+  { code: 'AZ-500', name: 'Azure Security Engineer Associate',                         date: 'Apr 2023',       level: 'Associate',    active: true  },
+  { code: 'AZ-104', name: 'Azure Administrator Associate',                             date: 'Apr 2022',       level: 'Associate',    active: true  },
+  { code: 'AI-900', name: 'Azure AI Fundamentals',                                     date: 'Mar 2024',       level: 'Fundamentals', active: true  },
+  { code: 'AZ-900', name: 'Azure Fundamentals',                                        date: 'Mar 2021',       level: 'Fundamentals', active: true  },
+  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',       level: 'Microsoft',    active: true  },
+];
+
+const skills = [
+  'Microsoft Azure', 'Azure Active Directory', 'Azure Virtual Desktop', 'Azure Networking',
+  'Azure Security Center', 'Microsoft Purview', 'Azure Monitor', 'Azure Cosmos DB',
+  'Azure Functions', 'Azure Blob Storage', 'Azure Front Door', 'Microsoft 365',
+  'Power BI', 'Solution Assessments', 'Cloud Migration', 'DLP Implementation',
+  'AI Automation', 'n8n Workflows', 'Infrastructure as Code', 'Network Operations',
+  'Technical Training', 'Pre-Sales Consulting', 'CRM & Forecasting',
+  'NestJS', 'React', 'TypeScript', 'PostgreSQL', 'Retell AI',
+];
+---
+
+<BaseLayout
+  title="Resume — Antonio Cumberbatch"
+  description="11+ years in cloud and infrastructure. Azure Solutions Architect Expert. Founder of ARC Cloud Consulting and 3 Stripes Technologies."
+>
+
+  <!-- PAGE HEADER -->
+  <section style="padding:4rem 1.5rem 3rem;border-bottom:1px solid var(--color-border);">
+    <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1.5rem;">
+      <div>
+        <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Resume</p>
+        <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin:0 0 0.5rem;">Antonio Cumberbatch</h1>
+        <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);margin:0 0 1rem;">Cloud Architect &middot; Consultant &middot; Founder</p>
+        <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.875rem;font-size:0.875rem;color:var(--color-text-muted);">
+          <span>Trinidad &amp; Tobago</span>
+          <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);text-decoration:none;">antonio.cumberbatch@arccloudconsulting.com</a>
+          <a href="https://api.whatsapp.com/send/?phone=18683237810" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);text-decoration:none;">+1 (868) 323-7810</a>
+          <a href="https://www.linkedin.com/in/antonio-c-484433137/" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);text-decoration:none;">LinkedIn</a>
+          <a href="https://www.antoniocumberbatch.com" style="color:var(--color-accent);text-decoration:none;">antoniocumberbatch.com</a>
+        </div>
+      </div>
+      <div class="reveal" style="display:flex;flex-direction:column;gap:0.625rem;align-items:flex-start;">
+        <a href="/resume.pdf" download style="background:var(--color-accent);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
+        <a href="/about" style="font-size:0.8125rem;color:var(--color-text-muted);text-decoration:none;padding:0.5rem 0;">View full profile &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <div style="max-width:900px;margin:0 auto;padding:0 1.5rem;">
+
+    <!-- SUMMARY -->
+    <section style="padding:2.5rem 0 2rem;border-bottom:1px solid var(--color-border);">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Summary</h2>
+      <p class="reveal" style="font-size:0.9375rem;color:#B8C8E8;line-height:1.8;margin:0;max-width:760px;">
+        Cloud architect and consultant with 11+ years across IT operations, infrastructure, and cloud transformation. Holds 8 Microsoft Azure certifications (7 currently active, 1 retired) including Expert-level Solutions Architect. Leads Solution Assessment engagements for enterprise customers on behalf of Microsoft at Apeiron Sumus. Founder of ARC Cloud Consulting &mdash; delivering cloud, automation, and custom software for Caribbean businesses &mdash; and co-founder of 3 Stripes Technologies, building the Caribbean&apos;s first purpose-built EMR platform.
+      </p>
+    </section>
+
+    <!-- WORK EXPERIENCE -->
+    <section style="padding:2.5rem 0 2rem;border-bottom:1px solid var(--color-border);">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 2rem;">Work Experience</h2>
+
+      <div style="position:relative;padding-left:1.375rem;border-left:2px solid var(--color-border);">
+        {workExperience.map((job, i) => (
+          <div class="reveal" style={`margin-bottom:${i < workExperience.length - 1 ? '2.25rem' : '0'};position:relative;`}>
+            <div style="position:absolute;left:-1.5625rem;top:0.5rem;width:10px;height:10px;border-radius:50%;background:var(--color-surface-2);border:2px solid var(--color-accent);flex-shrink:0;"></div>
+
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem;margin-bottom:0.375rem;">
+              <div style="width:36px;height:36px;border-radius:6px;background:#fff;border:1px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:3px;">
+                <img src={job.logo} alt={job.org + ' logo'} width="30" height="30" style="width:30px;height:30px;object-fit:contain;" loading="lazy" onerror="this.parentElement.style.display='none'" />
+              </div>
+              <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0;" set:html={job.org}></h3>
+              <span style="font-size:0.75rem;font-weight:600;color:var(--color-accent);background:rgba(255,107,43,0.1);border:1px solid rgba(255,107,43,0.2);padding:0.125rem 0.625rem;border-radius:100px;white-space:nowrap;" set:html={job.period}></span>
+            </div>
+            <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 0.75rem;font-style:italic;" set:html={job.role}></p>
+
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.3125rem;">
+              {job.bullets.map(b => (
+                <li style="font-size:0.875rem;color:#B8C8E8;line-height:1.65;padding-left:1rem;position:relative;">
+                  <span style="position:absolute;left:0;color:var(--color-accent);font-weight:700;">&middot;</span>
+                  <span set:html={b}></span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section style="padding:2.5rem 0 2rem;border-bottom:1px solid var(--color-border);">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1.5rem;">Certifications</h2>
+      <div style="display:flex;flex-direction:column;gap:0.625rem;">
+        {certs.map(cert => (
+          <div class="reveal" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;padding:0.75rem 1rem;background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;">
+            <div style="display:flex;align-items:center;gap:0.875rem;">
+              <span style="font-family:var(--font-mono);font-size:0.75rem;font-weight:700;color:var(--color-accent);min-width:52px;">{cert.code}</span>
+              <span style="font-size:0.9rem;font-weight:600;color:var(--color-text);">{cert.name}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.625rem;">
+              <span style="font-size:0.8125rem;color:var(--color-text-muted);">{cert.date}</span>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.125rem 0.5rem;border-radius:100px;${cert.active ? 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
+                {cert.active ? 'Active' : 'Retired'}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section style="padding:2.5rem 0 4rem;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1.25rem;">Skills &amp; Tools</h2>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+        {skills.map(s => (
+          <span style="font-size:0.8125rem;background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-muted);padding:0.375rem 0.75rem;border-radius:5px;font-weight:500;">{s}</span>
+        ))}
+      </div>
+    </section>
+
+  </div>
+
+</BaseLayout>
