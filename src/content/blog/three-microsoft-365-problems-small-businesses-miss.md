@@ -4,6 +4,7 @@ description: "Most small businesses across Trinidad, Barbados, and the wider Car
 pubDate: 2026-05-27
 category: "Microsoft 365"
 tags: ["microsoft-365", "azure", "intune", "identity", "security"]
+image: /images/blog/three-microsoft-365-problems-small-businesses-miss.svg
 draft: false
 ---
 

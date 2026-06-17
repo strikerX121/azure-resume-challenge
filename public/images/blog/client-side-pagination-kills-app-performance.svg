@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <g opacity="0.035" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/><line x1="0" y1="314" x2="1200" y2="314"/>
+    <line x1="0" y1="471" x2="1200" y2="471"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <!-- server rack glyph -->
+  <g opacity="0.045" fill="#ffffff">
+    <rect x="750" y="175" width="255" height="50" rx="7"/>
+    <rect x="750" y="243" width="255" height="50" rx="7"/>
+    <rect x="750" y="311" width="255" height="50" rx="7"/>
+    <rect x="750" y="379" width="255" height="50" rx="7"/>
+    <circle cx="980" cy="200" r="9" fill="#FF6B2B" opacity="0.5"/>
+    <circle cx="980" cy="268" r="9" fill="#FF6B2B" opacity="0.5"/>
+    <circle cx="980" cy="336" r="9" fill="#FF6B2B" opacity="0.5"/>
+    <circle cx="980" cy="404" r="9" fill="#FF6B2B" opacity="0.5"/>
+  </g>
+  <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
+  <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
+  <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">ENGINEERING</text>
+  <text x="60" y="185" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">Your List View Works Fine</text>
+  <text x="60" y="248" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">at 200 Records.</text>
+  <text x="60" y="311" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">Here's What Happens at 7,000.</text>
+  <line x1="60" y1="585" x2="1140" y2="585" stroke="#1E1E1E" stroke-width="1"/>
+  <text x="1140" y="608" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#6B7280" text-anchor="end">antoniocumberbatch.com</text>
+</svg>

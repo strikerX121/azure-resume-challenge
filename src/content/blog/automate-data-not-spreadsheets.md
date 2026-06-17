@@ -4,6 +4,7 @@ description: "Most automation projects fail not because the tools are wrong but 
 pubDate: 2026-06-09
 category: "AI & Automation"
 tags: ["n8n", "automation", "postgresql", "workflow", "operations"]
+image: /images/blog/automate-data-not-spreadsheets.svg
 draft: false
 ---
 

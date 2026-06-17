@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <g opacity="0.035" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/><line x1="0" y1="314" x2="1200" y2="314"/>
+    <line x1="0" y1="471" x2="1200" y2="471"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <!-- concentric rings + arrow (recommendation signal) -->
+  <g opacity="0.045" fill="none" stroke="#ffffff" stroke-width="7">
+    <circle cx="880" cy="315" r="145"/>
+    <circle cx="880" cy="315" r="95"/>
+    <circle cx="880" cy="315" r="45"/>
+  </g>
+  <!-- arrow pointing outward from center -->
+  <g opacity="0.055" stroke="#FF6B2B" stroke-width="8" fill="none">
+    <line x1="880" y1="315" x2="975" y2="220"/>
+    <polyline points="950,215 975,220 970,245"/>
+  </g>
+  <circle cx="880" cy="315" r="12" fill="#ffffff" opacity="0.045"/>
+  <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
+  <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
+  <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">DIGITAL STRATEGY</text>
+  <text x="60" y="185" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">Build to Be Recommended,</text>
+  <text x="60" y="248" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">Not Just Found:</text>
+  <text x="60" y="311" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">What the AI Search Shift Means</text>
+  <line x1="60" y1="585" x2="1140" y2="585" stroke="#1E1E1E" stroke-width="1"/>
+  <text x="1140" y="608" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#6B7280" text-anchor="end">antoniocumberbatch.com</text>
+</svg>

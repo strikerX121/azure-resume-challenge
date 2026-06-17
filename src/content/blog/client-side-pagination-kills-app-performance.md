@@ -4,6 +4,7 @@ description: "A list view that loaded fast in development took 10 seconds in pro
 pubDate: 2026-05-12
 category: "Engineering"
 tags: ["performance", "pagination", "database", "architecture", "web-dev"]
+image: /images/blog/client-side-pagination-kills-app-performance.svg
 draft: false
 ---
 

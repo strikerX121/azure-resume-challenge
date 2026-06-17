@@ -4,6 +4,7 @@ description: "SASSI is a Trinidad-based package forwarding business that ran on 
 pubDate: 2026-04-28
 category: "Cloud & Azure"
 tags: ["azure", "logistics", "saas", "n8n", "case-study"]
+image: /images/blog/how-we-built-a-logistics-platform-on-azure.svg
 draft: false
 ---
 
