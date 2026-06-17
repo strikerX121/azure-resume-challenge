@@ -147,6 +147,43 @@ const versions = [
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <script type="application/ld+json" set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: [
+          {
+            '@type': 'Question',
+            name: 'How much does an EMR cost for a Caribbean medical practice?',
+            acceptedAnswer: { '@type': 'Answer', text: '3 Stripes Tech EMR is priced at $99 USD per user per month, with a founding partner rate available. Pricing is per active user, so it scales with your practice.' },
+          },
+          {
+            '@type': 'Question',
+            name: 'Is the 3 Stripes EMR built for Caribbean healthcare specifically?',
+            acceptedAnswer: { '@type': 'Answer', text: 'Yes. It was designed around how Caribbean doctors actually work, rather than adapting a foreign system. It runs in the cloud on Azure with a 25-day free trial.' },
+          },
+        ],
+      })} />
+      <div class="reveal" style="margin-bottom:2rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">FAQ</p>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Common Questions</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        {[
+          { q: 'How much does an EMR cost for a Caribbean medical practice?', a: '3 Stripes Tech EMR is priced at $99 USD per user per month, with a founding partner rate available. Pricing is per active user, so it scales with your practice.' },
+          { q: 'Is the 3 Stripes EMR built for Caribbean healthcare specifically?', a: 'Yes. It was designed around how Caribbean doctors actually work, rather than adapting a foreign system. It runs in the cloud on Azure with a 25-day free trial.' },
+        ].map(item => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">{item.q}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{item.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
     <div style="max-width:900px;margin:0 auto;text-align:center;">

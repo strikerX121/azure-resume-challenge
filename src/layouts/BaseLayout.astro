@@ -33,13 +33,26 @@ const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Antonio Cumberbatch',
+  alternateName: 'Antonio Ricardo Cumberbatch',
+  jobTitle: 'Cloud Architect · Consultant · Founder',
+  description: 'Cloud architect and consultant with 11+ years in cloud transformation. Microsoft\'s primary US delivery resource for the M365 Copilot workshop program, trained 2,574+ professionals. Founder of ARC Cloud Consulting and co-founder of 3 Stripes Technologies.',
   url: siteUrl,
-  jobTitle: 'Cloud Architect & Consultant',
-  description: description,
+  image: siteUrl + '/images/me.png',
   sameAs: [
     'https://www.linkedin.com/in/antonio-c-484433137/',
     'https://www.instagram.com/arc.cloudconsulting/',
   ],
+  worksFor: [
+    { '@type': 'Organization', name: 'ARC Cloud Consulting', url: 'https://www.arccloudconsulting.com' },
+    { '@type': 'Organization', name: '3 Stripes Technologies', url: 'https://www.3stripestech.com' },
+  ],
+  knowsAbout: [
+    'Microsoft Azure', 'Cloud Architecture', 'Microsoft Copilot',
+    'AI Adoption', 'Cloud Migration', 'Solution Assessments',
+    'n8n Automation', 'NestJS', 'Caribbean Tech Consulting',
+    'Electronic Medical Records',
+  ],
+  address: { '@type': 'PostalAddress', addressCountry: 'TT' },
 };
 
 const articleSchema = isBlogPost ? {
@@ -85,10 +98,8 @@ const articleSchema = isBlogPost ? {
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" /></noscript>
 
-  <!-- JSON-LD Schema -->
-  {isHomepage && (
-    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
-  )}
+  <!-- JSON-LD Schema — Person on every page -->
+  <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   {isBlogPost && articleSchema && (
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   )}

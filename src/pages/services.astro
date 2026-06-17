@@ -1,8 +1,9 @@
-﻿---
+---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const services = [
   {
+    num: '01',
     label: 'ARC Cloud Consulting',
     tagline: 'Cloud transformation for Caribbean businesses.',
     desc: 'End-to-end Azure architecture, cloud migration, AI automation, and custom software. Remote-first delivery team covering full-stack development, UX/UI design, n8n automation, and WordPress.',
@@ -12,48 +13,144 @@ const services = [
     href: '/contact',
   },
   {
+    num: '02',
     label: '3 Stripes Tech EMR',
     tagline: "Caribbean's first cloud EMR built for regional healthcare.",
     desc: 'Cloud-based Electronic Medical Records designed around how Caribbean doctors actually work. 25-day free trial. Pricing starts at $99 USD/user/month.',
     for: 'Medical practices, clinics, and hospitals across the Caribbean.',
     engagement: '$99 USD/user/month.',
-    cta: 'Visit 3 Stripes Tech →',
+    cta: 'Visit 3 Stripes Tech',
     href: 'https://www.3stripestech.com/',
     target: '_blank',
     rel: 'noopener noreferrer',
     extraNote: 'Or email <a href="mailto:antonio.cumberbatch@3stripestech.com" style="color:var(--color-accent);">antonio.cumberbatch@3stripestech.com</a> to arrange a demo directly.',
   },
   {
-    label: 'AI & Automation Workshops',
-    tagline: 'Practical AI for business teams.',
-    desc: 'Hands-on workshops tailored to the AI tools your team actually uses — Microsoft Copilot, Claude, or Google Workspace AI (Gemini, NotebookLM, and more). Covers practical use cases for business operations, delivered in-person or remotely across the Caribbean.',
-    for: 'Corporate teams, SMB owners, and department leads.',
-    engagement: 'Custom pricing based on team size and scope.',
-    cta: 'Enquire About a Workshop',
+    num: '03',
+    label: 'AI Adoption & Copilot Enablement',
+    tagline: 'Microsoft Copilot training that actually drives adoption.',
+    desc: 'I served as Microsoft\'s primary US delivery resource for the M365 Copilot workshop program, training 2,574+ professionals across banking, healthcare, government, education, and manufacturing in a single year. I bring that exact program to Caribbean businesses: Copilot readiness assessments, adoption workshops, and secure AI productivity enablement. Built on a simple principle: Adoption Over Access. Giving your team AI tools is easy. Getting them to actually use them is the work.',
+    for: 'Teams rolling out Microsoft Copilot, SMB owners, department leads.',
+    engagement: 'Workshop series, readiness assessments, or ongoing enablement programs.',
+    cta: 'Book an AI Enablement Session',
     href: '/contact',
   },
 ];
+
+const frameworks = [
+  {
+    name: 'The Caribbean Cloud Readiness Framework',
+    desc: 'A structured assessment for whether a regional business is ready to move to Azure, covering infrastructure, security posture, cost modelling, and migration sequencing. Built from 20+ Solution Assessments delivered across the Caribbean and North America.',
+  },
+  {
+    name: 'Adoption Over Access',
+    desc: 'The principle behind every AI engagement: access to AI tools is easy, adoption is the work. Training, change management, and secure productivity, not just licenses.',
+  },
+  {
+    name: 'The ARC Delivery Model',
+    desc: 'Embedded, not transactional. ARC operates inside the client\'s business as a technical partner, not an outside vendor. Sub-principle: centralise first, automate second. Fix the data foundation before building automation on top of it.',
+  },
+];
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'ARC Cloud Consulting',
+  founder: { '@type': 'Person', name: 'Antonio Cumberbatch' },
+  url: 'https://www.arccloudconsulting.com',
+  description: 'Remote-first cloud consulting and technical delivery for Caribbean businesses. Azure architecture, AI automation, and custom software.',
+  areaServed: 'Caribbean',
+  knowsAbout: ['Microsoft Azure', 'AI Automation', 'Cloud Migration', 'Custom Software Development'],
+};
+
+const frameworkSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'DefinedTermSet',
+  name: "Antonio Cumberbatch's Consulting Frameworks",
+  hasDefinedTerm: [
+    {
+      '@type': 'DefinedTerm',
+      name: 'The Caribbean Cloud Readiness Framework',
+      description: 'A structured assessment for whether a regional business is ready to migrate to Azure, covering infrastructure, security posture, cost modelling, and migration sequencing.',
+      inDefinedTermSet: 'https://www.antoniocumberbatch.com/services',
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Adoption Over Access',
+      description: 'The principle that access to AI tools is easy, but adoption is the real work, emphasizing training and change management over licensing.',
+      inDefinedTermSet: 'https://www.antoniocumberbatch.com/services',
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'The ARC Delivery Model',
+      description: 'An embedded consulting model where the consultant operates inside the client\'s business as a technical partner. Sub-principle: centralise first, automate second.',
+      inDefinedTermSet: 'https://www.antoniocumberbatch.com/services',
+    },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How much does it cost to move a Caribbean business to Microsoft Azure?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Azure migration cost depends on your current infrastructure, the number of workloads, and your security and compliance needs. ARC starts every engagement with a Cloud Readiness assessment to scope this accurately before any migration begins, so you get a clear cost picture upfront rather than a surprise bill.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: "What's the difference between Copilot readiness and Copilot adoption?",
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Readiness is whether your environment, data governance, and licensing are set up to deploy Copilot safely. Adoption is whether your team actually uses it day to day. Most rollouts fail on adoption, not readiness, which is why training and change management matter more than the license itself.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Do you work with businesses outside the Caribbean?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. ARC is remote-first and has delivered work across the Caribbean and North America. The team operates across multiple time zones and countries.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What does "embedded, not transactional" mean for my business?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Instead of delivering a project and leaving, ARC operates as an ongoing technical partner inside your business, like having a technology department on retainer rather than hiring a one-off vendor.',
+      },
+    },
+  ],
+};
 ---
 
 <BaseLayout
   title="Services — Antonio Cumberbatch"
-  description="Cloud transformation, healthcare EMR, and AI automation workshops. Three focused offerings for Caribbean businesses."
+  description="Cloud transformation, healthcare EMR, and AI Copilot enablement. Three focused offerings for Caribbean businesses and beyond."
 >
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(frameworkSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section style="padding:4rem 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Services</p>
       <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Three Ways to Work Together</h1>
-      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Cloud architecture, healthcare software, and AI automation — focused on the Caribbean market.</p>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Cloud architecture, healthcare software, and AI adoption — focused on the Caribbean market and beyond.</p>
     </div>
   </section>
 
   <section style="padding:0 1.5rem 5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:2rem;">
-      {services.map((s, i) => (
+      {services.map((s) => (
         <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;overflow:hidden;">
           <div style="padding:2.5rem;border-bottom:1px solid var(--color-border);">
-            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);display:block;margin-bottom:0.625rem;">0{i + 1}</span>
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);display:block;margin-bottom:0.625rem;">{s.num}</span>
             <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;margin:0 0 0.5rem;">{s.label}</h2>
             <p style="font-size:1.0625rem;color:var(--color-accent);margin:0 0 1.25rem;font-weight:500;">{s.tagline}</p>
             <p style="font-size:1rem;color:#D1CDC6;line-height:1.7;max-width:680px;margin:0;">{s.desc}</p>
@@ -79,6 +176,53 @@ const services = [
     </div>
   </section>
 
+  <!-- HOW I WORK — NAMED FRAMEWORKS -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:3rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">How I Work</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0;">Named methods. Repeatable results.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {frameworks.map(f => (
+          <div class="card-lift reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-accent);margin:0 0 0.875rem;">{f.name}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding:5rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">FAQ</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0;">Common Questions</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        {faqSchema.mainEntity.map(q => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{q.name}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{q.acceptedAnswer.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Ready to get started?</h2>
+      <p class="reveal" style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:480px;margin-left:auto;margin-right:auto;">Whether it's cloud infrastructure, AI adoption, or a platform build, reach out and let's figure out what makes sense.</p>
+      <a class="reveal" href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Get in Touch
+      </a>
+    </div>
+  </section>
+
 </BaseLayout>
 
 <style>
@@ -88,4 +232,3 @@ const services = [
     }
   }
 </style>
-

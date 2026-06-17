@@ -8,11 +8,9 @@ const workExperience = [
     period: '2023 &ndash; Present',
     logo: 'https://logo.clearbit.com/arccloudconsulting.com',
     bullets: [
-      'Founded and operate a remote delivery team serving Caribbean businesses across cloud, automation, and custom software.',
-      'Architected and delivered the SASSI logistics platform (200+ active users, valued at $70,000&ndash;$90,000 USD), the Qualitech AI automation suite, and the Wiman Microsoft 365 infrastructure engagement.',
-      'Manage all commercial relationships, project scoping, technical architecture, and team coordination across active accounts.',
-      'Operate as an embedded technology and innovation department for retainer clients &mdash; not a vendor, a technical partner.',
-      'Team covers: full-stack development, UX/UI design, n8n automation, WordPress/WooCommerce, and project coordination.',
+      'Founded ARC as a remote-first technical delivery engine combining cloud architecture with a team covering full-stack development, UX/UI design, and n8n automation.',
+      'Architected and delivered the SASSI logistics platform (200+ active users), the Qualitech digital transformation (automation across 5 business functions), and the Wiman Microsoft 365 infrastructure engagement.',
+      'Operate as an embedded technical partner for retainer clients, managing scoping, architecture, delivery, and team coordination across all active accounts.',
     ],
   },
   {
@@ -21,31 +19,26 @@ const workExperience = [
     period: '2022 &ndash; Present',
     logo: 'https://logo.clearbit.com/3stripestech.com',
     bullets: [
-      'Co-founded the company to build the Caribbean&apos;s first cloud-based EMR platform designed around how regional doctors actually work.',
-      'Rebuilt the product three times (APEX Oracle &rarr; Express/CRA &rarr; Turborepo monorepo) based on real user feedback and performance requirements at scale.',
-      'Architected the V3 platform: Turborepo + pnpm, TypeScript end-to-end, NestJS, React 19 + Vite, Drizzle ORM, PostgreSQL, BullMQ, Socket.io, Azure infrastructure.',
-      'Resolved a critical performance issue loading 7,000 patient records client-side on every request &mdash; implemented server-driven pagination reducing load times from 5&ndash;10 seconds to under one second.',
-      'Deployed Azure Front Door as a WAF layer after bot traffic spiked server CPU to 80&ndash;100% &mdash; dropped resource usage to a consistent 30&ndash;40%.',
-      'Current live client: ABC Paediatrics &mdash; 11 doctors, 7,000+ patient records, near-paperless operation. Pricing: $99 USD/user/month.',
+      'Co-founded 3 Stripes to build the Caribbean&apos;s first cloud EMR designed around how regional doctors actually work.',
+      'Architected the V3 platform: Turborepo monorepo, TypeScript, NestJS, React 19, Drizzle ORM, PostgreSQL, BullMQ, Socket.io, Azure infrastructure.',
+      'Resolved a critical performance issue (7,000 records loading client-side), implementing server-driven pagination that cut load times from 5&ndash;10s to under 1s.',
+      'Live client: ABC Paediatrics &mdash; 11 doctors, 7,000+ patient records, near-paperless operation. Pricing: $99 USD/user/month.',
     ],
   },
   {
     org: 'Apeiron Sumus',
-    role: 'Solution Assessment Consultant, Team Mentor & Tech Expert',
-    period: 'March 2024 &ndash; Present',
+    role: 'Solution Assessment Consultant &middot; Copilot Delivery Lead &middot; Tech Expert',
+    period: 'March 2024 &ndash; June 2026',
     logo: 'https://logo.clearbit.com/apeironsumus.com',
     bullets: [
-      'Lead and manage Microsoft Azure and Security Solution Assessment projects from initiation to completion, ensuring successful execution for enterprise customers.',
-      'Generate lead flow by managing and executing data collection for Microsoft customers, including remote installation, configuration, and discovery tool deployment.',
-      'Orchestrate the full Solution Assessment process, coordinating efforts across accounts and ensuring timely deliverables.',
-      'Provide expert consulting on Microsoft solutions, aligning offerings with client business needs &mdash; particularly in cloud adoption and transformation.',
-      'Maintain ongoing relationships with existing accounts, creating brand awareness around Solution Assessments and ensuring client satisfaction.',
-      'Mentor and guide junior team members on the Solution Assessment process, best practices, and technical leadership during team meetings.',
-      'Support complex troubleshooting efforts for critical Microsoft Azure-related issues, providing actionable solutions and technical guidance.',
-      'Analyze data collected during assessments, deliver insights, and communicate findings to clients and internal teams.',
-      'Maintain business forecasting by managing an accurate pipeline and updating activity logs for all active assessments.',
-      'Utilize Microsoft Office, CRM software, and Power BI to manage tasks, report on performance metrics, and ensure efficient project execution.',
-      'Collaborate with cross-functional teams to align technical strategies with business objectives and provide high-level cloud security and performance consultations.',
+      'Served as the primary, and for most of FY26 the sole, US delivery resource for Microsoft&apos;s M365 Copilot workshop program within the SMC SMB Solution Assessment team.',
+      'Completed 95 customer engagements in FY26, reaching 136% of the annual target, averaging ~9 cases/month against a 7-case monthly target.',
+      'Trained 2,574+ professionals on Microsoft 365 Copilot adoption, readiness, and secure AI productivity across banking, healthcare, education, government, manufacturing, hospitality, legal, and nonprofit sectors.',
+      'Adapted workshop delivery for audiences ranging from 3 to 320+ attendees, across single sessions, multi-session series, and full programs.',
+      'Designated internal Tech Expert for tool-based assessment escalations across the North American consultant team, supporting CSAT, Azure Advisor, and related Microsoft assessment platforms.',
+      'Delivered the full assessment portfolio: Azure Advisor cloud optimisation, Cloud Security (CSAT), Azure Migrate, Total Cost of Ownership (TCO) and Business Value Assessments, and Threat Protection Assessments.',
+      'Earned 10 unsolicited customer accolades for session quality, adaptability, and delivery, including direct feedback from a banking CIO.',
+      'Managed full engagement lifecycle: scoping with Microsoft sellers and account managers, scheduling, multi-session delivery, follow-up, and CRM case closure.',
     ],
   },
   {
@@ -142,7 +135,7 @@ const certs = [
   { code: 'AZ-104', name: 'Azure Administrator Associate',                             date: 'Apr 2022',       level: 'Associate',    active: true  },
   { code: 'AI-900', name: 'Azure AI Fundamentals',                                     date: 'Mar 2024',       level: 'Fundamentals', active: true  },
   { code: 'AZ-900', name: 'Azure Fundamentals',                                        date: 'Mar 2021',       level: 'Fundamentals', active: true  },
-  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',       level: 'Microsoft',    active: true  },
+  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',       level: 'Microsoft',    active: false },
 ];
 
 const skills = [
@@ -192,7 +185,7 @@ const skills = [
     <section style="padding:2.5rem 0 2rem;border-bottom:1px solid var(--color-border);">
       <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Summary</h2>
       <p class="reveal" style="font-size:0.9375rem;color:#B8C8E8;line-height:1.8;margin:0;max-width:760px;">
-        Cloud architect and consultant with 11+ years across IT operations, infrastructure, and cloud transformation. Holds 8 Microsoft Azure certifications (7 currently active, 1 retired) including Expert-level Solutions Architect. Leads Solution Assessment engagements for enterprise customers on behalf of Microsoft at Apeiron Sumus. Founder of ARC Cloud Consulting &mdash; delivering cloud, automation, and custom software for Caribbean businesses &mdash; and co-founder of 3 Stripes Technologies, building the Caribbean&apos;s first purpose-built EMR platform.
+        Cloud architect and consultant with 11+ years across IT operations, infrastructure, and cloud transformation. Holds 8 Microsoft Azure certifications (7 active) including Expert-level Solutions Architect. As Microsoft's primary US delivery resource for the M365 Copilot workshop program (via Apeiron Sumus), trained 2,574+ professionals across North America in a single fiscal year. Founder of ARC Cloud Consulting, delivering cloud, automation, and custom software for Caribbean businesses, and co-founder of 3 Stripes Technologies, building the Caribbean&apos;s first purpose-built EMR platform.
       </p>
     </section>
 
