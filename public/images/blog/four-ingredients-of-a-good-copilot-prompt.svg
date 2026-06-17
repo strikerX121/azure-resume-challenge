@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <g opacity="0.035" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/><line x1="0" y1="314" x2="1200" y2="314"/>
+    <line x1="0" y1="471" x2="1200" y2="471"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <!-- 2x2 grid glyph representing 4 ingredients -->
+  <g opacity="0.05" fill="#ffffff">
+    <rect x="755" y="190" width="115" height="115" rx="12"/>
+    <rect x="890" y="190" width="115" height="115" rx="12"/>
+    <rect x="755" y="325" width="115" height="115" rx="12"/>
+    <rect x="890" y="325" width="115" height="115" rx="12"/>
+  </g>
+  <!-- subtle connector cross -->
+  <g opacity="0.025" stroke="#FF6B2B" stroke-width="3">
+    <line x1="812" y1="190" x2="812" y2="440"/><line x1="755" y1="305" x2="1005" y2="305"/>
+  </g>
+  <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
+  <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
+  <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">AI &amp; AUTOMATION</text>
+  <text x="60" y="185" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">The Four Ingredients of a</text>
+  <text x="60" y="246" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">Good Copilot Prompt</text>
+  <text x="60" y="307" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">(Most People Use Two)</text>
+  <line x1="60" y1="585" x2="1140" y2="585" stroke="#1E1E1E" stroke-width="1"/>
+  <text x="1140" y="608" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#6B7280" text-anchor="end">antoniocumberbatch.com</text>
+</svg>
