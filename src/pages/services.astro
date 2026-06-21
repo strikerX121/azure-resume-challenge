@@ -50,6 +50,10 @@ const frameworks = [
     name: 'The ARC Delivery Model',
     desc: 'Embedded, not transactional. ARC operates inside the client\'s business as a technical partner, not an outside vendor. Sub-principle: centralise first, automate second. Fix the data foundation before building automation on top of it.',
   },
+  {
+    name: 'Good Chefs Sauté Evenly (Goal, Context, Source, Expectation)',
+    desc: 'The four-ingredient Copilot prompt framework taught across 95 workshops. Goal: what you want. Context: what Copilot needs to know. Source: exactly where to look. Expectation: how the output should be formatted. Most prompts use two. All four is where the results are.',
+  },
 ];
 
 const orgSchema = {
@@ -84,6 +88,12 @@ const frameworkSchema = {
       '@type': 'DefinedTerm',
       name: 'The ARC Delivery Model',
       description: 'An embedded consulting model where the consultant operates inside the client\'s business as a technical partner. Sub-principle: centralise first, automate second.',
+      inDefinedTermSet: 'https://www.antoniocumberbatch.com/services',
+    },
+    {
+      '@type': 'DefinedTerm',
+      name: 'Good Chefs Sauté Evenly (Goal, Context, Source, Expectation)',
+      description: 'A four-ingredient Copilot prompt framework: Goal (what you want), Context (what Copilot needs to know), Source (exactly where to look), Expectation (how the output should be formatted). Taught across 95 Microsoft Copilot workshops to 2,574+ professionals.',
       inDefinedTermSet: 'https://www.antoniocumberbatch.com/services',
     },
   ],

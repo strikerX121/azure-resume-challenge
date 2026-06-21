@@ -1,0 +1,200 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const stats = [
+  ['4', 'Production Apps'],
+  ['2', 'Azure Subscriptions'],
+  ['5', 'Team Members'],
+  ['Sub-200ms', 'Dashboard Load'],
+];
+
+const stack = [
+  'Next.js 15',
+  'Azure CosmosDB',
+  'Azure Blob Storage',
+  'Azure Monitor API',
+  'Azure Cost Management API',
+  'Toggl API',
+  'NextAuth v5',
+  'TanStack Query',
+  'Recharts',
+  'Tailwind + shadcn/ui',
+  'GitHub Actions',
+  'Azure App Service',
+];
+
+const modules = [
+  {
+    icon: '📊',
+    title: 'App Health Dashboard',
+    body: 'Live status for four production apps across two Azure subscriptions. Engineers see deployment state, uptime indicators, and resource health at a glance — without opening the portal.',
+  },
+  {
+    icon: '💰',
+    title: 'Cost Visibility',
+    body: 'MTD Azure spend broken down by product and resource group. Nightly sync from the Cost Management REST API to CosmosDB. Finance has live cost visibility without an Azure account. Dead-spend detector flags any resource under $1/month.',
+  },
+  {
+    icon: '🕐',
+    title: 'Time Tracking',
+    body: 'Toggl entries synced nightly to CosmosDB. Role-scoped views: staff see their own hours, finance sees everyone. Stacked bar chart by project and a project donut. Monthly billing summaries in seconds, not Excel sessions.',
+  },
+  {
+    icon: '🧾',
+    title: 'Expense Workflow',
+    body: 'Staff upload PDF receipts. Finance reviews, approves or rejects with a note, and marks paid — all in one view. No email chains, no WhatsApp messages, no separate tracking spreadsheet.',
+  },
+];
+---
+
+<BaseLayout
+  title="Enterprise Apps Masterview (ESVD) — Case Study"
+  description="An internal ops dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI — all in one place."
+>
+
+  <!-- HERO -->
+  <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <div style="position:absolute;inset:0;background:rgba(15,22,36,0.80);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
+      <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Internal Ops &middot; Azure &middot; Next.js 15</p>
+      <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.15;">Enterprise Apps Masterview</h1>
+      <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:640px;">One dashboard that replaced Azure Portal, Google Sheets, expense email chains, and the Toggl web UI.</p>
+      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.5);margin:0;font-style:italic;">Built by 3 Stripes Technologies for internal operations.</p>
+    </div>
+  </div>
+
+  <!-- BACK + STATS -->
+  <section style="padding:2.5rem 1.5rem 2rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
+        <div style="width:80px;height:80px;border-radius:12px;background:#0F1624;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+        <div>
+          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Internal Ops &middot; Azure &middot; Next.js 15</span>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0.5rem 0 0;">Built for internal use — managing apps, costs, time, and expenses from one place.</p>
+        </div>
+      </div>
+
+      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
+        {stats.map(([val, label]) => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
+            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+
+      <h2>The Problem</h2>
+      <p>Four production apps across two Azure subscriptions. A five-person team. A finance workflow in Google Sheets. Expenses submitted by email. Time tracked in Toggl but only useful after an export-to-Excel session.</p>
+      <p>Every morning meant opening six tools that didn't talk to each other. The information existed — it was just distributed across Azure Portal, Google Sheets, Google Drive, Toggl, and two email threads. Assembling a clear daily picture took twenty minutes before the real work started.</p>
+      <p>No off-the-shelf tool fit. The products that exist were built for 500-person companies or solo freelancers. Nothing was designed for a five-person IT firm managing production enterprise apps for Caribbean clients with its own specific billing logic and team structure.</p>
+      <p>We built it.</p>
+
+      <h2>The Architecture Decision That Defined Everything</h2>
+      <p>The most important decision: <strong>everything syncs to CosmosDB first. The dashboard reads from Cosmos. Nothing calls the Azure APIs live on page load.</strong></p>
+      <p>Azure APIs are slow, rate-limited, and — in the case of Cost Management — operate with a 24–48 hour data lag anyway. Calling them live would mean slow page loads and no guarantee the data was accurate.</p>
+      <p>Instead, nightly GitHub Actions workflows sync each data source to Cosmos. The Cost Management sync pulls MTD spend for both subscriptions. The Toggl sync pulls all time entries for the current month. The expense and app health data write to Cosmos in real time as events occur.</p>
+      <p>The result: dashboard loads consistently under 200ms, even when Azure Monitor is running slow.</p>
+
+      <h2>Role-Based Access from Day One</h2>
+      <p>Five roles: <code>admin</code>, <code>finance</code>, <code>accountant</code>, <code>engineer</code>, <code>staff</code>. Every API endpoint and every sidebar item gates on the same permission keys via a single <code>can(role, permission)</code> function in <code>lib/rbac.js</code>.</p>
+      <p>Roles are stored in CosmosDB, not in the JWT. At sign-in, the NextAuth JWT callback looks up the user's role from Cosmos and injects it into the token. When a role changes in the database, the next sign-in reflects it immediately — no token invalidation logic, no lag.</p>
+      <p>This means the finance person has never opened Azure Portal. She sees cost data, expense submissions, and billing summaries in the dashboard — nothing more, nothing less.</p>
+
+    </div>
+  </section>
+
+  <!-- MODULES GRID -->
+  <section style="padding:0 1.5rem 3rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.75rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">Dashboard Modules</p>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Four problems. One platform.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1.25rem;">
+        {modules.map(m => (
+          <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+            <div style="font-size:1.75rem;margin-bottom:0.875rem;">{m.icon}</div>
+            <h3 style="font-family:var(--font-display);font-size:1.0625rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">{m.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{m.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.25rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">Tech Stack</p>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">What it's built on.</h2>
+      </div>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.625rem;">
+        {stack.map(tech => (
+          <span style="font-family:var(--font-mono);font-size:0.8125rem;background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text-muted);padding:0.375rem 0.875rem;border-radius:6px;">{tech}</span>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:1.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">Roadmap</p>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Three phases. One platform.</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem;">
+        {[
+          { phase: 'Phase 1', status: 'Live', label: 'Ops Dashboard', body: 'App health, cost visibility, time tracking, expense workflow. Five roles with full RBAC. DB-first architecture syncing from Azure Monitor, Cost Management, and Toggl.' },
+          { phase: 'Phase 2', status: 'In Progress', label: 'Accounting Module', body: 'General ledger, accounts receivable, accounts payable, bank reconciliation. Full double-entry accounting for a small IT firm — built to fit our actual workflow, not a generic chart of accounts.' },
+          { phase: 'Phase 3', status: 'Planned', label: 'Client Portal', body: 'Clients log in to see their Azure IT costs, download invoices, and pay via WiPay. No Azure account required. The goal: stop being a vendor and become an embedded IT department.' },
+        ].map(item => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;">
+            <div style="text-align:center;padding-top:0.125rem;">
+              <div style="font-family:var(--font-mono);font-size:0.6875rem;font-weight:700;color:var(--color-accent);margin-bottom:0.375rem;">{item.phase}</div>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;white-space:nowrap;${item.status === 'Live' ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : item.status === 'In Progress' ? 'background:rgba(251,191,36,0.12);color:#fbbf24;border:1px solid rgba(251,191,36,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>{item.status}</span>
+            </div>
+            <div>
+              <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.5rem;">{item.label}</h3>
+              <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{item.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Managing Azure apps for your business?</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">If you're dealing with the same tool sprawl — multiple Azure subscriptions, time tracking, expense management — let's talk about what this could look like for you.</p>
+      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Get in Touch
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  @media (max-width: 640px) {
+    div[style*="grid-template-columns:repeat(auto-fit,minmax(380px"] {
+      grid-template-columns: 1fr !important;
+    }
+    div[style*="grid-template-columns:auto 1fr"] {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
