@@ -1,11 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 ---
 
 <BaseLayout
   title="ARC Cloud Portfolio — Case Study"
   description="How Antonio Cumberbatch built his personal portfolio on Azure, starting with the Cloud Resume Challenge and evolving it into a full production platform in 2026."
 >
+
+  <WorkSchema
+    name="ARC Cloud Portfolio"
+    description="How Antonio Cumberbatch built his personal portfolio on Azure, starting with the Cloud Resume Challenge and evolving it into a full production platform in 2026."
+    path="/work/arc-portfolio"
+    breadcrumbLabel="ARC Cloud Portfolio"
+    about={['Microsoft Azure', 'Azure Front Door', 'Azure Functions', 'Cosmos DB', 'Static Site Architecture', 'Astro']}
+  />
+
 
   <section style="padding:4rem 1.5rem 2rem;">
     <div style="max-width:900px;margin:0 auto;">
@@ -123,5 +135,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.qualitech]} />
 
 </BaseLayout>

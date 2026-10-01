@@ -1,14 +1,23 @@
 ---
 import BlogPost from '../../layouts/BlogPost.astro';
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import { linksForPost, postSlug, relatedPosts } from '../../data/internal-links';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
-  return posts.map(post => ({ params: { slug: post.slug }, props: { post } }));
+  // Pass the full post set through so each page can compute its own related
+  // posts without re-reading the collection per route.
+  return posts.map(post => ({
+    params: { slug: postSlug(post) },
+    props: { post, allPosts: posts },
+  }));
 }
 
-const { post } = Astro.props;
-const { Content } = await post.render();
+const { post, allPosts } = Astro.props;
+const { Content } = await render(post);
+
+const related = relatedPosts(post, allPosts, 3);
+const proofLinks = linksForPost(postSlug(post));
 ---
 
 <BlogPost
@@ -18,6 +27,8 @@ const { Content } = await post.render();
   category={post.data.category}
   tags={post.data.tags}
   image={post.data.image}
+  related={related}
+  proofLinks={proofLinks}
 >
   <Content />
 </BlogPost>

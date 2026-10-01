@@ -1,8 +1,9 @@
-﻿﻿---
+﻿---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import meImg from '../assets/images/me.png';
+import { postSlug } from '../data/internal-links';
 
 let recentPosts = [];
 try {
@@ -16,11 +17,20 @@ const stats = [
   { value: '11+', label: 'Years Experience' },
   { value: '2574+', label: 'Professionals Trained on AI', format: 'locale' },
   { value: '95', label: 'Copilot Workshops Delivered' },
-  { value: '8', label: 'Azure Certifications' },
+  { value: '5', label: 'Active Azure Certifications' },
   { value: '20+', label: 'Clients Served' },
 ];
 
 const featuredWork = [
+  {
+    title: 'Enterprise Apps Masterview',
+    category: 'AI Operations & Internal Tooling',
+    desc: 'One operations dashboard replacing Azure Portal, Google Sheets, expense email chains and the Toggl UI. Nightly syncs, role-scoped views, sub-200ms loads.',
+    tags: ['Next.js 15', 'Cosmos DB', 'Azure'],
+    href: '/work/esvd-dashboard',
+    logo: '/images/logos/3st-logo.svg',
+    logoBg: '#0F1624',
+  },
   {
     title: 'SASSI Logistics Platform',
     category: 'Logistics & Supply Chain',
@@ -57,6 +67,11 @@ const services = [
     desc: 'End-to-end Azure infrastructure design, migration, and optimisation for Caribbean businesses.',
   },
   {
+    iconLabel: 'OPS',
+    title: 'AI Operations Architecture',
+    desc: 'AI consulting and business process automation — turning spreadsheets, email, and WhatsApp follow-up into secure systems with AI-assisted workflows on top.',
+  },
+  {
     iconLabel: 'AI',
     title: 'Custom Software & AI Automation',
     desc: 'Full-stack web apps, n8n workflows, and AI integrations that eliminate manual processes.',
@@ -71,6 +86,18 @@ const services = [
     title: 'Caribbean Tech Consulting',
     desc: 'Microsoft Solution Assessments, cloud strategy, and technology advisory for regional businesses.',
   },
+];
+
+// Outcome cards replace the three "Testimonial coming soon." placeholders that
+// were live until 2026-10-01. Every figure below is already published elsewhere
+// on the site, so no client quote permission is needed — real testimonials are
+// a separate follow-up, not a blocker on fixing the credibility gap now.
+const outcomes = [
+  { value: '200+', label: 'Active users on SASSI', href: '/work/sassi' },
+  { value: '7,000+', label: 'EMR patient records', href: '/work/3-stripes-tech' },
+  { value: '5', label: 'Departments automated at Qualitech', href: '/work/qualitech' },
+  { value: '95', label: 'Copilot workshops delivered', href: '/services' },
+  { value: '2,574', label: 'Professionals trained', href: '/services' },
 ];
 ---
 
@@ -91,7 +118,7 @@ const services = [
         </h1>
 
         <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:520px;margin-bottom:1.5rem;line-height:1.7;">
-          Cloud architect, consultant, and founder. Building digital infrastructure for businesses across the Caribbean and beyond.
+          Cloud architect, consultant, and founder building AI-assisted operations systems for businesses still running on spreadsheets, email, WhatsApp, and manual follow-up.
         </p>
 
         <p class="reveal" style="font-size:0.9375rem;color:var(--color-text-muted);margin-bottom:2rem;">
@@ -142,18 +169,19 @@ const services = [
     <div style="max-width:1200px;margin:0 auto;">
       <div class="reveal" style="margin-bottom:2rem;">
         <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.375rem;">Credentials</p>
-        <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;">8 Microsoft Certifications</h2>
+        <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;">8 Microsoft Credentials</h2>
+        <p style="font-size:0.9375rem;color:var(--color-text-muted);margin-top:0.5rem;">5 active Azure certifications, 2 expired, and 1 legacy Windows Server credential.</p>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
         {[
-          { code: 'AZ-305', name: 'Azure Solutions Architect Expert', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg', active: true },
-          { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-specialty-badge.svg', active: false },
-          { code: 'AZ-700', name: 'Azure Network Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
-          { code: 'AZ-500', name: 'Azure Security Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
-          { code: 'AZ-104', name: 'Azure Administrator Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', active: true },
-          { code: 'AI-900', name: 'Azure AI Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', active: true },
-          { code: 'AZ-900', name: 'Azure Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', active: true },
-          { code: 'M20740', name: 'Windows Server 2016', badge: null, active: true },
+          { code: 'AZ-305', name: 'Azure Solutions Architect Expert', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-expert-badge.svg', status: 'Active' },
+          { code: 'AZ-500', name: 'Azure Security Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', status: 'Active' },
+          { code: 'AZ-104', name: 'Azure Administrator Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', status: 'Active' },
+          { code: 'AI-900', name: 'Azure AI Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', status: 'Active' },
+          { code: 'AZ-900', name: 'Azure Fundamentals', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-fundamentals-badge.svg', status: 'Active' },
+          { code: 'AZ-700', name: 'Azure Network Engineer Associate', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-associate-badge.svg', status: 'Expired' },
+          { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty', badge: 'https://learn.microsoft.com/en-us/media/learn/certification/badges/microsoft-certified-specialty-badge.svg', status: 'Expired' },
+          { code: 'M20740', name: 'Windows Server 2016', badge: null, status: 'Legacy' },
         ].map(cert => (
           <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;display:flex;align-items:center;gap:0.875rem;">
             {cert.badge
@@ -163,9 +191,9 @@ const services = [
             <div style="flex:1;min-width:0;">
               <p style="font-size:0.6875rem;font-weight:700;color:var(--color-accent);margin:0 0 0.2rem;letter-spacing:0.05em;">{cert.code}</p>
               <p style="font-size:0.8125rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;line-height:1.3;">{cert.name}</p>
-              <span style={`display:inline-flex;align-items:center;gap:0.3rem;font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${cert.active ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
-                {cert.active && <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span>}
-                {cert.active ? 'Active' : 'Retired'}
+              <span style={`display:inline-flex;align-items:center;gap:0.3rem;font-size:0.625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${cert.status === 'Active' ? 'background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
+                {cert.status === 'Active' && <span style="width:5px;height:5px;border-radius:50%;background:#4ade80;display:inline-block;"></span>}
+                {cert.status}
               </span>
             </div>
           </div>
@@ -240,7 +268,7 @@ const services = [
       {recentPosts.length > 0 ? (
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-bottom:2.5rem;">
           {recentPosts.map(post => (
-            <a href={`/blog/${post.slug}`} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:block;">
+            <a href={`/blog/${postSlug(post)}`} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:block;">
               <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{post.data.category}</span>
               <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0.625rem 0 0.75rem;">{post.data.title}</h3>
               <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin-bottom:1rem;">{post.data.description}</p>
@@ -267,39 +295,21 @@ const services = [
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
+  <!-- PROVEN OUTCOMES (replaces placeholder testimonials) -->
   <section style="padding:4rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="reveal" style="margin-bottom:2.5rem;">
-        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Client Feedback</p>
-        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;">What Clients Say</h2>
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Proof</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0 0 0.75rem;">What the Work Produced</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);max-width:620px;margin:0;">Numbers from live production systems, not projections.</p>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
-        {[
-          {
-            quote: 'Testimonial coming soon.',
-            name: 'Client Name',
-            title: 'Role, Company',
-          },
-          {
-            quote: 'Testimonial coming soon.',
-            name: 'Client Name',
-            title: 'Role, Company',
-          },
-          {
-            quote: 'Testimonial coming soon.',
-            name: 'Client Name',
-            title: 'Role, Company',
-          },
-        ].map(t => (
-          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;gap:1.25rem;">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-accent)" opacity="0.4"><path d="M11.192 15.757c0-.88-.23-1.618-.69-2.217-.326-.412-.768-.683-1.327-.812-.55-.128-1.07-.137-1.54-.028-.16-.95.1-1.956.76-3.022.66-1.065 1.515-1.867 2.558-2.403L9.373 5c-.8.396-1.56.898-2.26 1.505-.71.607-1.34 1.305-1.9 2.094s-.98 1.68-1.25 2.69-.346 2.04-.217 3.1c.168 1.4.62 2.52 1.356 3.35.735.84 1.652 1.26 2.748 1.26.965 0 1.766-.29 2.4-.878.628-.576.94-1.365.94-2.368l.002.003zm9.124 0c0-.88-.23-1.618-.69-2.217-.326-.42-.77-.692-1.327-.817-.56-.124-1.074-.13-1.54-.022-.16-.94.09-1.95.75-3.02.66-1.06 1.514-1.86 2.557-2.4L18.547 5c-.8.396-1.555.898-2.26 1.505-.708.607-1.34 1.305-1.894 2.094-.556.79-.97 1.68-1.24 2.69-.273 1-.345 2.04-.217 3.1.168 1.4.62 2.52 1.356 3.35.735.84 1.652 1.26 2.748 1.26.965 0 1.766-.29 2.4-.878.628-.576.94-1.365.94-2.368l.002.003z"/></svg>
-            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;font-style:italic;">"{t.quote}"</p>
-            <div>
-              <p style="font-weight:700;color:var(--color-text);margin:0 0 0.125rem;font-size:0.9375rem;">{t.name}</p>
-              <p style="font-size:0.8125rem;color:var(--color-accent);margin:0;">{t.title}</p>
-            </div>
-          </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;">
+        {outcomes.map(o => (
+          <a href={o.href} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;text-decoration:none;display:flex;flex-direction:column;gap:0.5rem;">
+            <span style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--color-accent);line-height:1;">{o.value}</span>
+            <span style="font-size:0.9375rem;color:var(--color-text);line-height:1.5;">{o.label}</span>
+            <span style="font-size:0.8125rem;font-weight:600;color:var(--color-text-muted);margin-top:0.25rem;">See the detail &rarr;</span>
+          </a>
         ))}
       </div>
     </div>
@@ -308,7 +318,7 @@ const services = [
   <!-- LEAD MAGNET CALLOUT -->
   <section style="padding:0 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
-      <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem 2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;">
+      <div class="reveal lead-magnet" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem 2.5rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:center;">
         <div>
           <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.5rem;">Free Download</p>
           <p style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">Is your team actually ready for Microsoft Copilot?</p>
@@ -428,6 +438,17 @@ const services = [
     .hero-inner { grid-template-columns: 1fr !important; }
     .hero-photo-wrap { display: flex; justify-content: center; order: -1; }
     .hero-photo-wrap > div { width: 180px !important; height: 180px !important; }
+    /* The CTA is nowrap and wider than the remaining track at ~360px, which
+       pushed the page into horizontal scroll. Stack it instead. */
+    .lead-magnet {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 1.25rem !important;
+      padding: 1.75rem !important;
+    }
+    .lead-magnet a {
+      display: block !important;
+      text-align: center;
+    }
   }
 </style>
 

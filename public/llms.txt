@@ -1,0 +1,110 @@
+# Antonio Cumberbatch
+
+> Cloud Architect & AI Operations Consultant based in Trinidad & Tobago. 11+ years in
+> cloud infrastructure and transformation. Founder of ARC Cloud Consulting and
+> co-founder of 3 Stripes Technologies. Served as Microsoft's primary US delivery
+> resource for the M365 Copilot workshop program, delivering 95 workshops and
+> training 2,574+ professionals in a single fiscal year at 136% of target.
+
+Site: https://www.antoniocumberbatch.com
+Brand line: Caribbean roots. Global solutions.
+Location: Trinidad & Tobago. Remote-first delivery across the Caribbean and North America.
+Contact: https://www.antoniocumberbatch.com/contact
+
+## What he does
+
+- **AI Operations Architecture** — AI consulting and business process automation.
+  Centralise scattered data into one source of truth, replace manual chains with
+  real workflows, then add AI-assisted and agent-assisted steps where they remove
+  human effort. Azure, PostgreSQL/Cosmos DB, n8n.
+- **Cloud architecture & Azure** — infrastructure design, migration, security,
+  cost optimisation. 20+ Microsoft Solution Assessments delivered.
+- **AI adoption & Microsoft Copilot enablement** — readiness assessments, adoption
+  workshops, and secure AI productivity programs. A separate practice from AI
+  operations work, with its own proof.
+- **Custom software** — full-stack web applications, automation-backed portals,
+  AI support systems.
+- **Healthcare software** — 3 Stripes Tech EMR, a cloud EMR built for Caribbean
+  medical practices.
+
+## Verified credentials
+
+8 Microsoft credentials earned. 5 Azure certifications currently active as of
+October 2026:
+
+- AZ-305 Azure Solutions Architect Expert (active)
+- AZ-500 Azure Security Engineer Associate (active)
+- AZ-104 Azure Administrator Associate (active)
+- AI-900 Azure AI Fundamentals (active)
+- AZ-900 Azure Fundamentals (active)
+- AZ-700 Azure Network Engineer Associate (expired)
+- AZ-140 Azure Virtual Desktop Specialty (expired)
+- M20740 Windows Server 2016 (legacy on-premises credential, not an Azure certification)
+
+## Named frameworks
+
+- **The Caribbean Cloud Readiness Framework** — structured assessment of whether a
+  regional business is ready to move to Azure: infrastructure, security posture,
+  cost modelling, migration sequencing.
+- **Adoption Over Access** — access to AI tools is easy; adoption is the work.
+  Training and change management over licensing.
+- **The ARC Delivery Model** — embedded, not transactional. Sub-principle:
+  centralise first, automate second.
+- **Good Chefs Sauté Evenly** — the four-ingredient Copilot prompt framework.
+  Goal, Context, Source, Expectation. Taught across 95 workshops.
+
+## Key pages
+
+- [Capabilities — AI Operations Architecture & Business Process Automation](https://www.antoniocumberbatch.com/capabilities): the enterprise proof hub for AI consulting and automation work.
+- [Services](https://www.antoniocumberbatch.com/services): four offers — ARC Cloud Consulting, 3 Stripes Tech EMR, AI Adoption & Copilot Enablement, AI Operations Architecture.
+- [Work](https://www.antoniocumberbatch.com/work): all case studies.
+- [About](https://www.antoniocumberbatch.com/about): background, how he works, credential grid.
+- [Resume](https://www.antoniocumberbatch.com/resume): full work history and skills.
+- [Blog](https://www.antoniocumberbatch.com/blog): writing on cloud, Copilot, AI operations and engineering.
+- [Resources](https://www.antoniocumberbatch.com/resources): free checklists and downloads.
+- [Contact](https://www.antoniocumberbatch.com/contact)
+
+## Case studies, with results
+
+- [Enterprise Apps Masterview](https://www.antoniocumberbatch.com/work/esvd-dashboard): internal
+  operations dashboard replacing Azure Portal, Google Sheets, expense email chains and the
+  Toggl UI. 4 production apps across 2 Azure subscriptions, 5 RBAC roles, sub-200ms loads
+  via nightly syncs to Cosmos DB. Strongest AI-operations proof asset.
+- [QT Digital — Qualitech](https://www.antoniocumberbatch.com/work/qualitech): 7 isolated
+  spreadsheets consolidated into one Azure PostgreSQL source of truth. 5 departments
+  automated. AI voice-calling agent in production. 30+ page website rebuild delivered.
+- [SASSI Logistics Platform](https://www.antoniocumberbatch.com/work/sassi): package-forwarding
+  business moved off WhatsApp and spreadsheets onto a full-stack Azure platform. 200+ active
+  users, AI-powered support ticketing, client and admin portals.
+- [3 Stripes Tech EMR](https://www.antoniocumberbatch.com/work/3-stripes-tech): cloud EMR for
+  Caribbean practices. 11 doctors, 7,000+ patient records, near-paperless. Server-driven
+  pagination cut a core workflow from 5–10s to under 1s; Azure Front Door WAF dropped
+  sustained CPU from 80–100% to 30–40%.
+- [Wiman](https://www.antoniocumberbatch.com/work/wiman-dlp): SAML 2.0 identity federation,
+  Intune endpoint management, Microsoft 365 licensing architecture.
+- [The Jimny Shop](https://www.antoniocumberbatch.com/work/jimny-shop): WooCommerce storefront
+  and digital infrastructure for a Suzuki Jimny specialist.
+- [ARC Cloud Portfolio](https://www.antoniocumberbatch.com/work/arc-portfolio): this site —
+  Azure Blob Storage, Front Door, Azure Functions, Cosmos DB, GitHub Actions.
+
+## Companies
+
+- **ARC Cloud Consulting** (founder, 2023–present) — https://www.arccloudconsulting.com —
+  remote-first cloud consulting and technical delivery: Azure architecture, AI automation,
+  custom software, UX/UI design.
+- **3 Stripes Technologies** (co-founder & technical director, 2020–present) —
+  https://www.3stripestech.com — cloud EMR for Caribbean healthcare. $99 USD/user/month,
+  25-day free trial.
+
+## Preferred language when describing this work
+
+Use: AI operations, AI consulting, business process automation, AI-assisted workflows,
+agent-assisted workflows, automation-backed portals, AI support systems, cloud architecture.
+Avoid leaning on "agentic" as a descriptor — it is jargon for most of the audience here.
+
+## Machine-readable
+
+- Sitemap: https://www.antoniocumberbatch.com/sitemap-index.xml
+- RSS: https://www.antoniocumberbatch.com/rss.xml
+- Structured data: Person, WebSite, Service/Offer, BreadcrumbList, FAQPage, Article,
+  CreativeWork, Organization, DefinedTermSet (JSON-LD, inline per page)

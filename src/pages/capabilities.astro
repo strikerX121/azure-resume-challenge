@@ -1,0 +1,303 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { CASE_STUDIES } from '../data/internal-links';
+
+/**
+ * /capabilities — the enterprise-facing proof hub for AI Operations Architecture.
+ *
+ * Target lane (validated via OpenSEO 2026-10-01, see the Open SEO Validation
+ * Results note): "AI Operations Architecture" is the owned positioning phrase,
+ * paired with the terms that actually carry demand — AI consulting (8,100),
+ * AI consulting services (2,400), business process automation (1,300),
+ * AI agent consulting (140). Caribbean-specific Azure phrases were NOT validated
+ * and are deliberately used as market differentiation only, not as keyword bets.
+ *
+ * Copilot is kept out of the primary framing here on purpose: that lane has its
+ * own proof and its own service offer, and reframing it into generic AI
+ * operations would weaken the strongest existing content lane.
+ */
+
+const pillars = [
+  {
+    num: '01',
+    title: 'Centralise the data first',
+    body: 'Automation built on isolated spreadsheets is fragile by construction — one missed cell update breaks the chain, and nothing has audit history. Every engagement starts by consolidating the data into one source of truth, usually Azure PostgreSQL or Cosmos DB, before a single workflow is automated on top of it.',
+  },
+  {
+    num: '02',
+    title: 'Business process automation on real infrastructure',
+    body: 'Once the data has a home, the manual process gets replaced: intake from supplier email, follow-up sequences, escalation alerts when something goes overdue, KPI summaries to the people who need them. n8n handles workflow logic, a thin API layer handles auth and reads, and no business logic hides in two places at once.',
+  },
+  {
+    num: '03',
+    title: 'AI-assisted workflows where they actually pay off',
+    body: 'AI drafting, AI support ticketing, AI voice calling and agent-assisted follow-up get added where they remove real manual effort — not as a demo. The test is whether a person stops doing something tedious, not whether the system can be described as intelligent.',
+  },
+  {
+    num: '04',
+    title: 'Portals, roles and visibility',
+    body: 'Operations work needs a front door. Department dashboards, role-scoped access enforced server-side on every endpoint, and leadership views across all of it. Finance should be able to see cost and billing data without ever opening Azure Portal.',
+  },
+];
+
+const proofStack = [
+  {
+    ...CASE_STUDIES.esvd,
+    result: 'Four production apps, two Azure subscriptions and a five-person team run from one dashboard. Nightly syncs to Cosmos DB keep loads under 200ms. Five roles, RBAC enforced on every endpoint.',
+  },
+  {
+    ...CASE_STUDIES.qualitech,
+    result: 'Seven isolated spreadsheets replaced by one Azure PostgreSQL source of truth. Five departments automated — operations, sales, marketing, finance and HR — plus an AI voice-calling agent in production.',
+  },
+  {
+    ...CASE_STUDIES.sassi,
+    result: 'A package-forwarding business run on WhatsApp, spreadsheets and phone calls rebuilt as a full-stack Azure platform with 200+ active users, AI-powered support ticketing and separate client and admin portals.',
+  },
+  {
+    ...CASE_STUDIES.threeStripes,
+    result: 'A regional cloud EMR carrying 7,000+ patient records for 11 doctors, near-paperless. Server-driven pagination took a core workflow from 5–10 seconds to under one, and a WAF layer dropped sustained CPU from 80–100% to 30–40%.',
+  },
+  {
+    ...CASE_STUDIES.wiman,
+    result: 'SAML 2.0 identity federation, Intune endpoint management and Microsoft 365 licensing architecture — the identity and endpoint groundwork operations platforms depend on.',
+  },
+];
+
+const deliveryModel = [
+  {
+    title: 'Embedded, not transactional',
+    body: 'ARC Cloud Consulting operates inside the client\'s business as a technical partner rather than an outside vendor delivering and leaving. Qualitech does not have an IT department; they have ARC.',
+  },
+  {
+    title: 'A delivery team, not a single consultant',
+    body: 'Architecture and account ownership, automation and portal engineering, UI/UX design, and full-stack development across a remote team spanning Trinidad, Bangladesh and beyond. Design happens before the build, not after it.',
+  },
+  {
+    title: 'Azure-backed, cost-aware',
+    body: '11+ years in cloud infrastructure and 20+ Microsoft Solution Assessments behind the architecture decisions — including cost modelling, right-sizing and TCO work, so the platform does not quietly become the biggest line item.',
+  },
+];
+
+const faqs = [
+  {
+    q: 'What is AI Operations Architecture?',
+    a: 'It is the design and build of the operating layer a business actually runs on: one source of truth for the data, business process automation over it, AI-assisted workflows where they remove real manual effort, and role-scoped portals so each department sees what it needs. It is AI consulting grounded in operations rather than strategy slides — the deliverable is a working system.',
+  },
+  {
+    q: 'How is this different from buying business process automation software?',
+    a: 'Off-the-shelf automation tools assume your data is already clean and centralised, and most are built either for 500-person companies or for solo users. The engagements here start where the real constraint is — seven spreadsheets that disagree with each other — and build the source of truth first. The automation tooling is the easy part once that exists.',
+  },
+  {
+    q: 'Do you do AI agent consulting?',
+    a: 'Yes, where the use case justifies it. That has meant an outbound AI voice-calling agent with carrier integration and human handoff, AI-drafted supplier follow-up with escalation rules, and AI-powered support ticketing in a live logistics platform. The decision is always whether an agent removes work a person is currently doing by hand.',
+  },
+  {
+    q: 'What does an engagement look like?',
+    a: 'A scoped architecture engagement first — mapping the current process, the data, and the sequence of work — then a phased build, then an ongoing retainer if the platform needs continued delivery. Phasing matters: proving the automation logic before the full migration is what keeps the build honest.',
+  },
+  {
+    q: 'Do you work outside the Caribbean?',
+    a: 'Yes. Delivery is remote-first and has covered the Caribbean and North America, with a team operating across multiple time zones and countries. The Caribbean focus is market knowledge, not a geographic limit.',
+  },
+];
+
+const siteUrl = 'https://www.antoniocumberbatch.com';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'AI Operations Architecture & Business Process Automation',
+  serviceType: 'AI consulting and business process automation',
+  description:
+    'AI consulting, business process automation, and Azure-backed workflow systems for businesses moving beyond spreadsheets, email, WhatsApp, and manual follow-up.',
+  url: siteUrl + '/capabilities/',
+  provider: {
+    '@type': 'Person',
+    name: 'Antonio Cumberbatch',
+    jobTitle: 'Cloud Architect & AI Operations Consultant',
+    url: siteUrl,
+  },
+  areaServed: [
+    { '@type': 'Place', name: 'Caribbean' },
+    { '@type': 'Place', name: 'North America' },
+  ],
+  audience: {
+    '@type': 'Audience',
+    audienceType: 'Operations leaders, managing directors, and enterprise teams',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'AI Operations Architecture',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI consulting and AI operations assessment' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Business process automation services' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'AI agent consulting and agent-assisted workflow build' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Automation-backed portal and dashboard development' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Azure data platform and workflow architecture' } },
+    ],
+  },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Capabilities', item: siteUrl + '/capabilities/' },
+  ],
+};
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map(f => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+---
+
+<BaseLayout
+  title="AI Operations Architecture & Business Process Automation | Antonio Cumberbatch"
+  description="AI consulting, business process automation, and Azure-backed workflow systems for businesses moving beyond spreadsheets, email, WhatsApp, and manual follow-up."
+  canonicalUrl="https://www.antoniocumberbatch.com/capabilities"
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- HERO -->
+  <section style="padding:5rem 1.5rem 4rem;background:linear-gradient(160deg,#0F1B3D 0%,var(--color-navy) 100%);">
+    <div style="max-width:1000px;margin:0 auto;">
+      <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.875rem;">Capabilities</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2.25rem,5.5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:1.25rem;color:var(--color-text);">
+        AI Operations Architecture &amp;<br /><span style="color:var(--color-accent);">Business Process Automation</span>
+      </h1>
+      <p class="reveal" style="font-size:1.125rem;color:var(--color-text-muted);max-width:680px;line-height:1.7;margin-bottom:1.5rem;">
+        AI consulting and business process automation for companies still running on spreadsheets, email, WhatsApp, and manual follow-up. Caribbean roots, global solutions — and live systems to point at, not a methodology deck.
+      </p>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1rem;">
+        <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+          Start a Conversation
+        </a>
+        <a href="/services" style="background:transparent;color:var(--color-text);padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;border:1px solid var(--color-border);transition:border-color 0.2s,color 0.2s;" onmouseover="this.style.borderColor='var(--color-accent)';this.style.color='var(--color-accent)'" onmouseout="this.style.borderColor='var(--color-border)';this.style.color='var(--color-text)'">
+          All Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section style="padding:4rem 1.5rem;">
+    <div class="prose" style="max-width:860px;margin:0 auto;">
+      <h2>Most businesses don't have an AI problem</h2>
+      <p>They have an operations problem. The purchase orders live in one spreadsheet, the quotation follow-ups live in another, the customer conversations live in WhatsApp, and the approvals live in an email thread nobody can find six weeks later. Nothing connects, nothing has history, and no automation survives contact with it — because every workflow depends on someone remembering to update a cell.</p>
+      <p>Adding AI to that does not fix it. It produces confident output over data that was already wrong.</p>
+      <p>The work that actually moves a business forward is less glamorous and far more durable: give the data one home, replace the manual chain with real workflows, then apply AI where it removes human effort rather than where it demos well. That sequencing is the whole job, and it's what this page is about.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:4.5rem 1.5rem;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">The Approach</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0 0 0.75rem;">Centralise first. Automate second.</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);max-width:620px;margin:0;">The same four steps, in the same order, on every engagement.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {pillars.map(p => (
+          <div class="card-lift reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);display:block;margin-bottom:0.75rem;">{p.num}</span>
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{p.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF STACK -->
+  <section style="padding:4.5rem 1.5rem;">
+    <div style="max-width:1000px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Proof</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0 0 0.75rem;">Five systems, live in production.</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);max-width:620px;margin:0;">Each one is a full case study, not a logo on a wall.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        {proofStack.map(item => (
+          <a href={item.href} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:block;">
+            <h3 style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.5rem;">{item.label}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-accent);margin:0 0 0.875rem;font-weight:500;">{item.blurb}</p>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 1rem;">{item.result}</p>
+            <span style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">Read the case study &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY MODEL -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:4.5rem 1.5rem;">
+    <div style="max-width:1100px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Delivery</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0;">Who actually builds it.</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+        {deliveryModel.map(d => (
+          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-accent);margin:0 0 0.875rem;">{d.title}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{d.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- COPILOT CROSS-LINK — keeps the enablement lane distinct and intact -->
+  <section style="padding:4rem 1.5rem 0;">
+    <div style="max-width:860px;margin:0 auto;">
+      <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:12px;padding:2rem 2.25rem;">
+        <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.625rem;">Separate problem, separate offer</p>
+        <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">Rolling out Microsoft Copilot instead?</h2>
+        <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 1rem;">
+          Copilot readiness and adoption is its own engagement — 95 workshops delivered and 2,574+ professionals trained as Microsoft's primary US delivery resource for the M365 Copilot program. Changing how your team uses the tools they already have is a different job from rebuilding how the work flows.
+        </p>
+        <a href="/services" style="font-size:0.9375rem;font-weight:600;color:var(--color-accent);text-decoration:none;">See AI Adoption &amp; Copilot Enablement &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section style="padding:4rem 1.5rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">FAQ</p>
+        <h2 style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0;">Common Questions</h2>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        {faqs.map(f => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+            <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{f.q}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{f.a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1000px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Still running the business on spreadsheets?</h2>
+      <p class="reveal" style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:560px;margin-left:auto;margin-right:auto;">Tell me what the current process looks like and where it breaks. That conversation is usually enough to tell whether this is a scoping engagement or a bigger build.</p>
+      <a class="reveal" href="/contact" style="background:var(--color-accent);color:#fff;padding:0.9375rem 2.25rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:1rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+        Get in Touch
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

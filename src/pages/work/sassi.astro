@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 import { Image } from 'astro:assets';
 import nicoleImg from '../../assets/images/nicole-cumberbatch-sassi.jpg';
 import clientPortalImg from '../../assets/images/sassi-client-portal.png';
@@ -11,6 +14,15 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
   title="SASSI Logistics Platform — Case Study"
   description="How ARC Cloud Consulting built a full-stack logistics platform serving 200+ active users, replacing WhatsApp and spreadsheets with automated workflows."
 >
+
+  <WorkSchema
+    name="SASSI Logistics Platform"
+    description="How ARC Cloud Consulting built a full-stack logistics platform serving 200+ active users, replacing WhatsApp and spreadsheets with automated workflows."
+    path="/work/sassi"
+    breadcrumbLabel="SASSI Logistics Platform"
+    about={['Logistics Software', 'Microsoft Azure', 'AI Support Systems', 'n8n Automation', 'Business Process Automation']}
+  />
+
 
   <section style="padding:4rem 1.5rem 2rem;">
     <div style="max-width:900px;margin:0 auto;">
@@ -133,5 +145,7 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.qualitech, CASE_STUDIES.esvd]} />
 
 </BaseLayout>
