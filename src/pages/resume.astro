@@ -86,15 +86,18 @@ const workExperience = [
   },
 ];
 
+// Credential statuses verified against Antonio's Microsoft Learn dashboard on
+// 2026-10-01. AZ-140 and AZ-700 are expired; M20740 is a legacy on-prem Windows
+// Server credential, not an active Azure certification. Active count is 5.
 const certs = [
-  { code: 'AZ-305', name: 'Azure Solutions Architect Expert',                         date: 'May 2024',       level: 'Expert',       active: true  },
-  { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty',                           date: 'Sep 2023',       level: 'Specialty',    active: false },
-  { code: 'AZ-700', name: 'Azure Network Engineer Associate',                          date: 'Jun 2023',       level: 'Associate',    active: true  },
-  { code: 'AZ-500', name: 'Azure Security Engineer Associate',                         date: 'Apr 2023',       level: 'Associate',    active: true  },
-  { code: 'AZ-104', name: 'Azure Administrator Associate',                             date: 'Apr 2022',       level: 'Associate',    active: true  },
-  { code: 'AI-900', name: 'Azure AI Fundamentals',                                     date: 'Mar 2024',       level: 'Fundamentals', active: true  },
-  { code: 'AZ-900', name: 'Azure Fundamentals',                                        date: 'Mar 2021',       level: 'Fundamentals', active: true  },
-  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',       level: 'Microsoft',    active: false },
+  { code: 'AZ-305', name: 'Azure Solutions Architect Expert',                         date: 'May 2024',       level: 'Expert',       status: 'Active'  },
+  { code: 'AZ-500', name: 'Azure Security Engineer Associate',                         date: 'Apr 2023',       level: 'Associate',    status: 'Active'  },
+  { code: 'AZ-104', name: 'Azure Administrator Associate',                             date: 'Apr 2022',       level: 'Associate',    status: 'Active'  },
+  { code: 'AI-900', name: 'Azure AI Fundamentals',                                     date: 'Mar 2024',       level: 'Fundamentals', status: 'Active'  },
+  { code: 'AZ-900', name: 'Azure Fundamentals',                                        date: 'Mar 2021',       level: 'Fundamentals', status: 'Active'  },
+  { code: 'AZ-700', name: 'Azure Network Engineer Associate',                          date: 'Jun 2023',       level: 'Associate',    status: 'Expired' },
+  { code: 'AZ-140', name: 'Azure Virtual Desktop Specialty',                           date: 'Sep 2023',       level: 'Specialty',    status: 'Expired' },
+  { code: 'M20740', name: 'Installation, Storage & Compute with Windows Server 2016', date: 'Jul 2021',       level: 'Microsoft',    status: 'Legacy'  },
 ];
 
 const skills = [
@@ -119,7 +122,7 @@ const skills = [
       <div>
         <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Resume</p>
         <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin:0 0 0.5rem;">Antonio Cumberbatch</h1>
-        <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);margin:0 0 1rem;">Cloud Architect &middot; Consultant &middot; Founder</p>
+        <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);margin:0 0 1rem;">Cloud Architect &middot; AI Operations Consultant &middot; Founder</p>
         <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.875rem;font-size:0.875rem;color:var(--color-text-muted);">
           <span>Trinidad &amp; Tobago</span>
           <a href="mailto:antonio.cumberbatch2@gmail.com" style="color:var(--color-accent);text-decoration:none;">antonio.cumberbatch2@gmail.com</a>
@@ -144,7 +147,7 @@ const skills = [
     <section style="padding:2.5rem 0 2rem;border-bottom:1px solid var(--color-border);">
       <h2 class="reveal" style="font-family:var(--font-display);font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Summary</h2>
       <p class="reveal" style="font-size:0.9375rem;color:#B8C8E8;line-height:1.8;margin:0;max-width:760px;">
-        Cloud architect and solutions consultant with 11+ years spanning IT operations, infrastructure, and cloud transformation. Holds 8 Microsoft Azure certifications (6 active), including Expert-level Solutions Architect. Served as the primary US delivery resource for a Microsoft Copilot enablement program, training 2,574+ professionals across banking, healthcare, government, education, and manufacturing in a single year at 136% of target. Founder of ARC Cloud Consulting, delivering cloud architecture, custom software, and AI automation for businesses across the Caribbean and beyond, and co-founder of 3 Stripes Technologies, a purpose-built EMR platform serving regional healthcare. Proven across Azure architecture, migrations, security, and AI adoption &mdash; equally comfortable designing the infrastructure and driving the human adoption that makes it deliver.
+        Cloud architect and AI operations consultant with 11+ years spanning IT operations, infrastructure, and cloud transformation. Holds 8 Microsoft credentials, 5 Azure certifications currently active, including Expert-level Solutions Architect. Served as the primary US delivery resource for a Microsoft Copilot enablement program, training 2,574+ professionals across banking, healthcare, government, education, and manufacturing in a single year at 136% of target. Founder of ARC Cloud Consulting, delivering cloud architecture, custom software, AI consulting, and business process automation for businesses across the Caribbean and beyond, and co-founder of 3 Stripes Technologies, a purpose-built EMR platform serving regional healthcare. Proven across Azure architecture, migrations, security, AI operations, and AI adoption &mdash; equally comfortable designing the infrastructure and driving the human adoption that makes it deliver.
       </p>
     </section>
 
@@ -191,8 +194,8 @@ const skills = [
             </div>
             <div style="display:flex;align-items:center;gap:0.625rem;">
               <span style="font-size:0.8125rem;color:var(--color-text-muted);">{cert.date}</span>
-              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.125rem 0.5rem;border-radius:100px;${cert.active ? 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
-                {cert.active ? 'Active' : 'Retired'}
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.125rem 0.5rem;border-radius:100px;${cert.status === 'Active' ? 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>
+                {cert.status}
               </span>
             </div>
           </div>

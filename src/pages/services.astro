@@ -35,6 +35,16 @@ const services = [
     cta: 'Book an AI Enablement Session',
     href: '/contact',
   },
+  {
+    num: '04',
+    label: 'AI Operations Architecture',
+    tagline: 'AI consulting and business process automation for operations that still run on spreadsheets.',
+    desc: 'Most businesses do not have an AI problem, they have an operations problem: the data lives in seven spreadsheets, the follow-up lives in WhatsApp, and nothing has history. This is the engagement that fixes the order of operations — centralise the data first, then layer automation and AI-assisted workflows on top of a real source of truth. Business process automation, automation-backed portals, AI support systems, and AI agent work on Azure and n8n. Built the same way as the live systems behind Enterprise Apps Masterview, QT Digital, and SASSI.',
+    for: 'Operations leaders, MDs, and teams past the point where spreadsheets hold up.',
+    engagement: 'Scoped architecture engagement, then phased build or monthly retainer.',
+    cta: 'See the Capability Stack',
+    href: '/capabilities',
+  },
 ];
 
 const frameworks = [
@@ -64,7 +74,63 @@ const orgSchema = {
   url: 'https://www.arccloudconsulting.com',
   description: 'Remote-first cloud consulting and technical delivery for Caribbean businesses. Azure architecture, AI automation, and custom software.',
   areaServed: 'Caribbean',
-  knowsAbout: ['Microsoft Azure', 'AI Automation', 'Cloud Migration', 'Custom Software Development'],
+  knowsAbout: [
+    'Microsoft Azure', 'AI Automation', 'Cloud Migration', 'Custom Software Development',
+    'AI Consulting', 'AI Operations Architecture', 'Business Process Automation',
+    'AI Agent Consulting', 'Microsoft Copilot Enablement',
+  ],
+};
+
+// Service/Offer schema — absent before 2026-10-01 despite four named offers in
+// visible copy. One Service entry per visible offer, in the same order, so the
+// structured data cannot silently drift from the page.
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Services — Antonio Cumberbatch',
+  itemListElement: services.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Service',
+      name: s.label,
+      description: s.tagline,
+      serviceType: s.label,
+      provider: {
+        '@type': 'Person',
+        name: 'Antonio Cumberbatch',
+        url: 'https://www.antoniocumberbatch.com',
+      },
+      areaServed: [
+        { '@type': 'Place', name: 'Caribbean' },
+        { '@type': 'Place', name: 'North America' },
+      ],
+      audience: { '@type': 'Audience', audienceType: s.for },
+      offers: {
+        '@type': 'Offer',
+        description: s.engagement,
+        availability: 'https://schema.org/InStock',
+        url: s.href.startsWith('http') ? s.href : 'https://www.antoniocumberbatch.com' + s.href,
+        ...(s.label === '3 Stripes Tech EMR'
+          ? { price: '99', priceCurrency: 'USD', priceSpecification: {
+                '@type': 'UnitPriceSpecification',
+                price: '99',
+                priceCurrency: 'USD',
+                unitText: 'user per month',
+              } }
+          : {}),
+      },
+    },
+  })),
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.antoniocumberbatch.com/' },
+    { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.antoniocumberbatch.com/services/' },
+  ],
 };
 
 const frameworkSchema = {
@@ -135,23 +201,41 @@ const faqSchema = {
         text: 'Instead of delivering a project and leaving, ARC operates as an ongoing technical partner inside your business, like having a technology department on retainer rather than hiring a one-off vendor.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'What is AI Operations Architecture?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'It is the engagement for businesses whose real constraint is operations rather than AI: data spread across isolated spreadsheets, follow-up living in email and WhatsApp, and no history on anything. The work is business process automation in the right order — centralise the data into one source of truth first, then build automation, portals, and AI-assisted workflows on top of it. In practice that means Azure infrastructure, n8n automation, and AI support or agent workflows where they genuinely reduce manual effort.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How is AI consulting different from Copilot training?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Copilot enablement makes an existing Microsoft 365 rollout actually get used — readiness, adoption, and training for your team. AI consulting and business process automation go a layer deeper: changing how the work itself flows, with automation and custom systems behind it. They are separate offers here because they solve separate problems, and plenty of businesses need one without the other.',
+      },
+    },
   ],
 };
 ---
 
 <BaseLayout
   title="Services — Antonio Cumberbatch"
-  description="Cloud transformation, healthcare EMR, and AI Copilot enablement. Three focused offerings for Caribbean businesses and beyond."
+  description="Cloud transformation, healthcare EMR, Copilot enablement, and AI operations architecture. Four focused offerings for Caribbean businesses and beyond."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(frameworkSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section style="padding:4rem 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Services</p>
-      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Three Ways to Work Together</h1>
-      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Cloud architecture, healthcare software, and AI adoption — focused on the Caribbean market and beyond.</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Four Ways to Work Together</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:620px;">Cloud architecture, healthcare software, Copilot adoption, and AI operations — focused on the Caribbean market and beyond.</p>
     </div>
   </section>
 

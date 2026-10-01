@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 
 const team = [
   {
@@ -83,6 +86,15 @@ function badgeStyle(status: string): string {
   title="QT Digital — Qualitech Case Study"
   description="Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal — built and delivered by ARC."
 >
+
+  <WorkSchema
+    name="QT Digital — Qualitech Machining Services"
+    description="Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal — built and delivered by ARC."
+    path="/work/qualitech"
+    breadcrumbLabel="QT Digital — Qualitech"
+    about={['Business Process Automation', 'AI Operations', 'n8n Automation', 'AI Agent Workflows', 'Microsoft Azure', 'PostgreSQL']}
+  />
+
 
   <!-- HERO BANNER -->
   <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
@@ -218,5 +230,7 @@ function badgeStyle(status: string): string {
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.sassi]} />
 
 </BaseLayout>

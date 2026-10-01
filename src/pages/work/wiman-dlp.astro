@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 
 const workstreams = [
   {
@@ -37,6 +40,15 @@ const workstreams = [
   title="Wiman — Microsoft 365 Identity & Endpoint Management"
   description="Identity federation, endpoint management, and M365 licensing architecture for Wiman Inc."
 >
+
+  <WorkSchema
+    name="Wiman — Microsoft 365 Identity & Endpoint Management"
+    description="Identity federation, endpoint management, and M365 licensing architecture for Wiman Inc."
+    path="/work/wiman-dlp"
+    breadcrumbLabel="Wiman"
+    about={['Microsoft 365', 'Entra ID', 'SAML 2.0 Identity Federation', 'Microsoft Intune', 'Endpoint Management']}
+  />
+
 
   <!-- HEADER -->
   <section style="padding:4rem 1.5rem 2rem;">
@@ -120,5 +132,7 @@ const workstreams = [
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.qualitech]} />
 
 </BaseLayout>

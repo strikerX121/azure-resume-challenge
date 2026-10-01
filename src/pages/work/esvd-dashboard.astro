@@ -1,5 +1,8 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 
 const stats = [
   ['4', 'Production Apps'],
@@ -51,6 +54,15 @@ const modules = [
   title="Enterprise Apps Masterview (ESVD) — Case Study"
   description="An internal ops dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI — all in one place."
 >
+
+  <WorkSchema
+    name="Enterprise Apps Masterview"
+    description="An internal ops dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI — all in one place."
+    path="/work/esvd-dashboard"
+    breadcrumbLabel="Enterprise Apps Masterview"
+    about={['AI Operations', 'Business Process Automation', 'Microsoft Azure', 'Cosmos DB', 'Internal Tooling', 'Role-Based Access Control']}
+  />
+
 
   <!-- HERO -->
   <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
@@ -185,6 +197,8 @@ const modules = [
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.qualitech, CASE_STUDIES.sassi]} />
 
 </BaseLayout>
 

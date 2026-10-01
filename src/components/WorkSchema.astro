@@ -1,0 +1,53 @@
+---
+/**
+ * Emits BreadcrumbList + CreativeWork JSON-LD for a case-study page.
+ *
+ * Case studies are the strongest proof pages on the site but had no schema on
+ * 7 of 8 of them (2026-10-01 discoverability audit). This component keeps the
+ * markup in one place so every work page gets the same shape and the visible
+ * copy and structured data cannot drift apart per-page.
+ */
+interface Props {
+  /** Page title as it should appear in schema (not the "— Case Study" suffix). */
+  name: string;
+  /** Short description — pass the same string used for the page meta description. */
+  description: string;
+  /** Path of this case study, e.g. '/work/esvd-dashboard'. */
+  path: string;
+  /** Breadcrumb leaf label, usually a short client name. */
+  breadcrumbLabel: string;
+  /** Subject areas this case study evidences. */
+  about?: string[];
+}
+
+const { name, description, path, breadcrumbLabel, about = [] } = Astro.props;
+
+const siteUrl = 'https://www.antoniocumberbatch.com';
+const pageUrl = siteUrl + path;
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl + '/' },
+    { '@type': 'ListItem', position: 2, name: 'Work', item: siteUrl + '/work/' },
+    { '@type': 'ListItem', position: 3, name: breadcrumbLabel, item: pageUrl + '/' },
+  ],
+};
+
+const workSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name,
+  description,
+  url: pageUrl + '/',
+  author: { '@type': 'Person', name: 'Antonio Cumberbatch', url: siteUrl },
+  creator: { '@type': 'Organization', name: 'ARC Cloud Consulting', url: 'https://www.arccloudconsulting.com' },
+  inLanguage: 'en',
+  ...(about.length ? { about: about.map((a) => ({ '@type': 'Thing', name: a })) } : {}),
+  isPartOf: { '@type': 'CollectionPage', name: 'Work', url: siteUrl + '/work/' },
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(workSchema)} />

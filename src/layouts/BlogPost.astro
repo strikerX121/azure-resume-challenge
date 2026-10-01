@@ -1,6 +1,7 @@
 ﻿---
 import BaseLayout from './BaseLayout.astro';
 import { Image } from 'astro:assets';
+import type { InternalLink } from '../data/internal-links';
 
 interface Props {
   title: string;
@@ -9,9 +10,13 @@ interface Props {
   category: string;
   tags: string[];
   image?: string;
+  /** Related posts chosen by the caller (see data/internal-links.ts). */
+  related?: { slug: string; data: { title: string; description: string; category: string } }[];
+  /** Case study / capability links this post should feed. */
+  proofLinks?: InternalLink[];
 }
 
-const { title, description, pubDate, category, tags, image } = Astro.props;
+const { title, description, pubDate, category, tags, image, related = [], proofLinks = [] } = Astro.props;
 
 function readTime(body: string) {
   const words = body.split(/\s+/).length;
@@ -60,8 +65,41 @@ function readTime(body: string) {
       <slot />
     </div>
 
+    <!-- Proof links: this post -> the case studies it describes -->
+    {proofLinks.length > 0 && (
+      <section style="padding:0 1.5rem 1rem;max-width:860px;margin:0 auto;">
+        <div style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:12px;padding:1.5rem 1.75rem;">
+          <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.875rem;">The work behind this post</p>
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            {proofLinks.map(link => (
+              <a href={link.href} style="text-decoration:none;display:block;">
+                <span style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);display:block;margin-bottom:0.25rem;">{link.label} &rarr;</span>
+                <span style="font-size:0.9rem;color:var(--color-text-muted);line-height:1.6;">{link.blurb}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Related posts -->
+    {related.length > 0 && (
+      <section style="padding:1.5rem 1.5rem 0;max-width:860px;margin:0 auto;">
+        <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 1rem;">Related reading</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+          {related.map(post => (
+            <a href={`/blog/${post.slug}`} class="card-lift" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.25rem;text-decoration:none;display:block;">
+              <span style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{post.data.category}</span>
+              <h3 style="font-family:var(--font-display);font-size:0.9375rem;font-weight:700;color:var(--color-text);margin:0.5rem 0 0.5rem;line-height:1.4;">{post.data.title}</h3>
+              <p style="font-size:0.8125rem;color:var(--color-text-muted);line-height:1.55;margin:0;">{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
     <!-- Post footer -->
-    <footer style="border-top:1px solid var(--color-border);padding:2.5rem 1.5rem;max-width:860px;margin:0 auto;">
+    <footer style="border-top:1px solid var(--color-border);padding:2.5rem 1.5rem;max-width:860px;margin:2.5rem auto 0;">
       <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
 
         <div style="display:flex;align-items:center;gap:0.875rem;">
@@ -69,7 +107,7 @@ function readTime(body: string) {
           <div>
             <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 0.2rem;">Written by</p>
             <p style="font-weight:600;color:var(--color-text);margin:0;">Antonio Cumberbatch</p>
-            <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0;">Cloud Architect &amp; Consultant</p>
+            <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0;">Cloud Architect &amp; AI Operations Consultant</p>
           </div>
         </div>
 

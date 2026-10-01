@@ -1,11 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import WorkSchema from '../../components/WorkSchema.astro';
+import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
+import { CASE_STUDIES } from '../../data/internal-links';
 
 const team = [
   {
     name: 'Antonio Cumberbatch',
     role: 'Founder & Technical Lead',
-    bio: 'Antonio architected and led the full V3 rebuild — from infrastructure design on Azure to API layer and product strategy. He holds 7 Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
+    bio: 'Antonio architected and led the full V3 rebuild — from infrastructure design on Azure to API layer and product strategy. He holds 5 active Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
     photo: null,
   },
   {
@@ -49,6 +52,15 @@ const versions = [
   description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
 >
 
+  <WorkSchema
+    name="3 Stripes Technologies EMR"
+    description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
+    path="/work/3-stripes-tech"
+    breadcrumbLabel="3 Stripes Tech EMR"
+    about={['Electronic Medical Records', 'Healthcare IT', 'Microsoft Azure', 'NestJS', 'Azure Front Door', 'Caribbean Healthcare']}
+  />
+
+
   <!-- HERO BANNER -->
   <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
     <div style="position:absolute;inset:0;background:rgba(15,22,36,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
@@ -79,7 +91,7 @@ const versions = [
         </div>
       </div>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records'], ['10+', 'Doctors on Platform']].map(([val, label]) => (
+        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records'], ['11', 'Doctors on Platform']].map(([val, label]) => (
           <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
             <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
@@ -137,7 +149,7 @@ const versions = [
       ))}
 
       <h2>Current State</h2>
-      <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of over 10 doctors.</p>
+      <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of 11 doctors.</p>
 
       <h2>Sound familiar?</h2>
       <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
@@ -194,5 +206,7 @@ const versions = [
       </a>
     </div>
   </section>
+
+  <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.qualitech]} />
 
 </BaseLayout>
