@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { postSlug } from '../../data/internal-links';
 
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
 const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -60,7 +61,7 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
     <section style="padding:0 1.5rem 3rem;">
       <div style="max-width:1200px;margin:0 auto;">
         <a
-          href={`/blog/${featuredPost.slug}`}
+          href={`/blog/${postSlug(featuredPost)}`}
           class="reveal featured-post"
           data-category={featuredPost.data.category}
           style="display:grid;grid-template-columns:1fr 1fr;gap:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;overflow:hidden;text-decoration:none;transition:border-color 0.2s,transform 0.2s,box-shadow 0.2s;"
@@ -109,7 +110,7 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
         <div id="post-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1.5rem;">
           {remainingPosts.map(post => (
             <a
-              href={`/blog/${post.slug}`}
+              href={`/blog/${postSlug(post)}`}
               class="card-lift reveal post-card"
               data-category={post.data.category}
               style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;overflow:hidden;text-decoration:none;display:flex;flex-direction:column;"

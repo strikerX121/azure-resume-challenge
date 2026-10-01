@@ -60,6 +60,10 @@ export const POST_LINKS: Record<string, InternalLink[]> = {
   '2019-visibility-strategy-2026-world': [CAPABILITIES_LINK],
 };
 
+export function postSlug(post: { id?: string; slug?: string }): string {
+  return (post.slug ?? post.id ?? '').replace(/\.mdx?$/, '');
+}
+
 export function linksForPost(slug: string): InternalLink[] {
   return POST_LINKS[slug] ?? [];
 }
@@ -69,12 +73,13 @@ export function linksForPost(slug: string): InternalLink[] {
  * then most recent, never including the post itself. Returns at most `limit`.
  */
 export function relatedPosts<
-  T extends { slug: string; data: { category: string; tags?: string[]; pubDate: Date } }
+  T extends { id?: string; slug?: string; data: { category: string; tags?: string[]; pubDate: Date } }
 >(current: T, all: T[], limit = 3): T[] {
   const currentTags = new Set(current.data.tags ?? []);
+  const currentSlug = postSlug(current);
 
   const scored = all
-    .filter((p) => p.slug !== current.slug)
+    .filter((p) => postSlug(p) !== currentSlug)
     .map((p) => {
       let score = 0;
       if (p.data.category === current.data.category) score += 3;

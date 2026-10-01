@@ -2,6 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import { Image } from 'astro:assets';
 import type { InternalLink } from '../data/internal-links';
+import { postSlug } from '../data/internal-links';
 
 interface Props {
   title: string;
@@ -11,7 +12,7 @@ interface Props {
   tags: string[];
   image?: string;
   /** Related posts chosen by the caller (see data/internal-links.ts). */
-  related?: { slug: string; data: { title: string; description: string; category: string } }[];
+  related?: { id?: string; slug?: string; data: { title: string; description: string; category: string } }[];
   /** Case study / capability links this post should feed. */
   proofLinks?: InternalLink[];
 }
@@ -88,7 +89,7 @@ function readTime(body: string) {
         <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 1rem;">Related reading</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
           {related.map(post => (
-            <a href={`/blog/${post.slug}`} class="card-lift" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.25rem;text-decoration:none;display:block;">
+            <a href={`/blog/${postSlug(post)}`} class="card-lift" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.25rem;text-decoration:none;display:block;">
               <span style="font-size:0.6875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{post.data.category}</span>
               <h3 style="font-family:var(--font-display);font-size:0.9375rem;font-weight:700;color:var(--color-text);margin:0.5rem 0 0.5rem;line-height:1.4;">{post.data.title}</h3>
               <p style="font-size:0.8125rem;color:var(--color-text-muted);line-height:1.55;margin:0;">{post.data.description}</p>
