@@ -85,7 +85,7 @@ const articleSchema = isBlogPost ? {
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>{title}</title>
   <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
   <link rel="apple-touch-icon" href="/favicon.jpg" />
@@ -177,11 +177,50 @@ const articleSchema = isBlogPost ? {
 
   <!-- Scroll reveal -->
   <script>
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
-      { threshold: 0.1 }
-    );
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (prefersReducedMotion) {
+      // CSS already shows these; just mark them so state is consistent.
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+    } else {
+      const observer = new IntersectionObserver(
+        (entries, obs) => entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            // Reveal is one-shot — stop observing so we don't pay for
+            // intersection callbacks on every subsequent scroll.
+            obs.unobserve(e.target);
+          }
+        }),
+        // Start slightly before the element enters view so the transition has
+        // finished by the time it is comfortably on screen.
+        { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+  </script>
+
+  <!-- Nav gains a shadow once the page is scrolled, so it reads as a layer
+       above the content rather than a flat band. -->
+  <script>
+    const siteHeader = document.querySelector('header');
+    if (siteHeader) {
+      let ticking = false;
+      const applyHeaderState = () => {
+        const scrolled = window.scrollY > 8;
+        siteHeader.style.boxShadow = scrolled
+          ? '0 4px 20px rgba(0,0,0,0.35), 0 1px 0 rgba(255,255,255,0.06)'
+          : '0 1px 0 rgba(255,255,255,0.06)';
+        ticking = false;
+      };
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          ticking = true;
+          requestAnimationFrame(applyHeaderState);
+        }
+      }, { passive: true });
+      applyHeaderState();
+    }
   </script>
 </body>
 </html>

@@ -318,7 +318,7 @@ const outcomes = [
   <!-- LEAD MAGNET CALLOUT -->
   <section style="padding:0 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
-      <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem 2.5rem;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;">
+      <div class="reveal lead-magnet" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem 2.5rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2rem;align-items:center;">
         <div>
           <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.5rem;">Free Download</p>
           <p style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">Is your team actually ready for Microsoft Copilot?</p>
@@ -438,6 +438,17 @@ const outcomes = [
     .hero-inner { grid-template-columns: 1fr !important; }
     .hero-photo-wrap { display: flex; justify-content: center; order: -1; }
     .hero-photo-wrap > div { width: 180px !important; height: 180px !important; }
+    /* The CTA is nowrap and wider than the remaining track at ~360px, which
+       pushed the page into horizontal scroll. Stack it instead. */
+    .lead-magnet {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 1.25rem !important;
+      padding: 1.75rem !important;
+    }
+    .lead-magnet a {
+      display: block !important;
+      text-align: center;
+    }
   }
 </style>
 

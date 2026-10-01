@@ -39,6 +39,14 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  /* Guard against a single long token (emails, URLs) widening the page on
+     narrow viewports — the root cause of horizontal scroll on /privacy. */
+  overflow-wrap: break-word;
+}
+
+/* Remove the grey flash on tap for interactive elements on iOS/Android. */
+a, button {
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -49,18 +57,26 @@ h1, h2, h3, h4, h5, h6 {
 /* Scroll reveal animation */
 .reveal {
   opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(18px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  /* Release compositor hints once the animation has played. */
+  will-change: auto;
 }
 
 /* Card hover lift */
 .card-lift {
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
   box-shadow: var(--shadow-sm);
 }
 
@@ -68,6 +84,54 @@ h1, h2, h3, h4, h5, h6 {
   transform: translateY(-3px);
   border-color: rgba(255, 107, 43, 0.30) !important;
   box-shadow: var(--shadow-hover);
+}
+
+/* Keyboard parity with :hover, and a visible focus ring for accessibility. */
+.card-lift:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(255, 107, 43, 0.30) !important;
+  box-shadow: var(--shadow-hover);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Touch devices get no hover state, so the lift would stick after a tap.
+   Give them a brief press response instead. */
+@media (hover: none) {
+  .card-lift:hover {
+    transform: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .card-lift:active {
+    transform: scale(0.99);
+  }
+}
+
+/* Respect users who ask the OS to reduce motion: show content immediately,
+   with no transform, scroll animation, or lift. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+  .card-lift,
+  .card-lift:hover,
+  .card-lift:focus-visible {
+    transition: none;
+    transform: none;
+  }
 }
 
 /* CSS grid background pattern for hero */

@@ -178,7 +178,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .contact-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    /* minmax(0, 1fr) rather than 1fr: a plain 1fr track refuses to shrink below
+       its min-content, and the non-wrapping email address made that min-content
+       wider than a 360px viewport, forcing horizontal page scroll. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 4rem;
     align-items: start;
   }
@@ -387,7 +390,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   @media (max-width: 768px) {
     .contact-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2.5rem;
     }
     .contact-sidebar {
       order: -1;

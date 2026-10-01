@@ -181,7 +181,7 @@ function badgeStyle(status: string): string {
       <div class="reveal" style="margin-bottom:1.5rem;">
         <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">What Was Built</h2>
       </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;">
+      <div class="workstream-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:1rem;">
         {workstreams.map(w => (
           <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;display:flex;flex-direction:column;gap:0.75rem;">
             <div style="display:flex;align-items:center;justify-content:space-between;gap:0.75rem;flex-wrap:wrap;">
@@ -234,3 +234,13 @@ function badgeStyle(status: string): string {
   <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.sassi]} />
 
 </BaseLayout>
+
+<style>
+  /* The 380px minimum track cannot fit a 360px viewport, so the grid overflowed
+     the page. Collapse to a single column before that happens. */
+  @media (max-width: 640px) {
+    .workstream-grid {
+      grid-template-columns: minmax(0, 1fr) !important;
+    }
+  }
+</style>
