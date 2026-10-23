@@ -10,42 +10,77 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="contact-hero">
     <div class="container">
       <p class="reveal eyebrow">Contact</p>
-      <h1 class="reveal">Let&apos;s Build Something.</h1>
-      <p class="reveal subheading">I reply within 48 hours on business days.</p>
+      <h1 class="reveal">Discuss your project.</h1>
+      <p class="reveal subheading">Tell me what is breaking and what you have already tried. I reply within 48 hours on business days.</p>
     </div>
   </section>
 
   <section class="contact-body">
     <div class="container contact-grid">
 
-      <!-- Contact Form -->
+      <!-- Draft an email.
+           This composes a message in the visitor's own mail application. It is
+           labelled that way on purpose: the page has no server-side send, so
+           claiming otherwise would be a form that appears to submit and does
+           not. The fallback block below is always visible, not revealed on
+           failure, because a browser with no mail handler gives us no event to
+           react to. -->
       <div class="reveal">
-        <h2 class="section-heading">Send a Message</h2>
+        <h2 class="section-heading">Start a conversation</h2>
+
+        <p class="compose-note">
+          Fill this in and it opens a pre-filled draft in your own email app. Nothing is sent from this page, so you will see the message before it goes and keep a copy in your sent items.
+        </p>
+
         <form id="contact-form" class="contact-form">
           <div class="field">
             <label for="name">Name</label>
             <input type="text" id="name" name="name" required placeholder="Your name" />
           </div>
           <div class="field">
-            <label for="email">Email</label>
+            <label for="email">Your email</label>
             <input type="email" id="email" name="email" required placeholder="your@email.com" />
           </div>
           <div class="field">
-            <label for="subject">Subject</label>
+            <label for="subject">What is this about</label>
             <select id="subject" name="subject">
-              <option value="General Enquiry">General Enquiry</option>
-              <option value="Project Scope">Project Scope</option>
-              <option value="Discovery Call">Discovery Call</option>
-              <option value="Workshop">Workshop</option>
+              <option value="Project enquiry">Project enquiry</option>
+              <option value="Cloud architecture or assessment">Cloud architecture or assessment</option>
+              <option value="Automation or integration">Automation or integration</option>
+              <option value="Specialist contracting">Specialist contracting</option>
+              <option value="Copilot workshop">Copilot workshop</option>
+              <option value="Something else">Something else</option>
             </select>
           </div>
           <div class="field">
             <label for="message">Message</label>
-            <textarea id="message" name="message" required rows="5" placeholder="Tell me about your project or question..."></textarea>
+            <textarea id="message" name="message" required rows="5" placeholder="What is breaking, and what have you already tried?"></textarea>
           </div>
-          <button type="submit" class="btn-primary">Send Message</button>
-          <p id="form-status" class="form-status"></p>
+          <button type="submit" class="btn-primary" data-track="contact_intent" data-track-context="contact-compose">Open draft in my email app</button>
+          <p id="form-status" class="form-status" role="status"></p>
         </form>
+
+        <div class="fallback">
+          <h3 class="fallback-heading">No mail app on this device?</h3>
+          <p class="fallback-note">
+            The button above needs an email application registered in your browser. If it does nothing, use one of these instead. The address is selectable, so you can copy it into webmail.
+          </p>
+          <p class="fallback-address">
+            <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" data-track="contact_intent" data-track-context="contact-fallback-email">antonio.cumberbatch@arccloudconsulting.com</a>
+          </p>
+          <p class="fallback-note">
+            Or <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer" class="fallback-link">book a 30-minute call directly</a>, which needs no email at all.
+          </p>
+        </div>
+
+        <div class="next-steps">
+          <h3 class="fallback-heading">What happens next</h3>
+          <ol class="next-list">
+            <li>I read it myself. There is no inbox team and no autoresponder.</li>
+            <li>You get a reply within 48 hours on business days, even if the answer is that it is not a fit.</li>
+            <li>If it looks workable, the next step is a short call to scope the actual problem before anyone talks about cost.</li>
+          </ol>
+        </div>
       </div>
 
       <!-- Sidebar -->
@@ -266,9 +301,74 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   .form-status {
     font-size: 0.875rem;
-    color: var(--color-accent);
+    color: var(--color-text-muted);
     display: none;
     margin: 0;
+    line-height: 1.6;
+  }
+
+  .compose-note {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: -0.75rem 0 1.5rem;
+  }
+
+  .fallback,
+  .next-steps {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .fallback-heading {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin: 0 0 0.625rem;
+  }
+
+  .fallback-note {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin: 0 0 0.75rem;
+  }
+
+  .fallback-address {
+    margin: 0 0 0.875rem;
+    /* The address must stay selectable and must not widen the page on a narrow
+       viewport, hence the explicit wrap rather than nowrap plus ellipsis. */
+    overflow-wrap: anywhere;
+  }
+
+  .fallback-address a {
+    font-family: var(--font-mono);
+    font-size: 0.9375rem;
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .fallback-link {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .next-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .next-list li {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
   }
 
   /* Sidebar */
@@ -401,6 +501,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status');
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -410,6 +511,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     const message = (form.elements.namedItem('message') as HTMLTextAreaElement).value;
 
     const body = `Name: ${name}\nEmail: ${email}\n\n${message}`;
-    window.location.href = `mailto:antonio.cumberbatch@arccloudconsulting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const href = `mailto:antonio.cumberbatch@arccloudconsulting.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+    // No success claim here. A mailto: navigation gives the page no signal about
+    // whether a mail client actually opened, so the status says what should have
+    // happened and points at the fallback rather than asserting it was sent.
+    if (status) {
+      status.textContent = 'Your email app should now be opening with this message as a draft. Nothing has been sent yet, so check it and press send there. If no draft appeared, copy the address below into your webmail instead.';
+      status.style.display = 'block';
+    }
+
+    window.location.href = href;
   });
 </script>

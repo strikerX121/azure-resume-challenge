@@ -3,19 +3,21 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
+import { Image } from 'astro:assets';
+import rakibImg from '../../assets/images/rakib-hasan.jpg';
 
 const team = [
   {
     name: 'Antonio Cumberbatch',
     role: 'Founder & Technical Lead',
-    bio: 'Antonio architected and led the full V3 rebuild — from infrastructure design on Azure to API layer and product strategy. He holds 5 active Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
+    bio: 'Antonio architected and led the full V3 rebuild, from infrastructure design on Azure through the API layer to product strategy. He holds 5 active Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
     photo: null,
   },
   {
     name: 'Rakib Hasan',
     role: 'UI/UX Designer & Frontend Developer',
     bio: 'For 3 Stripes Technology, I designed a comprehensive healthcare management system centered around the user. From structuring complex Electronic Medical Records (EMR) to crafting an accessible patient portal, my goal was to create a clean, minimalist interface that reduces cognitive load for medical professionals and patients alike.',
-    photo: '/images/Rakib%20Hasan.jpeg',
+    photo: rakibImg,
   },
   {
     name: 'Naeem Hasan',
@@ -29,26 +31,26 @@ const versions = [
   {
     label: 'V1',
     status: 'Retired',
-    heading: 'V1 — Retired',
-    body: 'The first version was built on a low-code Oracle platform. It proved the concept but hit a ceiling quickly — the platform wasn\'t suited to the kind of custom clinical logic the product needed as requirements matured.',
+    heading: 'V1, retired',
+    body: 'The first version was built on a low-code Oracle platform. It proved the concept but hit a ceiling quickly, because the platform wasn\'t suited to the kind of custom clinical logic the product needed as requirements matured.',
   },
   {
     label: 'V2',
     status: 'Retired',
-    heading: 'V2 — Retired',
+    heading: 'V2, retired',
     body: 'V2 was a proper web application and was publicly presented at the T&T Medical Research Conference at the Radisson Hotel. Feedback from the medical community was positive. But the product had a critical architectural problem: patient record lists loaded the entire dataset client-side on every request. At 7,000+ records, that meant 5–10 second load times on a core workflow. The codebase wasn\'t built to fix that without a full rewrite. So we did a full rewrite.',
   },
   {
     label: 'V3',
     status: 'Live',
-    heading: 'V3 — Current (Launched 2025)',
-    body: 'V3 is not an iteration of V2. It\'s a complete ground-up rebuild with a monorepo architecture, TypeScript end-to-end, and a properly separated API and frontend layer. The core technical decision was moving to server-driven pagination — list views query only what they need, with server-enforced limits and validated response contracts. Load times on the same dataset dropped from 5–10 seconds to under a second.\n\nThe platform runs on Azure with a WAF layer in front of the frontend. During early production, automated bot traffic was spiking compute usage to 80–100% CPU. Adding a WAF dropped baseline resource usage to 30–40% and eliminated the impact on real users entirely. That removed an entire class of infrastructure risk.',
+    heading: 'V3, current (launched 2025)',
+    body: 'V3 is not an iteration of V2. It\'s a complete ground-up rebuild with a monorepo architecture, TypeScript end-to-end, and a properly separated API and frontend layer. The core technical decision was moving to server-driven pagination: list views query only what they need, with server-enforced limits and validated response contracts. Load times on the same dataset dropped from 5–10 seconds to under a second.\n\nThe platform runs on Azure with a WAF layer in front of the frontend. During early production, automated bot traffic was spiking compute usage to 80–100% CPU. Adding a WAF dropped baseline resource usage to 30–40% and eliminated the impact on real users entirely. That removed an entire class of infrastructure risk.',
   },
 ];
 ---
 
 <BaseLayout
-  title="3 Stripes Tech EMR — Case Study"
+  title="3 Stripes Tech EMR | Caribbean Cloud EMR Case Study"
   description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
 >
 
@@ -69,7 +71,7 @@ const versions = [
       <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:600px;">A cloud-based EMR built from the ground up for Caribbean medical practices.</p>
       <p style="font-size:0.9375rem;color:rgba(255,255,255,0.5);margin:0;font-style:italic;">Three versions. Four years. One platform doctors actually use.</p>
     </div>
-    <span style="position:absolute;bottom:0.875rem;right:1rem;font-size:0.6875rem;color:rgba(255,255,255,0.2);font-style:italic;">[Hero image — add as background-image when available]</span>
+    <span style="position:absolute;bottom:0.875rem;right:1rem;font-size:0.6875rem;color:rgba(255,255,255,0.2);font-style:italic;">[Hero image: add as background-image when available]</span>
   </div>
 
   <!-- NAV + STATS -->
@@ -78,7 +80,7 @@ const versions = [
       <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
       <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
         <div style="width:80px;height:80px;border-radius:12px;background:#0F1624;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
-          <img src="/images/logos/3st-logo.svg" alt="3 Stripes Technologies logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+          <img src="/images/logos/3st-logo.svg" alt="3 Stripes Technologies logo" width="64" height="64" loading="eager" decoding="async" style="width:64px;height:64px;object-fit:contain;" />
         </div>
         <div>
           <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
@@ -112,7 +114,7 @@ const versions = [
         {team.map(person => (
           <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;flex-direction:column;align-items:center;text-align:center;">
             {person.photo ? (
-              <img src={person.photo} alt={person.name} width="80" height="80" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);margin-bottom:1rem;flex-shrink:0;" />
+              <Image src={person.photo} width={80} height={80} alt={person.name} loading="lazy" decoding="async" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);margin-bottom:1rem;flex-shrink:0;" />
             ) : (
               <div style="width:80px;height:80px;border-radius:50%;background:var(--color-surface-2);border:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;margin-bottom:1rem;flex-shrink:0;">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
@@ -132,7 +134,7 @@ const versions = [
     <div class="prose" style="max-width:900px;margin:0 auto;">
 
       <h2>The Problem</h2>
-      <p>Caribbean medical practices were managing patient records on paper or on foreign EMR systems that weren't built for how regional doctors actually work — not for the documentation patterns, the practice sizes, or the local infrastructure constraints. We built 3ST EMR to close that gap.</p>
+      <p>Caribbean medical practices were managing patient records on paper or on foreign EMR systems that weren't built for how regional doctors actually work, whether that is the documentation patterns, the practice sizes, or the local infrastructure constraints. We built 3ST EMR to close that gap.</p>
 
       <h2>Three Versions to Get It Right</h2>
 

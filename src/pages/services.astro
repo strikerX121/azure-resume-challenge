@@ -15,7 +15,7 @@ const services = [
   {
     num: '02',
     label: '3 Stripes Tech EMR',
-    tagline: "Caribbean's first cloud EMR built for regional healthcare.",
+    tagline: 'A cloud-based EMR built for Caribbean healthcare providers.',
     desc: 'Cloud-based Electronic Medical Records designed around how Caribbean doctors actually work. 25-day free trial. Pricing starts at $99 USD/user/month.',
     for: 'Medical practices, clinics, and hospitals across the Caribbean.',
     engagement: '$99 USD/user/month.',
@@ -39,7 +39,7 @@ const services = [
     num: '04',
     label: 'AI Operations Architecture',
     tagline: 'AI consulting and business process automation for operations that still run on spreadsheets.',
-    desc: 'Most businesses do not have an AI problem, they have an operations problem: the data lives in seven spreadsheets, the follow-up lives in WhatsApp, and nothing has history. This is the engagement that fixes the order of operations — centralise the data first, then layer automation and AI-assisted workflows on top of a real source of truth. Business process automation, automation-backed portals, AI support systems, and AI agent work on Azure and n8n. Built the same way as the live systems behind Enterprise Apps Masterview, QT Digital, and SASSI.',
+    desc: 'Most businesses do not have an AI problem, they have an operations problem: the data lives in seven spreadsheets, the follow-up lives in WhatsApp, and nothing has history. This is the engagement that fixes the order of operations: centralise the data first, then layer automation and AI-assisted workflows on top of a real source of truth. Business process automation, automation-backed portals, AI support systems, and AI agent work on Azure and n8n. Built the same way as the live systems behind Enterprise Apps Masterview, QT Digital, and SASSI.',
     for: 'Operations leaders, MDs, and teams past the point where spreadsheets hold up.',
     engagement: 'Scoped architecture engagement, then phased build or monthly retainer.',
     cta: 'See the Capability Stack',
@@ -81,13 +81,13 @@ const orgSchema = {
   ],
 };
 
-// Service/Offer schema — absent before 2026-10-01 despite four named offers in
+// Service/Offer schema, covering the named offers listed in
 // visible copy. One Service entry per visible offer, in the same order, so the
 // structured data cannot silently drift from the page.
 const serviceSchema = {
   '@context': 'https://schema.org',
   '@type': 'ItemList',
-  name: 'Services — Antonio Cumberbatch',
+  name: 'Services, Antonio Cumberbatch',
   itemListElement: services.map((s, i) => ({
     '@type': 'ListItem',
     position: i + 1,
@@ -206,7 +206,7 @@ const faqSchema = {
       name: 'What is AI Operations Architecture?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'It is the engagement for businesses whose real constraint is operations rather than AI: data spread across isolated spreadsheets, follow-up living in email and WhatsApp, and no history on anything. The work is business process automation in the right order — centralise the data into one source of truth first, then build automation, portals, and AI-assisted workflows on top of it. In practice that means Azure infrastructure, n8n automation, and AI support or agent workflows where they genuinely reduce manual effort.',
+        text: 'It is the engagement for businesses whose real constraint is operations rather than AI: data spread across isolated spreadsheets, follow-up living in email and WhatsApp, and no history on anything. The work is business process automation in the right order: centralise the data into one source of truth first, then build automation, portals, and AI-assisted workflows on top of it. In practice that means Azure infrastructure, n8n automation, and AI support or agent workflows where they genuinely reduce manual effort.',
       },
     },
     {
@@ -214,7 +214,7 @@ const faqSchema = {
       name: 'How is AI consulting different from Copilot training?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Copilot enablement makes an existing Microsoft 365 rollout actually get used — readiness, adoption, and training for your team. AI consulting and business process automation go a layer deeper: changing how the work itself flows, with automation and custom systems behind it. They are separate offers here because they solve separate problems, and plenty of businesses need one without the other.',
+        text: 'Copilot enablement makes an existing Microsoft 365 rollout actually get used, through readiness assessment, adoption support and training for your team. AI consulting and business process automation go a layer deeper: changing how the work itself flows, with automation and custom systems behind it. They are separate offers here because they solve separate problems, and plenty of businesses need one without the other.',
       },
     },
   ],
@@ -222,7 +222,7 @@ const faqSchema = {
 ---
 
 <BaseLayout
-  title="Services — Antonio Cumberbatch"
+  title="Services | Cloud Consulting, Automation and Copilot Enablement"
   description="Cloud transformation, healthcare EMR, Copilot enablement, and AI operations architecture. Four focused offerings for Caribbean businesses and beyond."
 >
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
@@ -235,7 +235,7 @@ const faqSchema = {
     <div style="max-width:1200px;margin:0 auto;">
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Services</p>
       <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Four Ways to Work Together</h1>
-      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:620px;">Cloud architecture, healthcare software, Copilot adoption, and AI operations — focused on the Caribbean market and beyond.</p>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:620px;">Cloud architecture and assessments, automation and integration, Microsoft 365 and identity, and Copilot enablement. Based in Trinidad and Tobago, delivered remotely across the Caribbean and North America.</p>
     </div>
   </section>
 
@@ -270,7 +270,7 @@ const faqSchema = {
     </div>
   </section>
 
-  <!-- HOW I WORK — NAMED FRAMEWORKS -->
+  <!-- How I work: named frameworks -->
   <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:5rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;">
       <div class="reveal" style="margin-bottom:3rem;">
