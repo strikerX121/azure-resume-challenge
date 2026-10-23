@@ -9,6 +9,15 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    env:
+      # Single source of truth for the cache policy. scripts/check-upload-policy.mjs
+      # parses THIS file and asserts that every file in dist/ ends up with the
+      # policy its class requires, so the test cannot drift from the workflow.
+      BASELINE_CACHE: 'public, max-age=0, must-revalidate'
+      IMAGE_CACHE: 'public, max-age=604800, stale-while-revalidate=86400'
+      CRAWLER_CACHE: 'public, max-age=3600'
+      IMMUTABLE_CACHE: 'public, max-age=31536000, immutable'
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,152 +36,204 @@ jobs:
 
       # Fail before anything reaches Azure if the build output is wrong: broken
       # internal links, broken or unsized images, a canonical that disagrees
-      # with the sitemap, invalid JSON-LD, or an em dash in public copy.
+      # with the sitemap, invalid JSON-LD, an em dash in public copy, a CV whose
+      # bytes are not the approved artifact, or an upload policy that would
+      # leave a file stale or mis-cached.
       - name: Verify build output
         run: npm run verify
 
       - name: Log in to Azure
         run: |
+          set -euo pipefail
           az login --service-principal \
-            --username ${{ secrets.ARC_RESUME_CLIENT_ID }} \
-            --password ${{ secrets.ARC_RESUME_CLIENT_SECRET }} \
-            --tenant ${{ secrets.ARC_RESUME_TENANT_ID }}
-          az account set --subscription ${{ secrets.ARC_RESUME_SUBSCRIPTION_ID }}
+            --username "${{ secrets.ARC_RESUME_CLIENT_ID }}" \
+            --password "${{ secrets.ARC_RESUME_CLIENT_SECRET }}" \
+            --tenant "${{ secrets.ARC_RESUME_TENANT_ID }}"
+          az account set --subscription "${{ secrets.ARC_RESUME_SUBSCRIPTION_ID }}"
 
-      # Upload order matters, and so does the fact that no step re-uploads a
-      # blob an earlier step already set headers on.
+      # ---------------------------------------------------------------------
+      # Upload strategy: baseline first, then intentional overrides.
       #
-      # The previous version of this workflow ended with an unfiltered
-      # `upload-batch -s dist` carrying no --content-cache-control. Because
-      # --overwrite was true, that step re-uploaded every blob the three
-      # preceding steps had just uploaded, and re-uploading a blob without the
-      # property clears it. Net effect: production served no Cache-Control
-      # header at all, on HTML, CSS, images and PDFs alike.
+      # Why not one pattern-scoped pass per file class (the previous design):
+      # `az storage blob upload-batch --pattern` is Python fnmatch applied to
+      # the FULL joined path, and fnmatch's `*` matches `/` as well. That has
+      # two consequences the previous workflow got wrong.
       #
-      # The catch-all step is now pattern-scoped and non-overwriting, so each
-      # blob is uploaded exactly once under exactly one cache policy.
+      #   1. `**/*.html` does NOT match a root-level file. The pattern becomes
+      #      `dist/**/*.html`, which requires a literal `/` after `dist/`, so
+      #      `dist/index.html` and `dist/404.html` matched nothing. The only
+      #      step that would have caught them was the catch-all, which ran with
+      #      `--overwrite false` and therefore skipped them because they already
+      #      existed in `$web`. Net effect: the homepage and the 404 page could
+      #      never be updated by a deploy. Verified against Python fnmatch with
+      #      the real dist/ tree.
+      #   2. Because `*` crosses `/`, extension patterns like `*.svg`, `*.webp`
+      #      and `*.js` also matched files inside `_astro/`, so a later pass
+      #      overwrote the immutable header an earlier pass had just set.
       #
-      # Policy:
-      #   HTML            must revalidate, so a copy fix is visible immediately
-      #   _astro/*        content-hashed by Astro, safe to pin as immutable
-      #   images, icons   long-lived but still revalidatable: these filenames are
-      #                   mutable, so immutable would strand a replaced image
-      #   PDFs            the CV filename is stable while its bytes can change,
-      #                   so it must revalidate rather than be pinned for a year
-      #   txt/xml/json    crawler-facing, short cache so robots, sitemap and
-      #                   llms.txt changes propagate quickly
+      # So "every blob is uploaded exactly once under exactly one policy" was
+      # not true, and cannot easily be made true with overlapping fnmatch
+      # patterns. This version stops pretending otherwise:
       #
-      # Nothing whose filename is stable while its contents can change is marked
-      # immutable. A stale mutable filename behind an immutable header cannot be
-      # corrected without a purge.
+      #   Pass 0  uploads EVERYTHING with a conservative revalidating header.
+      #           Nothing can be missed, and nothing can go stale, because the
+      #           worst case is a file that revalidates more often than needed.
+      #   Pass 1+ deliberately re-upload subsets to widen their cache, in an
+      #           order where the LAST writer for any overlapping file is the
+      #           correct one. `_astro/` is re-asserted last precisely because
+      #           the extension patterns above it reach inside it.
+      #
+      # HTML and PDFs intentionally have no override pass: the baseline header
+      # is already the policy they need. The CV filename is stable while its
+      # bytes can change, so it must revalidate rather than be pinned.
+      #
+      # Every step is `set -euo pipefail` with no `|| true` / `|| echo`. An
+      # authorization, network or quota failure must fail the deploy, not be
+      # reported as "nothing left to upload".
+      #
+      # Known limitation: upload-batch only adds and replaces. It never deletes
+      # a blob that is no longer in dist/, so a renamed or removed page stays
+      # reachable at its old URL until it is deleted out of band.
+      # ---------------------------------------------------------------------
 
-      - name: Upload HTML (must revalidate)
+      - name: 'Upload pass 0: every file (baseline, must revalidate)'
         run: |
+          set -euo pipefail
           az storage blob upload-batch \
-            --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
+            --account-name "${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }}" \
             -s dist -d '$web' \
-            --pattern "**/*.html" \
-            --content-cache-control "public, max-age=0, must-revalidate" \
+            --content-cache-control "$BASELINE_CACHE" \
             --overwrite true
 
-      - name: Upload hashed assets (immutable)
+      - name: 'Upload pass 1: images and icons (one week, revalidatable)'
         run: |
+          set -euo pipefail
+          for pattern in "*.png" "*.jpg" "*.jpeg" "*.webp" "*.avif" "*.gif" "*.ico" "*.svg"; do
+            az storage blob upload-batch \
+              --account-name "${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }}" \
+              -s dist -d '$web' \
+              --pattern "$pattern" \
+              --content-cache-control "$IMAGE_CACHE" \
+              --overwrite true
+          done
+
+      - name: 'Upload pass 2: crawler and feed files (short cache)'
+        run: |
+          set -euo pipefail
+          for pattern in "*.txt" "*.xml" "*.json" "*.webmanifest"; do
+            az storage blob upload-batch \
+              --account-name "${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }}" \
+              -s dist -d '$web' \
+              --pattern "$pattern" \
+              --content-cache-control "$CRAWLER_CACHE" \
+              --overwrite true
+          done
+
+      # Must be the last upload step. Astro content-hashes these filenames, so
+      # they are the only safe immutable class, and running last reclaims any
+      # _astro file that pass 1 or pass 2 matched by extension.
+      - name: 'Upload pass 3: hashed assets (immutable, runs last)'
+        run: |
+          set -euo pipefail
           az storage blob upload-batch \
-            --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
+            --account-name "${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }}" \
             -s dist -d '$web' \
             --pattern "_astro/*" \
-            --content-cache-control "public, max-age=31536000, immutable" \
+            --content-cache-control "$IMMUTABLE_CACHE" \
             --overwrite true
-
-      - name: Upload images (one week, revalidatable)
-        run: |
-          for pattern in "images/**/*" "*.png" "*.jpg" "*.jpeg" "*.svg" "*.webp" "*.ico"; do
-            az storage blob upload-batch \
-              --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
-              -s dist -d '$web' \
-              --pattern "$pattern" \
-              --content-cache-control "public, max-age=604800, stale-while-revalidate=86400" \
-              --overwrite true
-          done
-
-      - name: Upload PDFs (must revalidate)
-        run: |
-          az storage blob upload-batch \
-            --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
-            -s dist -d '$web' \
-            --pattern "*.pdf" \
-            --content-cache-control "public, max-age=0, must-revalidate" \
-            --overwrite true
-
-      - name: Upload crawler and feed files (short cache)
-        run: |
-          for pattern in "*.txt" "*.xml" "*.json" "*.js" "*.webmanifest"; do
-            az storage blob upload-batch \
-              --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
-              -s dist -d '$web' \
-              --pattern "$pattern" \
-              --content-cache-control "public, max-age=3600" \
-              --overwrite true
-          done
-
-      # Safety net for any file type the patterns above do not cover, so a new
-      # asset type cannot silently fail to deploy. --overwrite is false here on
-      # purpose: it must never clobber the headers set above.
-      - name: Upload anything not already covered
-        run: |
-          az storage blob upload-batch \
-            --account-name ${{ secrets.ARC_RESUME_STORAGE_ACCOUNT }} \
-            -s dist -d '$web' \
-            --content-cache-control "public, max-age=3600" \
-            --overwrite false \
-          || echo "Nothing uncovered left to upload."
 
       - name: Purge Azure Front Door CDN
         run: |
+          set -euo pipefail
           az afd endpoint purge \
-            --resource-group ${{ secrets.ARC_RESUME_RESOURCE_GROUP }} \
-            --profile-name ${{ secrets.ARC_RESUME_FRONT_DOOR_PROFILE }} \
-            --endpoint-name ${{ secrets.ARC_RESUME_FRONT_DOOR_ENDPOINT }} \
+            --resource-group "${{ secrets.ARC_RESUME_RESOURCE_GROUP }}" \
+            --profile-name "${{ secrets.ARC_RESUME_FRONT_DOOR_PROFILE }}" \
+            --endpoint-name "${{ secrets.ARC_RESUME_FRONT_DOOR_ENDPOINT }}" \
             --content-paths "/*"
 
       # Read the headers back from the edge rather than trusting that setting a
       # blob property worked. Source inspection is not proof of a served header,
       # and a Front Door rule can still override the origin.
-      - name: Verify served cache headers
+      #
+      # A purge is asynchronous, so this retries with a bounded backoff instead
+      # of racing the CDN and failing on the first miss. Every curl is bounded
+      # by --max-time so a hanging edge cannot hang the job.
+      - name: Verify served cache headers and CV bytes
         run: |
-          set -u
+          set -uo pipefail
           base="https://www.antoniocumberbatch.com"
-          fail=0
+          attempts=6
+          delay=10
 
-          check() {
-            url="$1"; expect="$2"
-            got="$(curl -sS -I "$url" | tr -d '\r' | awk -F': ' 'tolower($1)=="cache-control"{print $2}')"
-            echo "  $url"
-            echo "    expect contains: $expect"
-            echo "    got            : ${got:-<none>}"
-            case "$got" in
-              *"$expect"*) : ;;
-              *) echo "    MISMATCH"; fail=1 ;;
-            esac
+          header_of() {
+            curl -sS -I --max-time 20 --retry 2 --retry-delay 3 --retry-all-errors "$1" \
+              | tr -d '\r' | awk -F': ' 'tolower($1)=="cache-control"{print $2}'
           }
 
-          echo "Cache-Control readback:"
-          check "$base/" "must-revalidate"
-          check "$base/Antonio-Cumberbatch-CV-2026.pdf" "must-revalidate"
-          check "$base/robots.txt" "max-age=3600"
+          # Discover the real hashed asset URL from the deployed homepage rather
+          # than guessing a filename that changes on every build.
+          discover_hashed_asset() {
+            curl -sS --max-time 20 "$base/" \
+              | grep -o '/_astro/[^"]*\.\(css\|js\)' | head -1
+          }
 
-          asset="$(curl -sS "$base/" | grep -o '/_astro/[^"]*\.css' | head -1)"
+          fail=0
+          check() {
+            url="$1"; expect="$2"; got=""
+            for i in $(seq 1 "$attempts"); do
+              got="$(header_of "$url")"
+              case "$got" in
+                *"$expect"*) echo "  OK       $url -> $got"; return 0 ;;
+              esac
+              [ "$i" -lt "$attempts" ] && sleep "$delay"
+            done
+            echo "  MISMATCH $url"
+            echo "      expected to contain: $expect"
+            echo "      got                : ${got:-<none>}"
+            fail=1
+            return 1
+          }
+
+          echo "Cache-Control readback (up to $attempts attempts, ${delay}s apart):"
+          check "$base/"                                  "must-revalidate"
+          check "$base/404.html"                          "must-revalidate"
+          check "$base/resume/"                           "must-revalidate"
+          check "$base/Antonio-Cumberbatch-CV-2026.pdf"   "must-revalidate"
+          check "$base/resume.pdf"                        "must-revalidate"
+          check "$base/robots.txt"                        "max-age=3600"
+          check "$base/sitemap-0.xml"                     "max-age=3600"
+
+          asset="$(discover_hashed_asset)"
           if [ -n "$asset" ]; then
             check "$base$asset" "immutable"
           else
-            echo "  could not discover a hashed asset URL to check"
+            echo "  could not discover a hashed asset URL from the served homepage"
             fail=1
           fi
 
+          # The approved CV must survive deployment byte for byte, under both
+          # filenames. This is the check that would catch a re-compressed or
+          # regenerated PDF reaching production.
+          echo "Approved CV hash readback:"
+          expected_cv="$(sha256sum dist/Antonio-Cumberbatch-CV-2026.pdf | awk '{print $1}')"
+          for name in "Antonio-Cumberbatch-CV-2026.pdf" "resume.pdf"; do
+            served="$(curl -sS --max-time 60 --retry 2 --retry-delay 5 "$base/$name" | sha256sum | awk '{print $1}')"
+            if [ "$served" = "$expected_cv" ]; then
+              echo "  OK       /$name $served"
+            else
+              echo "  MISMATCH /$name"
+              echo "      expected $expected_cv"
+              echo "      served   $served"
+              fail=1
+            fi
+          done
+
           if [ "$fail" -ne 0 ]; then
-            echo "Served cache headers do not match policy. The upload already"
-            echo "happened, so investigate the upload steps or any Front Door"
-            echo "rule overriding the origin before relying on this deploy."
+            echo ""
+            echo "Served state does not match policy. The upload already happened,"
+            echo "so investigate the upload passes or any Front Door rule"
+            echo "overriding the origin before relying on this deploy."
             exit 1
           fi
-          echo "All checked headers match policy."
+          echo "All checked headers and CV hashes match policy."
+

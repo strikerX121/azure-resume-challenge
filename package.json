@@ -7,8 +7,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "check:copy": "node scripts/check-no-em-dashes.mjs",
+    "check:upload": "node scripts/check-upload-policy.mjs",
     "audit:build": "node scripts/audit-build.mjs",
-    "verify": "node scripts/audit-build.mjs && node scripts/check-no-em-dashes.mjs",
+    "verify": "node scripts/audit-build.mjs && node scripts/check-no-em-dashes.mjs && node scripts/check-upload-policy.mjs",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
