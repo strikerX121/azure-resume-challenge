@@ -7,8 +7,8 @@ export async function GET(context) {
   const sorted = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
   return rss({
-    title: 'Antonio Cumberbatch — Cloud Architect & Consultant',
-    description: 'Cloud architecture, Azure, automation, and building digital infrastructure for Caribbean businesses.',
+    title: 'Antonio Cumberbatch: Cloud Solutions Architect',
+    description: 'Writing on cloud architecture, Azure, automation and integration, and the engineering behind real business systems.',
     site: context.site,
     items: sorted.map((post) => ({
       title: post.data.title,
