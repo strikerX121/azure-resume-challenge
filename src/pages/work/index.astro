@@ -1,13 +1,19 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
+// Project summaries audited 2026-10-23 against the current repos and the vault's
+// Live URL Evidence Register. `status` distinguishes what is actually serving
+// production traffic from delivered one-off engagements and local prototypes, so
+// the page does not read as if everything listed is a shipped live product.
+// Entries with href: null have no case study page and render as non-linked cards.
 const projects = [
   {
     title: 'Enterprise Apps Masterview',
     category: 'Internal Ops · Azure · Next.js 15',
     year: 2026,
-    desc: 'One dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI. Built for a 5-person IT firm managing 4 production apps across 2 Azure subscriptions.',
-    tags: ['Next.js 15', 'CosmosDB', 'Azure Cost Management API', 'NextAuth v5', 'Toggl API'],
+    status: 'Live in production',
+    desc: 'The internal operations portal for a 5-person IT firm managing 4 production apps across 2 Azure subscriptions. Started as app health, Azure cost and time/expense tracking, and has since grown a CRM and outreach rail, finance and equity workflows, support, and an AI voice-calling booking automation — role-scoped throughout, enforced server-side on every endpoint.',
+    tags: ['Next.js 15', 'CosmosDB', 'Azure Cost Management API', 'NextAuth v5', 'Retell AI', 'Toggl API'],
     href: '/work/esvd-dashboard',
     stat: 'Sub-200ms loads',
     logo: '/images/ARC%20Logo.jpg',
@@ -17,6 +23,7 @@ const projects = [
     title: 'Qualitech — QT Digital',
     category: 'AI & Automation',
     year: 2026,
+    status: 'Live in production',
     desc: 'Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal across 5 business functions.',
     tags: ['n8n', 'Retell AI', 'Twilio', 'Azure'],
     href: '/work/qualitech',
@@ -28,6 +35,7 @@ const projects = [
     title: 'ARC Cloud Portfolio',
     category: 'Cloud Infrastructure · DevOps',
     year: 2025,
+    status: 'Live in production',
     desc: 'This portfolio — built on Azure. Astro static site, Azure Blob Storage origin, Front Door CDN, GitHub Actions CI/CD, serverless visit counter on Azure Functions + Cosmos DB.',
     tags: ['Astro', 'Azure Blob Storage', 'Azure Front Door', 'GitHub Actions', 'Azure Functions', 'Cosmos DB'],
     href: '/work/arc-portfolio',
@@ -39,7 +47,8 @@ const projects = [
     title: '3 Stripes Tech EMR',
     category: 'Healthcare IT',
     year: 2025,
-    desc: "Caribbean's first cloud EMR built for how regional doctors actually work. 11 doctors, 7,000+ patient records, near-paperless.",
+    status: 'Live in production',
+    desc: "Caribbean's first cloud EMR built for how regional doctors actually work. 11 doctors, 7,000+ patient records, near-paperless. Co-founded and architected; ongoing application development is delivered by the 3ST team.",
     tags: ['NestJS', 'React 19', 'Azure Front Door', 'PostgreSQL'],
     href: '/work/3-stripes-tech',
     stat: '7,000+ records',
@@ -50,7 +59,8 @@ const projects = [
     title: 'SASSI Logistics Platform',
     category: 'Logistics & Supply Chain',
     year: 2024,
-    desc: 'Full-stack package forwarding platform serving 200+ active users. Client portal, admin dashboard, AI support chatbot, and SNS purchase service.',
+    status: 'Live in production',
+    desc: 'Full-stack package forwarding platform serving 200+ active users. Client portal, admin dashboard, AI support chatbot, and SNS purchase service. Architected and led delivery with a distributed build team.',
     tags: ['Azure', 'n8n', 'GPT-4', 'PostgreSQL'],
     href: '/work/sassi',
     stat: '200+ users',
@@ -61,6 +71,7 @@ const projects = [
     title: 'The Jimny Shop',
     category: 'E-Commerce · WordPress',
     year: 2024,
+    status: 'Live in production',
     desc: 'Full WooCommerce store built from the ground up — product catalogue, order management, secure payments, and Azure hosting. Ongoing managed IT under ARC.',
     tags: ['WordPress', 'WooCommerce', 'Azure', 'E-Commerce'],
     href: '/work/jimny-shop',
@@ -72,11 +83,24 @@ const projects = [
     title: 'Wiman — Microsoft 365 Infrastructure',
     category: 'Managed IT · Microsoft 365',
     year: 2023,
+    status: 'Delivered',
     desc: 'Microsoft 365 identity federation, endpoint management, and licensing architecture for Wiman Inc. SAML 2.0 SSO, Intune enrollment, and a lean M365 licensing model.',
     tags: ['Microsoft Entra ID', 'Microsoft Intune', 'SAML 2.0', 'Microsoft 365'],
     href: '/work/wiman-dlp',
     stat: 'Remote Endpoint Mgmt',
     logo: '/images/logos/wiman-logo.png',
+    logoBg: '#fff',
+  },
+  {
+    title: 'Road to 190 — Workout App',
+    category: 'Personal Project · Prototype',
+    year: 2026,
+    status: 'Prototype — not a released product',
+    desc: 'A personal build-in-public experiment: turning my own gym logs into a fast in-workout logging flow. Currently a local prototype — a unit-tested state reducer, a mobile-first cockpit UI, and browser-local storage only. No backend, no hosting, no public release. Included as a worked example of scoping and building in phases, not as a shipped product.',
+    tags: ['JavaScript', 'Node test runner', 'Mobile-first UI', 'localStorage'],
+    href: null,
+    stat: 'Local prototype',
+    logo: '/images/ARC%20Logo.jpg',
     logoBg: '#fff',
   },
 ];
@@ -97,15 +121,19 @@ const projects = [
 
   <section style="padding:0 1.5rem 5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;">
-      {projects.map((p) => (
-        <a href={p.href} class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;">
+      {projects.map((p) => {
+        const Tag = p.href ? 'a' : 'div';
+        const isLive = p.status === 'Live in production';
+        return (
+        <Tag href={p.href ?? undefined} class="card-lift reveal work-card" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;">
           <div>
-            <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:0.875rem;">
+            <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:0.875rem;flex-wrap:wrap;">
               <div style={`width:44px;height:44px;border-radius:8px;background:${p.logoBg};border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;`}>
                 <img src={p.logo} alt={p.title + ' logo'} width="36" height="36" style="width:36px;height:36px;object-fit:contain;" />
               </div>
               <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category}</span>
               <span style="font-size:0.75rem;color:var(--color-text-muted);">· {p.year}</span>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${isLive ? 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>{p.status}</span>
             </div>
             <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h2>
             <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin:0 0 1.25rem;max-width:640px;">{p.desc}</p>
@@ -117,10 +145,11 @@ const projects = [
           </div>
           <div style="text-align:right;flex-shrink:0;">
             <div style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin-bottom:0.25rem;">{p.stat}</div>
-            <div style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">View case study &rarr;</div>
+            {p.href && <div style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">View case study &rarr;</div>}
           </div>
-        </a>
-      ))}
+        </Tag>
+        );
+      })}
     </div>
   </section>
 
@@ -136,11 +165,14 @@ const projects = [
 </BaseLayout>
 
 <style>
+  /* Collapse the two-column card to one column on mobile. Must match both the
+     linked (<a>) and non-linked (<div>) card variants, so this keys off the
+     .work-card class rather than the element name. */
   @media (max-width: 640px) {
-    a[style*="grid-template-columns:1fr auto"] {
+    .work-card {
       grid-template-columns: 1fr !important;
     }
-    div[style*="text-align:right"] {
+    .work-card div[style*="text-align:right"] {
       text-align: left !important;
     }
   }
