@@ -32,9 +32,34 @@
   --shadow: 0 4px 16px rgba(0,0,0,0.30);
   --shadow-hover: 0 8px 24px rgba(0,0,0,0.40);
 
-  --font-display: 'Inter', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --font-display: 'Inter', 'Inter Fallback', sans-serif;
+  --font-body: 'Inter', 'Inter Fallback', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Metric-matched fallback for Inter.
+ *
+ * The Google Fonts stylesheet is loaded asynchronously (preload as=style, then
+ * swapped to rel=stylesheet onload) so it does not block first paint. The cost
+ * of that is a font swap after paint: text first renders in the local sans
+ * fallback, then re-renders in Inter. Because the two faces have different
+ * metrics, the line count of a long paragraph can change, which reflows
+ * everything below it and registers as layout shift.
+ *
+ * Measured on /resume/ at 412x915: one shift of 0.0156 at ~1.0s, attributed to
+ * the Summary block changing height (380px -> 346px). These overrides scale the
+ * local fallback to Inter's metrics so the swap is close to dimensionally
+ * neutral. Values are the standard Inter-on-Arial set.
+ *
+ * Do not mark this as a webfont to download: src is local() only, so it costs
+ * no request and silently does nothing if the local face is unavailable. */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  ascent-override: 90.20%;
+  descent-override: 22.48%;
+  line-gap-override: 0.00%;
+  size-adjust: 107.12%;
 }
 
 * {
