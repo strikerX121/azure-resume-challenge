@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Rich deep navy dark — from the original ARC design */
+  /* Rich deep navy dark, from the original ARC design */
   --color-bg: #0F1624;
   --color-surface: #1C2840;
   --color-surface-2: #161F35;
@@ -9,6 +9,18 @@
   --color-text-muted: #8FA4C8;
   --color-accent: #FF6B2B;
   --color-accent-hover: #E5571A;
+
+  /* Text-bearing accent surfaces.
+     #FF6B2B behind white text measures 2.84:1, well under the 4.5:1 WCAG AA
+     minimum for body text, and it was doing that job on every primary CTA on
+     the site. The brand orange is kept for decorative use (rules, dots,
+     borders) and for accent-coloured text on the dark navy, where it measures
+     6.37:1 and is fine. Buttons and badges that place white text on a filled
+     accent now use the darker shade below: 5.18:1 against white, so it clears
+     AA with margin while staying recognisably the same orange. */
+  --color-accent-strong: #C2410C;
+  --color-accent-strong-hover: #9A330A;
+
   --color-border: #263350;
 
   /* Nav / footer use solid navy */
@@ -40,7 +52,7 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   /* Guard against a single long token (emails, URLs) widening the page on
-     narrow viewports — the root cause of horizontal scroll on /privacy. */
+     narrow viewports, the root cause of horizontal scroll on /privacy. */
   overflow-wrap: break-word;
 }
 

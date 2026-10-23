@@ -9,7 +9,7 @@ const workstreams = [
     name: 'WooCommerce Store Build',
     status: 'DELIVERED',
     statusLabel: 'Delivered',
-    desc: 'Full WooCommerce store on WordPress covering the complete product catalogue, inventory management, and order processing. Built from zero — no prior web presence existed.',
+    desc: 'Full WooCommerce store on WordPress covering the complete product catalogue, inventory management, and order processing. Built from zero, with no prior web presence to work from.',
     tags: ['WordPress', 'WooCommerce', 'Bluehost'],
   },
   {
@@ -37,7 +37,7 @@ const workstreams = [
     name: 'n8n Order Automation',
     status: 'IN_DEV',
     statusLabel: 'In Scope',
-    desc: 'Automation workflows to streamline order management and customer communication — reducing manual handling of order confirmations, shipping updates, and follow-ups.',
+    desc: 'Automation workflows to streamline order management and customer communication, reducing manual handling of order confirmations, shipping updates, and follow-ups.',
     tags: ['n8n', 'Order Automation', 'Email Workflows'],
   },
 ];
@@ -50,7 +50,7 @@ function badgeStyle(status: string): string {
 ---
 
 <BaseLayout
-  title="The Jimny Shop — Case Study"
+  title="The Jimny Shop | WooCommerce and Azure Case Study"
   description="Full e-commerce and digital infrastructure for a Trinidad-based Suzuki Jimny specialist. Built from zero to live WooCommerce store under ARC Cloud Consulting."
 >
 
@@ -81,7 +81,7 @@ function badgeStyle(status: string): string {
           </div>
         </div>
       </div>
-      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.5rem;">The Jimny Shop — E-Commerce &amp; Digital Infrastructure</h1>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.5rem;">The Jimny Shop: E-Commerce and Digital Infrastructure</h1>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;">
         {[['E-Commerce', 'Status: Live'], ['WooCommerce', 'Platform'], ['Retail IT', 'Type']].map(([val, label]) => (
           <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
@@ -98,7 +98,7 @@ function badgeStyle(status: string): string {
     <div class="prose" style="max-width:900px;margin:0 auto;">
 
       <h2>The Client</h2>
-      <p>The Jimny Shop is a Trinidad-based specialist retailer focused on Suzuki Jimny parts, accessories, and lifestyle products. The business had a clear market — an active community of Jimny owners across the Caribbean — but no digital infrastructure to serve them online.</p>
+      <p>The Jimny Shop is a Trinidad-based specialist retailer focused on Suzuki Jimny parts, accessories, and lifestyle products. The business had a clear market, an active community of Jimny owners across the Caribbean, but no digital infrastructure to serve them online.</p>
 
       <h2>The Problem</h2>
       <p>The business needed a complete digital infrastructure built from the ground up. No existing web presence, no e-commerce capability, no payment processing, and no system for managing product inventory or customer orders online. Everything the business needed to sell online had to be created.</p>
@@ -146,7 +146,7 @@ function badgeStyle(status: string): string {
     <div style="max-width:900px;margin:0 auto;text-align:center;">
       <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Need an e-commerce setup?</h2>
       <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">ARC builds and manages WooCommerce stores for Caribbean retailers. From zero to live, with the automation and infrastructure to scale.</p>
-      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+      <a href="/contact" style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong-hover)'" onmouseout="this.style.background='var(--color-accent-strong)'">
         Start the Conversation
       </a>
     </div>

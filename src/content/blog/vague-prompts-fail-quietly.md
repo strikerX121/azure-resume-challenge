@@ -1,5 +1,5 @@
 ---
-title: "Vague Prompts Don't Fail Loudly. They Fail Quietly — and That's the Problem."
+title: "Vague Prompts Don't Fail Loudly. They Fail Quietly, and That's the Problem."
 description: "Copilot won't tell you it used the wrong source. It answers confidently from whatever it found. A bad prompt doesn't throw an error. It produces a plausible-sounding wrong answer."
 pubDate: 2026-06-16
 category: "AI & Automation"

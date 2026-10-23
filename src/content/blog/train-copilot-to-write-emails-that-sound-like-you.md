@@ -1,6 +1,6 @@
 ---
 title: "How to Train Copilot to Write Emails That Actually Sound Like You"
-description: "Every AI-drafted email sounds like AI — until you do this. Your sent box is the best training data for your own voice. Here's the step-by-step."
+description: "Every AI-drafted email sounds like AI, until you do this. Your sent box is the best training data for your own voice. Here's the step-by-step."
 pubDate: 2026-06-11
 category: "AI & Automation"
 tags: ["microsoft copilot", "outlook", "email productivity", "ai writing"]
@@ -56,7 +56,7 @@ The output will be something like:
 
 In Microsoft 365 Copilot for Outlook, you can save custom instructions that apply every time Copilot drafts an email for you. Paste your tone guide there.
 
-From that point on, when you ask Copilot to draft an email, it uses your instructions as the baseline. The prompts still matter — Goal, Context, Source, Expectation still apply — but the tone is now anchored to how you actually write.
+From that point on, when you ask Copilot to draft an email, it uses your instructions as the baseline. The prompts still matter, and Goal, Context, Source and Expectation all still apply, but the tone is now anchored to how you actually write.
 
 You'll still want to review and adjust. Copilot isn't perfect, and first attempts will sometimes feel slightly off even with good instructions. Refine the tone guide over time as you notice patterns in what it gets wrong.
 

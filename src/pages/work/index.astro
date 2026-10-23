@@ -1,33 +1,68 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-// Project summaries audited 2026-10-23 against the current repos and the vault's
-// Live URL Evidence Register. `status` distinguishes what is actually serving
-// production traffic from delivered one-off engagements and local prototypes, so
-// the page does not read as if everything listed is a shipped live product.
-// Entries with href: null have no case study page and render as non-linked cards.
+// Project summaries audited 2026-10-23 against the current repos and the
+// governing client notes in the vault.
+//
+// `tone` drives the badge styling and is deliberately more granular than the
+// old live-or-not split. A running Azure host proves a process is up; it does
+// not prove a client accepted the work. Conflating those two is what made the
+// previous version of this page overstate its own status, so "Live in
+// production" is now reserved for systems in real daily use, and work that is
+// built and deployed but still inside a client review gate says exactly that.
+//
+// Entries with href: null have no case study page and render as non-linked
+// cards. `external: true` links out to the live product instead.
 const projects = [
   {
     title: 'Enterprise Apps Masterview',
     category: 'Internal Ops · Azure · Next.js 15',
     year: 2026,
     status: 'Live in production',
-    desc: 'The internal operations portal for a 5-person IT firm managing 4 production apps across 2 Azure subscriptions. Started as app health, Azure cost and time/expense tracking, and has since grown a CRM and outreach rail, finance and equity workflows, support, and an AI voice-calling booking automation — role-scoped throughout, enforced server-side on every endpoint.',
-    tags: ['Next.js 15', 'CosmosDB', 'Azure Cost Management API', 'NextAuth v5', 'Retell AI', 'Toggl API'],
+    tone: 'live',
+    desc: 'The internal operations portal for a 5-person IT firm running 4 production apps across 2 Azure subscriptions. It began as app health, Azure cost and time tracking, and has since grown a CRM and outreach rail, finance and equity workflows, support, and an AI voice booking flow. Access is role-scoped and enforced server-side on every authenticated endpoint, alongside a small set of deliberately public intake, tracking and unsubscribe routes.',
+    tags: ['Next.js 15', 'Cosmos DB', 'Azure Cost Management API', 'NextAuth v5', 'Retell AI', 'Toggl API'],
     href: '/work/esvd-dashboard',
-    stat: 'Sub-200ms loads',
+    stat: '31 test suites',
     logo: '/images/ARC%20Logo.jpg',
     logoBg: '#fff',
   },
   {
-    title: 'Qualitech — QT Digital',
-    category: 'AI & Automation',
-    year: 2026,
+    title: 'SASSI Logistics Platform',
+    category: 'Logistics & Supply Chain',
+    year: 2024,
     status: 'Live in production',
-    desc: 'Replacing 7 isolated spreadsheets with a single source of truth. Automation, a centralised database, and a department portal across 5 business functions.',
-    tags: ['n8n', 'Retell AI', 'Twilio', 'Azure'],
+    tone: 'live',
+    desc: 'A package-forwarding business moved off WhatsApp threads and spreadsheets onto a full-stack Azure platform: client portal, admin and warehouse dashboards, an AI support assistant, and a shop-and-ship purchase service. The client reported a user base of 200+ at handover. Architected and led delivery with a distributed build team; later feature work runs through a separate client review and approval gate.',
+    tags: ['Azure', 'n8n', 'GPT-4', 'PostgreSQL'],
+    href: '/work/sassi',
+    stat: 'Daily operational use',
+    logo: '/images/logos/sassi-logo.svg',
+    logoBg: '#fff',
+  },
+  {
+    title: '3 Stripes Tech EMR',
+    category: 'Healthcare IT',
+    year: 2025,
+    status: 'Live in production',
+    tone: 'live',
+    desc: 'A cloud-based electronic medical record system built for Caribbean healthcare providers, designed around how regional practices actually run a consultation. Co-founded and architected the V3 rebuild, from Azure infrastructure through the API layer; ongoing application development is delivered by the 3ST team.',
+    tags: ['NestJS', 'React 19', 'Azure Front Door', 'PostgreSQL'],
+    href: '/work/3-stripes-tech',
+    stat: 'In clinical use',
+    logo: '/images/logos/3st-logo.svg',
+    logoBg: '#0F1624',
+  },
+  {
+    title: 'Qualitech, QT Digital',
+    category: 'Automation & Integration',
+    year: 2026,
+    status: 'Automation delivered, portal in client review',
+    tone: 'progress',
+    desc: 'Two distinct pieces of work. The workflow automation is delivered and running: quotation handling, scheduled follow-up, and an AI voice calling agent built on n8n and Twilio. The newer database and department portal is built and deployed but still inside the client review gate, with acceptance, date handling and operational sign-off open. It is listed as work in progress rather than an accepted production rollout.',
+    tags: ['n8n', 'Retell AI', 'Twilio', 'Azure', 'PostgreSQL'],
     href: '/work/qualitech',
-    stat: '5 departments automated',
+    stat: 'Automation in use',
     logo: '/images/logos/qualitech-logo.png',
     logoBg: '#fff',
   },
@@ -36,7 +71,8 @@ const projects = [
     category: 'Cloud Infrastructure · DevOps',
     year: 2025,
     status: 'Live in production',
-    desc: 'This portfolio — built on Azure. Astro static site, Azure Blob Storage origin, Front Door CDN, GitHub Actions CI/CD, serverless visit counter on Azure Functions + Cosmos DB.',
+    tone: 'live',
+    desc: 'This site, built and operated on Azure: an Astro static build, Blob Storage origin, Front Door CDN, GitHub Actions CI/CD, and a serverless visit counter on Azure Functions and Cosmos DB. A small system, but every layer of it is mine and publicly inspectable.',
     tags: ['Astro', 'Azure Blob Storage', 'Azure Front Door', 'GitHub Actions', 'Azure Functions', 'Cosmos DB'],
     href: '/work/arc-portfolio',
     stat: 'Live on Azure',
@@ -44,59 +80,52 @@ const projects = [
     logoBg: '#fff',
   },
   {
-    title: '3 Stripes Tech EMR',
-    category: 'Healthcare IT',
-    year: 2025,
+    title: '3 Stripes Tech Product Site',
+    category: 'Product Marketing · Next.js',
+    year: 2026,
     status: 'Live in production',
-    desc: "Caribbean's first cloud EMR built for how regional doctors actually work. 11 doctors, 7,000+ patient records, near-paperless. Co-founded and architected; ongoing application development is delivered by the 3ST team.",
-    tags: ['NestJS', 'React 19', 'Azure Front Door', 'PostgreSQL'],
-    href: '/work/3-stripes-tech',
-    stat: '7,000+ records',
+    tone: 'live',
+    desc: 'The public product and marketing site for 3 Stripes Technologies: product presentation, a trade-association sponsorship surface, an ambient clinical dictation section, and pricing sourced from the product API rather than hardcoded into the page. Delivered with a technical SEO, accessibility and structured-data pass. Front-end delivery with the 3ST team, with content and campaign work shared.',
+    tags: ['Next.js 15', 'React 19', 'Tailwind', 'Technical SEO', 'Structured data'],
+    href: 'https://www.3stripestech.com',
+    external: true,
+    stat: 'Public product site',
     logo: '/images/logos/3st-logo.svg',
     logoBg: '#0F1624',
-  },
-  {
-    title: 'SASSI Logistics Platform',
-    category: 'Logistics & Supply Chain',
-    year: 2024,
-    status: 'Live in production',
-    desc: 'Full-stack package forwarding platform serving 200+ active users. Client portal, admin dashboard, AI support chatbot, and SNS purchase service. Architected and led delivery with a distributed build team.',
-    tags: ['Azure', 'n8n', 'GPT-4', 'PostgreSQL'],
-    href: '/work/sassi',
-    stat: '200+ users',
-    logo: '/images/logos/sassi-logo.svg',
-    logoBg: '#fff',
   },
   {
     title: 'The Jimny Shop',
     category: 'E-Commerce · WordPress',
     year: 2024,
     status: 'Live in production',
-    desc: 'Full WooCommerce store built from the ground up — product catalogue, order management, secure payments, and Azure hosting. Ongoing managed IT under ARC.',
+    tone: 'live',
+    desc: 'A WooCommerce store built from the ground up: product catalogue, order management, secure payments and Azure hosting, with ongoing managed IT under ARC.',
     tags: ['WordPress', 'WooCommerce', 'Azure', 'E-Commerce'],
     href: '/work/jimny-shop',
-    stat: 'Live Store',
+    stat: 'Live store',
     logo: '/images/TheJimnyShop.jpg',
     logoBg: '#fff',
   },
   {
-    title: 'Wiman — Microsoft 365 Infrastructure',
+    title: 'Wiman, Microsoft 365 Infrastructure',
     category: 'Managed IT · Microsoft 365',
     year: 2023,
     status: 'Delivered',
-    desc: 'Microsoft 365 identity federation, endpoint management, and licensing architecture for Wiman Inc. SAML 2.0 SSO, Intune enrollment, and a lean M365 licensing model.',
+    tone: 'delivered',
+    desc: 'Microsoft 365 identity federation, endpoint management and licensing architecture for Wiman Inc: SAML 2.0 single sign-on, Intune enrolment, and a lean licensing model sized to the organisation.',
     tags: ['Microsoft Entra ID', 'Microsoft Intune', 'SAML 2.0', 'Microsoft 365'],
     href: '/work/wiman-dlp',
-    stat: 'Remote Endpoint Mgmt',
+    stat: 'Remote endpoint management',
     logo: '/images/logos/wiman-logo.png',
     logoBg: '#fff',
   },
   {
-    title: 'Road to 190 — Workout App',
+    title: 'Road to 190, Workout App',
     category: 'Personal Project · Prototype',
     year: 2026,
-    status: 'Prototype — not a released product',
-    desc: 'A personal build-in-public experiment: turning my own gym logs into a fast in-workout logging flow. Currently a local prototype — a unit-tested state reducer, a mobile-first cockpit UI, and browser-local storage only. No backend, no hosting, no public release. Included as a worked example of scoping and building in phases, not as a shipped product.',
+    status: 'Prototype, not a released product',
+    tone: 'prototype',
+    desc: 'A personal build-in-public experiment turning my own gym logs into a fast in-workout logging flow. It is a local prototype: a unit-tested state reducer, a mobile-first interface, and browser-local storage only. No backend, no hosting, no public release. Included as a worked example of scoping and building in phases, not as a shipped product.',
     tags: ['JavaScript', 'Node test runner', 'Mobile-first UI', 'localStorage'],
     href: null,
     stat: 'Local prototype',
@@ -104,18 +133,27 @@ const projects = [
     logoBg: '#fff',
   },
 ];
+
+const BADGE_TONES = {
+  live: 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);',
+  progress: 'background:rgba(251,191,36,0.1);color:#fcd34d;border:1px solid rgba(251,191,36,0.22);',
+  delivered: 'background:rgba(148,163,184,0.1);color:#b4c0d4;border:1px solid rgba(148,163,184,0.2);',
+  prototype: 'background:rgba(148,163,184,0.1);color:#b4c0d4;border:1px solid rgba(148,163,184,0.2);',
+};
 ---
 
 <BaseLayout
-  title="Work — Antonio Cumberbatch"
-  description="Case studies from ARC Cloud Consulting — logistics platforms, healthcare EMRs, AI automation, and enterprise security projects."
+  title="Work | Cloud, Automation and Integration Case Studies"
+  description="Case studies in cloud architecture, workflow automation and systems integration: logistics, healthcare, internal operations platforms and managed Microsoft 365, with delivery status and contribution stated for each."
 >
 
   <section style="padding:4rem 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Case Studies</p>
-      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Projects That Ship.</h1>
-      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:540px;">Real problems. Real solutions. Real numbers.</p>
+      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Systems that run a business.</h1>
+      <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:620px;line-height:1.7;">
+        Each entry states what the operational problem was, what I was responsible for, and where the work actually stands. Deployment status and acceptance status are kept separate on purpose: a running host is not the same thing as an accepted rollout.
+      </p>
     </div>
   </section>
 
@@ -123,17 +161,23 @@ const projects = [
     <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:1.5rem;">
       {projects.map((p) => {
         const Tag = p.href ? 'a' : 'div';
-        const isLive = p.status === 'Live in production';
+        const badgeStyle = BADGE_TONES[p.tone] ?? BADGE_TONES.delivered;
         return (
-        <Tag href={p.href ?? undefined} class="card-lift reveal work-card" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;">
+        <Tag
+          href={p.href ?? undefined}
+          target={p.external ? '_blank' : undefined}
+          rel={p.external ? 'noopener noreferrer' : undefined}
+          class="card-lift reveal work-card"
+          style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;text-decoration:none;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center;"
+        >
           <div>
             <div style="display:flex;align-items:center;gap:0.875rem;margin-bottom:0.875rem;flex-wrap:wrap;">
               <div style={`width:44px;height:44px;border-radius:8px;background:${p.logoBg};border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;`}>
-                <img src={p.logo} alt={p.title + ' logo'} width="36" height="36" style="width:36px;height:36px;object-fit:contain;" />
+                <img src={p.logo} alt={p.title + ' logo'} width="36" height="36" loading="lazy" decoding="async" style="width:36px;height:36px;object-fit:contain;" />
               </div>
               <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category}</span>
               <span style="font-size:0.75rem;color:var(--color-text-muted);">· {p.year}</span>
-              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${isLive ? 'background:rgba(34,197,94,0.1);color:#4ade80;border:1px solid rgba(34,197,94,0.2);' : 'background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.2);'}`}>{p.status}</span>
+              <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${badgeStyle}`}>{p.status}</span>
             </div>
             <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h2>
             <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.6;margin:0 0 1.25rem;max-width:640px;">{p.desc}</p>
@@ -145,7 +189,11 @@ const projects = [
           </div>
           <div style="text-align:right;flex-shrink:0;">
             <div style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin-bottom:0.25rem;">{p.stat}</div>
-            {p.href && <div style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">View case study &rarr;</div>}
+            {p.href && (
+              <div style="font-size:0.875rem;font-weight:600;color:var(--color-accent);">
+                {p.external ? 'Visit the live site' : 'View case study'} &rarr;
+              </div>
+            )}
           </div>
         </Tag>
         );
@@ -154,19 +202,34 @@ const projects = [
   </section>
 
   <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
-    <div style="max-width:1200px;margin:0 auto;text-align:center;">
-      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Have a project like these?</h2>
-      <a class="reveal" href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
-        Let's Talk
+    <div style="max-width:720px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Have a problem that looks like one of these?</h2>
+      <p class="reveal" style="font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 2rem;">
+        Tell me what is breaking and what you have already tried. If it is a fit I will say so, and if it needs someone else I will say that too.
+      </p>
+      <a
+        class="reveal"
+        href="/contact/"
+        data-track="project_enquiry_intent"
+        data-track-context="work-index"
+        style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;"
+        onmouseover="this.style.background='var(--color-accent-strong-hover)'"
+        onmouseout="this.style.background='var(--color-accent-strong)'"
+      >
+        Discuss your project
       </a>
+      <p class="reveal" style="font-size:0.875rem;color:var(--color-text-muted);margin:1.5rem 0 0;">
+        Looking at the EMR as a product rather than as a build?
+        <a href="https://www.3stripestech.com" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);text-decoration:underline;text-underline-offset:3px;">See 3 Stripes Technologies</a>.
+      </p>
     </div>
   </section>
 
 </BaseLayout>
 
 <style>
-  /* Collapse the two-column card to one column on mobile. Must match both the
-     linked (<a>) and non-linked (<div>) card variants, so this keys off the
+  /* Collapse the two-column card to one column on mobile. This must match both
+     the linked (<a>) and non-linked (<div>) card variants, so it keys off the
      .work-card class rather than the element name. */
   @media (max-width: 640px) {
     .work-card {
