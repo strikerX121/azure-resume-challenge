@@ -143,7 +143,7 @@ function scan(roots) {
 // repo, and the dummy never touches src/, public/ or dist/.
 function selfTest() {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'cred-guard-fixture-'));
-  const dummy = ['Dummy', 'Fixture', 'Not', 'A', 'Real'].join('') +
+  const dummy = ['Guard', 'Fixture', 'Not', 'A', 'Real'].join('') +
     'Key_0123456789abcdefABCDEF-xyz==';
   const fixture = path.join(dir, 'leaky.html');
   fs.writeFileSync(
