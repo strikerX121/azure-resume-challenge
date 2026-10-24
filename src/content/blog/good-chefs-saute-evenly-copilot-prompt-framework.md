@@ -18,13 +18,13 @@ These are the four ingredients of a prompt that works. Most people show up with 
 
 Here's what each one means and why it matters.
 
-## G — Goal: What you want Copilot to do
+## G is for Goal: What you want Copilot to do
 
 This is the part everyone gets right. "Summarize this document." "Draft a reply." "Create talking points." The goal names the task.
 
-Where people go wrong is stopping here and calling it a prompt. A goal alone tells Copilot what to do. It doesn't tell it where to look, who the output is for, or what form it should take. That leaves three decisions to Copilot. And Copilot will make them — just not necessarily the way you would.
+Where people go wrong is stopping here and calling it a prompt. A goal alone tells Copilot what to do. It doesn't tell it where to look, who the output is for, or what form it should take. That leaves three decisions to Copilot. And Copilot will make them, just not necessarily the way you would.
 
-## C — Context: What it needs to know
+## C is for Context: What it needs to know
 
 Context answers the background questions. Who is the audience? What's the purpose? What constraint matters here?
 
@@ -32,7 +32,7 @@ Context answers the background questions. Who is the audience? What's the purpos
 
 Most people include some context. They write a sentence or two about the situation. That's fine. But context still doesn't tell Copilot where to look or how to format the output. That's what S and E are for.
 
-## S — Source: Where to look
+## S is for Source: Where to look
 
 This is the ingredient most prompts are missing. It's also the one that moves the needle the most.
 
@@ -46,11 +46,11 @@ In session after session: adding one line specifying the source improved results
 
 Copilot Notebooks take this further by giving Copilot exactly one bounded place to look, with no wandering into the rest of your environment. But even without Notebooks, specifying the source in the prompt is a habit worth building immediately.
 
-## E — Expectation: How the output should look
+## E is for Expectation: How the output should look
 
 The second most-missed ingredient. Expectation tells Copilot what form the output should take and how it should be formatted.
 
-Without it, Copilot formats output however it thinks is best. It's not bad at this. But "however it thinks is best" often produces something that needs reformatting before it can be used — especially when the format matters as much as the content.
+Without it, Copilot formats output however it thinks is best. It's not bad at this. But "however it thinks is best" often produces something that needs reformatting before it can be used, especially when the format matters as much as the content.
 
 "In three short bullets" is an expectation. "As a table with columns for risk, likelihood, and owner" is an expectation. "As a professional email under 150 words with a clear subject line" is an expectation.
 
@@ -66,10 +66,10 @@ The difference in output quality is not subtle. The second prompt produces somet
 
 ## The framework, one more time
 
-**G — Goal**: what you want Copilot to do.
-**C — Context**: what it needs to know about the situation.
-**S — Source**: exactly where it should look for information.
-**E — Expectation**: what the output should look like.
+**G is for Goal**: what you want Copilot to do.
+**C is for Context**: what it needs to know about the situation.
+**S is for Source**: exactly where it should look for information.
+**E is for Expectation**: what the output should look like.
 
 **Good Chefs Sauté Evenly.**
 
@@ -77,4 +77,4 @@ Most people use G and C. Adding S and E is where the real gains are. The habit b
 
 Sing it on the car ride home. Use it the next time you open Copilot. The results will be different.
 
-This is the kind of thing I cover in Copilot adoption workshops — practical frameworks that change how people actually work, not just feature walkthroughs. If your team is rolling out Copilot, [here's how we can work together](/services). And if you want to know whether your team is ready to make the most of it, grab the [AI & Copilot Staff Readiness Checklist](/resources) — it's free.
+This is the kind of thing I cover in Copilot adoption workshops: practical frameworks that change how people actually work, not just feature walkthroughs. If your team is rolling out Copilot, [here's how we can work together](/services). And if you want to know whether your team is ready to make the most of it, grab the [AI & Copilot Staff Readiness Checklist](/resources). It's free.

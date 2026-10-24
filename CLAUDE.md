@@ -4,14 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A two-tier cloud resume: a static frontend served from **Azure Blob Storage** (`$web` container) and a serverless backend in `api/` (Azure Functions, C# .NET, in-process v2 binding model). There is no build step, no package manager, and no bundler — files are deployed as-is.
+A two-tier cloud resume: an **Astro static site** built to `dist/` and served from **Azure Blob Storage** (`$web` container) behind Azure Front Door, plus a serverless visit counter in `api/` (Azure Functions, C# .NET, in-process v2 binding model).
+
+This project **does** have a build step. Astro 7 plus Tailwind 4, dependencies managed with npm, and `npm run build` emits `dist/`. Earlier revisions of this file described a no-build static site; that has not been true since the Astro rebuild.
 
 ## Deployment
 
-**Frontend** — upload the contents of `$web/` directly to the Azure Blob Storage `$web` container:
-```bash
-az storage blob upload-batch --account-name <storage-account> -s . -d '$web'
-```
+**Frontend** — automatic. Pushing to `main` runs `.github/workflows/deploy.yml`, which builds, runs `npm run verify`, uploads to Blob Storage in pattern-scoped passes (one cache policy per file class), purges Front Door, and reads the served `Cache-Control` headers back.
+
+**Merging to `main` is publishing** — there is no staging gate.
+
+Do not hand-upload `dist/` with a single unfiltered `upload-batch`. Doing that is what previously stripped every `Cache-Control` header in production: re-uploading a blob without the property clears it. Any new upload step must carry `--pattern` or use `--overwrite false`. See `docs/deployment.md` for the policy table, the CV hash requirement and the rollback procedure.
 
 **Backend** — deploy `api/` as an Azure Functions app:
 ```bash

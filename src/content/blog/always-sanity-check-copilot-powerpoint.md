@@ -32,7 +32,7 @@ This is the failure mode to watch for. Not errors in structure or logic. Numbers
 
 Before you share any Copilot-generated PowerPoint, do this:
 
-Click through every slide that has a number — percentages, totals, dates, metrics, rankings — and verify the value against your source. Not a thorough audit. Just a quick confirmation that the number on the slide matches what you actually know to be true.
+Click through every slide that carries a number of any kind: percentages, totals, dates, metrics, rankings. Verify each value against your source. Not a thorough audit. Just a quick confirmation that the number on the slide matches what you actually know to be true.
 
 It takes 30 seconds on a 10-slide deck. It has saved me from sharing wrong numbers more than once, and I've watched it save workshop participants from the same thing in real time.
 

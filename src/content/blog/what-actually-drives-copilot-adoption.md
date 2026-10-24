@@ -8,7 +8,7 @@ image: /images/blog/what-actually-drives-copilot-adoption.svg
 draft: false
 ---
 
-Over the course of one fiscal year, I ran 95 Microsoft 365 Copilot workshops as Microsoft's primary US delivery resource for the program. By the end, I had trained 2,574 professionals across banking, healthcare, government, education, manufacturing, and nonprofit. We hit 136% of the annual target and received 10 accolades from Microsoft for the delivery.
+Over the course of one fiscal year, I ran 95 Microsoft 365 Copilot workshops as the primary US delivery resource for the Microsoft 365 Copilot workshop programme. By the end, I had trained 2,574 professionals across banking, healthcare, government, education, manufacturing, and nonprofit. We hit 136% of the annual target and received 10 accolades from Microsoft for the delivery.
 
 The thing I took away from all of it wasn't about Copilot's features. It was about why some teams actually change how they work and why others walk away from a workshop, go back to their desks, and never open Copilot again.
 

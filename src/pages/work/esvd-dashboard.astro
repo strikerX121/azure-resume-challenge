@@ -30,7 +30,7 @@ const modules = [
   {
     icon: '📊',
     title: 'App Health Dashboard',
-    body: 'Live status for four production apps across two Azure subscriptions. Engineers see deployment state, uptime indicators, and resource health at a glance — without opening the portal.',
+    body: 'Live status for four production apps across two Azure subscriptions. Engineers see deployment state, uptime indicators, and resource health at a glance, without opening the portal.',
   },
   {
     icon: '💰',
@@ -45,19 +45,34 @@ const modules = [
   {
     icon: '🧾',
     title: 'Expense Workflow',
-    body: 'Staff upload PDF receipts. Finance reviews, approves or rejects with a note, and marks paid — all in one view. No email chains, no WhatsApp messages, no separate tracking spreadsheet.',
+    body: 'Staff upload PDF receipts. Finance reviews, approves or rejects with a note, and marks paid, all in one view. No email chains, no WhatsApp messages, no separate tracking spreadsheet.',
+  },
+  {
+    icon: '📇',
+    title: 'CRM & Outreach Rail',
+    body: 'Contacts, companies, sequences and campaign sends in one pipeline, with lead capture from public intake forms and a news-signal rail for timing. Campaign sends are claimed through an ETag-conditioned transition, so two operators pressing send cannot both start the same run.',
+  },
+  {
+    icon: '📞',
+    title: 'AI Voice & Booking Automation',
+    body: 'An outbound AI voice-calling agent handles first-touch calls and booking, with guards against repeat calls and duplicate booking automation firing. Human handoff where the conversation needs a person.',
+  },
+  {
+    icon: '🏦',
+    title: 'Finance & Equity',
+    body: 'Payment matching, review workflows and an equity register, with closed-period rules enforced server-side so historical books cannot be silently rewritten.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Enterprise Apps Masterview (ESVD) — Case Study"
-  description="An internal ops dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI — all in one place."
+  title="Enterprise Apps Masterview | Internal Operations Platform Case Study"
+  description="An internal operations platform that replaced Azure Portal browsing, spreadsheet cost tracking, expense email chains and the Toggl UI, with atomic campaign claiming and guarded automation triggers underneath it."
 >
 
   <WorkSchema
     name="Enterprise Apps Masterview"
-    description="An internal ops dashboard that replaced Azure Portal browsing, Google Sheets cost tracking, expense email chains, and the Toggl web UI — all in one place."
+    description="An internal operations platform that replaced Azure Portal browsing, spreadsheet cost tracking, expense email chains and the Toggl UI, with atomic campaign claiming and guarded automation triggers underneath it."
     path="/work/esvd-dashboard"
     breadcrumbLabel="Enterprise Apps Masterview"
     about={['AI Operations', 'Business Process Automation', 'Microsoft Azure', 'Cosmos DB', 'Internal Tooling', 'Role-Based Access Control']}
@@ -86,7 +101,7 @@ const modules = [
         <div>
           <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
           <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Internal Ops &middot; Azure &middot; Next.js 15</span>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0.5rem 0 0;">Built for internal use — managing apps, costs, time, and expenses from one place.</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0.5rem 0 0;">Built for internal use: managing apps, costs, time and expenses from one place.</p>
         </div>
       </div>
 
@@ -107,20 +122,20 @@ const modules = [
 
       <h2>The Problem</h2>
       <p>Four production apps across two Azure subscriptions. A five-person team. A finance workflow in Google Sheets. Expenses submitted by email. Time tracked in Toggl but only useful after an export-to-Excel session.</p>
-      <p>Every morning meant opening six tools that didn't talk to each other. The information existed — it was just distributed across Azure Portal, Google Sheets, Google Drive, Toggl, and two email threads. Assembling a clear daily picture took twenty minutes before the real work started.</p>
+      <p>Every morning meant opening six tools that didn't talk to each other. The information existed; it was just distributed across Azure Portal, Google Sheets, Google Drive, Toggl, and two email threads. Assembling a clear daily picture took twenty minutes before the real work started.</p>
       <p>No off-the-shelf tool fit. The products that exist were built for 500-person companies or solo freelancers. Nothing was designed for a five-person IT firm managing production enterprise apps for Caribbean clients with its own specific billing logic and team structure.</p>
       <p>We built it.</p>
 
       <h2>The Architecture Decision That Defined Everything</h2>
       <p>The most important decision: <strong>everything syncs to CosmosDB first. The dashboard reads from Cosmos. Nothing calls the Azure APIs live on page load.</strong></p>
-      <p>Azure APIs are slow, rate-limited, and — in the case of Cost Management — operate with a 24–48 hour data lag anyway. Calling them live would mean slow page loads and no guarantee the data was accurate.</p>
+      <p>Azure APIs are slow, rate-limited, and in the case of Cost Management operate with a 24–48 hour data lag anyway. Calling them live would mean slow page loads and no guarantee the data was accurate.</p>
       <p>Instead, nightly GitHub Actions workflows sync each data source to Cosmos. The Cost Management sync pulls MTD spend for both subscriptions. The Toggl sync pulls all time entries for the current month. The expense and app health data write to Cosmos in real time as events occur.</p>
       <p>The result: dashboard loads consistently under 200ms, even when Azure Monitor is running slow.</p>
 
       <h2>Role-Based Access from Day One</h2>
       <p>Five roles: <code>admin</code>, <code>finance</code>, <code>accountant</code>, <code>engineer</code>, <code>staff</code>. Every API endpoint and every sidebar item gates on the same permission keys via a single <code>can(role, permission)</code> function in <code>lib/rbac.js</code>.</p>
-      <p>Roles are stored in CosmosDB, not in the JWT. At sign-in, the NextAuth JWT callback looks up the user's role from Cosmos and injects it into the token. When a role changes in the database, the next sign-in reflects it immediately — no token invalidation logic, no lag.</p>
-      <p>This means the finance person has never opened Azure Portal. She sees cost data, expense submissions, and billing summaries in the dashboard — nothing more, nothing less.</p>
+      <p>Roles are stored in CosmosDB, not in the JWT. At sign-in, the NextAuth JWT callback looks up the user's role from Cosmos and injects it into the token. When a role changes in the database, the next sign-in reflects it immediately, with no token invalidation logic and no lag.</p>
+      <p>This means the finance person has never opened Azure Portal. She sees cost data, expense submissions, and billing summaries in the dashboard, and nothing more.</p>
 
     </div>
   </section>
@@ -169,7 +184,7 @@ const modules = [
       <div style="display:flex;flex-direction:column;gap:1rem;">
         {[
           { phase: 'Phase 1', status: 'Live', label: 'Ops Dashboard', body: 'App health, cost visibility, time tracking, expense workflow. Five roles with full RBAC. DB-first architecture syncing from Azure Monitor, Cost Management, and Toggl.' },
-          { phase: 'Phase 2', status: 'In Progress', label: 'Accounting Module', body: 'General ledger, accounts receivable, accounts payable, bank reconciliation. Full double-entry accounting for a small IT firm — built to fit our actual workflow, not a generic chart of accounts.' },
+          { phase: 'Phase 2', status: 'In Progress', label: 'Accounting Module', body: 'General ledger, accounts receivable, accounts payable, bank reconciliation. Full double-entry accounting for a small IT firm, built to fit our actual workflow rather than a generic chart of accounts.' },
           { phase: 'Phase 3', status: 'Planned', label: 'Client Portal', body: 'Clients log in to see their Azure IT costs, download invoices, and pay via WiPay. No Azure account required. The goal: stop being a vendor and become an embedded IT department.' },
         ].map(item => (
           <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:grid;grid-template-columns:auto 1fr;gap:1.25rem;align-items:start;">
@@ -191,14 +206,62 @@ const modules = [
   <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
     <div style="max-width:900px;margin:0 auto;text-align:center;">
       <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Managing Azure apps for your business?</h2>
-      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">If you're dealing with the same tool sprawl — multiple Azure subscriptions, time tracking, expense management — let's talk about what this could look like for you.</p>
-      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">If you're dealing with the same tool sprawl across multiple Azure subscriptions, time tracking and expense management, let's talk about what this could look like for you.</p>
+      <a href="/contact" style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong-hover)'" onmouseout="this.style.background='var(--color-accent-strong)'">
         Get in Touch
       </a>
     </div>
   </section>
 
   <CaseStudyLinks related={[CASE_STUDIES.qualitech, CASE_STUDIES.sassi]} />
+
+
+  <!-- ENGINEERING DETAIL -->
+  <section style="padding:4.5rem 1.5rem;background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);">
+    <div style="max-width:900px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.25rem;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Engineering detail</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin:0 0 0.75rem;">The parts that were hard to get right</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);max-width:660px;line-height:1.7;margin:0;">
+          Listing modules says what a dashboard shows. These are the concurrency and correctness problems underneath it, which is the part that actually took work.
+        </p>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:1.25rem;">
+        <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">Atomic campaign-send claiming</h3>
+          <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">
+            Two operators hitting send on the same campaign is a duplicate-email incident, not a UI annoyance. The send route claims the campaign by moving it from draft to sending through an ETag-conditioned replace, so exactly one caller wins the transition and the loser is rejected rather than queued. A per-contact completion filter sits behind that, so a retried run skips recipients already recorded as sent.
+          </p>
+        </div>
+
+        <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">Guarded automation triggers</h3>
+          <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">
+            The public voice-call route checks whether a call has already been requested for that record before dialling, and the webhook that fires booking automation skips it when the booking trigger timestamp is already set. These are timestamp guards on specific paths, not a general exactly-once guarantee across the system, and they are scoped that way deliberately.
+          </p>
+        </div>
+
+        <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">Closed-period enforcement</h3>
+          <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">
+            Once a finance period is closed, writes dated into it are refused server-side rather than hidden in the UI. Historical books stay auditable, which matters more than the convenience of a late edit.
+          </p>
+        </div>
+
+        <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">Access model and test coverage</h3>
+          <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">
+            Five roles resolved from the database at sign-in and checked through one shared permission function, so a role change takes effect at next sign-in without token invalidation logic. Authorisation is enforced server-side on every authenticated endpoint, with a small set of deliberately public intake, tracking and unsubscribe routes. 31 test suites run under the Node test runner, concentrated on the guarded paths above.
+          </p>
+        </div>
+      </div>
+
+      <p class="reveal" style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.7;margin:1.75rem 0 0;">
+        Contribution: architecture, the concurrency primitives and access model, and delivery leadership. The platform is internal to the firm, so there are no customer screenshots here.
+      </p>
+    </div>
+  </section>
 
 </BaseLayout>
 

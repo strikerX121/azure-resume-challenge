@@ -5,7 +5,12 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "check:copy": "node scripts/check-no-em-dashes.mjs",
+    "check:upload": "node scripts/check-upload-policy.mjs",
+    "audit:build": "node scripts/audit-build.mjs",
+    "verify": "node scripts/audit-build.mjs && node scripts/check-no-em-dashes.mjs && node scripts/check-upload-policy.mjs && node scripts/check-no-public-credentials.mjs",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

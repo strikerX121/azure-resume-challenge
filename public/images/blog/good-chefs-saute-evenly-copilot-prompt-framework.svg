@@ -22,7 +22,7 @@
   <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
   <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
   <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">AI &amp; AUTOMATION</text>
-  <!-- mnemonic as first title line — slightly smaller so it sits as a label -->
+  <!-- mnemonic as first title line, slightly smaller so it sits as a label -->
   <text x="60" y="172" font-family="system-ui,-apple-system,sans-serif" font-size="38" font-weight="700" fill="#FF6B2B" opacity="0.9">Good Chefs Saut&#233; Evenly</text>
   <text x="60" y="240" font-family="system-ui,-apple-system,sans-serif" font-size="52" font-weight="800" fill="#F0EEE8">The Four-Ingredient</text>
   <text x="60" y="300" font-family="system-ui,-apple-system,sans-serif" font-size="52" font-weight="800" fill="#F0EEE8">Copilot Prompt</text>

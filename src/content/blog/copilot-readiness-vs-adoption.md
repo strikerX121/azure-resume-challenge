@@ -1,5 +1,5 @@
 ---
-title: "Copilot Readiness vs Copilot Adoption — Why Most Rollouts Skip the Step That Matters"
+title: "Copilot Readiness vs Copilot Adoption: Why Most Rollouts Skip the Step That Matters"
 description: "Most IT teams stop at readiness and call the Copilot rollout done. Then six months later, nobody's using it. Here's why readiness and adoption are different problems."
 pubDate: 2026-06-12
 category: "AI & Automation"

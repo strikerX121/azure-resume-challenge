@@ -1,4 +1,4 @@
-// Internal linking map — single source of truth for blog -> case study and
+// Internal linking map: single source of truth for blog -> case study and
 // blog -> capability hub links, so the related-links module in BlogPost.astro
 // stays in lockstep with the case studies it points at.
 //
@@ -21,7 +21,7 @@ export const CASE_STUDIES: Record<string, InternalLink> = {
   threeStripes: {
     href: '/work/3-stripes-tech',
     label: '3 Stripes Tech EMR',
-    blurb: "The Caribbean's first regional cloud EMR — 11 doctors, 7,000+ patient records, near-paperless.",
+    blurb: 'A cloud-based EMR built for Caribbean healthcare providers, running near-paperless consultations.',
   },
   esvd: {
     href: '/work/esvd-dashboard',
@@ -30,12 +30,12 @@ export const CASE_STUDIES: Record<string, InternalLink> = {
   },
   qualitech: {
     href: '/work/qualitech',
-    label: 'QT Digital — Qualitech',
+    label: 'QT Digital, Qualitech',
     blurb: 'Seven isolated spreadsheets consolidated into one database, with automation across five departments.',
   },
   wiman: {
     href: '/work/wiman-dlp',
-    label: 'Wiman — Microsoft 365 Identity & Endpoints',
+    label: 'Wiman: Microsoft 365 Identity and Endpoints',
     blurb: 'SAML 2.0 identity federation, Intune endpoint management and licensing architecture.',
   },
 };

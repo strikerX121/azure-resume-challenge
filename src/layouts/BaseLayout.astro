@@ -15,9 +15,9 @@ interface Props {
 }
 
 const {
-  title = 'Antonio Cumberbatch — Cloud Architect & AI Operations Consultant',
-  description = 'Cloud architect and AI operations consultant. Azure architecture, AI consulting, and business process automation for businesses across the Caribbean and beyond.',
-  ogImage = '/images/me.png',
+  title = 'Antonio Cumberbatch | Cloud Solutions Architect, Automation and Integration',
+  description = 'Cloud Solutions Architect working across Azure architecture, automation and integration, and technical delivery. Based in Trinidad and Tobago, delivering remotely for business and consulting teams.',
+  ogImage = '/images/og-antonio.jpg',
   ogType = 'website',
   canonicalUrl,
   isHomepage = false,
@@ -26,18 +26,41 @@ const {
 } = Astro.props;
 
 const siteUrl = 'https://www.antoniocumberbatch.com';
-const canonical = canonicalUrl ?? siteUrl + Astro.url.pathname;
+
+// Canonical URLs are normalised to the trailing-slash form so the canonical link
+// on every page matches exactly what @astrojs/sitemap emits for the same route.
+// Before this, pages canonicalised to "/about" while the sitemap declared
+// "/about/", and both URLs answered 200 with identical bytes, leaving two
+// competing addresses for one page. Root stays "/" and any route whose last
+// segment carries a file extension keeps its extension form.
+function canonicalise(rawPath: string): string {
+  if (!rawPath || rawPath === '/') return siteUrl + '/';
+  const pathOnly = rawPath.split('?')[0].split('#')[0];
+  const trimmed = pathOnly.replace(/\/+$/, '');
+  if (trimmed === '') return siteUrl + '/';
+  const lastSegment = trimmed.split('/').pop() ?? '';
+  if (lastSegment.includes('.')) return siteUrl + trimmed;
+  return siteUrl + trimmed + '/';
+}
+
+const canonical = canonicalise(
+  canonicalUrl ? new URL(canonicalUrl, siteUrl).pathname : Astro.url.pathname
+);
 const fullOgImage = ogImage.startsWith('http') ? ogImage : siteUrl + ogImage;
 
+// Positioning note: the professional line here is the same one the approved CV
+// leads with, so the site, the structured data and the downloadable document
+// describe one person rather than three. Copilot and AI enablement stay visible
+// as proven capabilities rather than as the headline identity.
 const personSchema = {
   '@context': 'https://schema.org',
   '@type': 'Person',
   name: 'Antonio Cumberbatch',
   alternateName: 'Antonio Ricardo Cumberbatch',
-  jobTitle: 'Cloud Architect & AI Operations Consultant',
-  description: 'Cloud architect and AI operations consultant with 11+ years in cloud transformation. Microsoft\'s primary US delivery resource for the M365 Copilot workshop program, trained 2,574+ professionals. Founder of ARC Cloud Consulting and co-founder of 3 Stripes Technologies.',
+  jobTitle: 'Cloud Solutions Architect',
+  description: 'Cloud Solutions Architect with 11+ years in cloud infrastructure and transformation, working across Azure architecture, automation and integration, and technical delivery. Delivered the Microsoft 365 Copilot workshop programme as its primary US delivery resource, training 2,574+ professionals. Founder of ARC Cloud Consulting and co-founder of 3 Stripes Technologies.',
   url: siteUrl,
-  image: siteUrl + '/images/me.png',
+  image: siteUrl + '/images/og-antonio.jpg',
   sameAs: [
     'https://www.linkedin.com/in/antonio-c-484433137/',
     'https://www.instagram.com/arc.cloudconsulting/',
@@ -47,26 +70,27 @@ const personSchema = {
     { '@type': 'Organization', name: '3 Stripes Technologies', url: 'https://www.3stripestech.com' },
   ],
   knowsAbout: [
-    'Microsoft Azure', 'Cloud Architecture', 'Microsoft Copilot',
-    'AI Adoption', 'Cloud Migration', 'Solution Assessments',
-    'n8n Automation', 'NestJS', 'Caribbean Tech Consulting',
-    'Electronic Medical Records',
-    'AI Operations', 'AI Consulting', 'AI Agent Consulting',
-    'Business Process Automation', 'AI-Assisted Workflows',
+    'Microsoft Azure', 'Cloud Architecture', 'Cloud Migration',
+    'Solution Assessments', 'Identity and Access Management',
+    'Systems Integration', 'Workflow Automation', 'Business Process Automation',
+    'Technical Delivery Management', 'Custom Portals',
+    'Microsoft Copilot', 'AI Adoption',
+    'n8n Automation', 'NestJS', 'Electronic Medical Records',
+    'Caribbean Tech Consulting',
   ],
   address: { '@type': 'PostalAddress', addressCountry: 'TT' },
 };
 
-// WebSite schema — was missing entirely before 2026-10-01. Gives search and AI
-// assistants a single named entity for the site itself, separate from the Person.
+// WebSite schema gives search and AI assistants a single named entity for the
+// site itself, separate from the Person it describes.
 const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'Antonio Cumberbatch',
-  alternateName: 'Antonio Cumberbatch — Cloud Architect & AI Operations Consultant',
+  alternateName: 'Antonio Cumberbatch, Cloud Solutions Architect',
   url: siteUrl,
   inLanguage: 'en',
-  description: 'Cloud architecture, AI consulting, and business process automation for Caribbean businesses and beyond.',
+  description: 'Cloud architecture, automation and integration, and technical delivery for business and consulting teams across the Caribbean and beyond.',
   publisher: { '@type': 'Person', name: 'Antonio Cumberbatch', url: siteUrl },
 };
 
@@ -87,8 +111,8 @@ const articleSchema = isBlogPost ? {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>{title}</title>
-  <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
-  <link rel="apple-touch-icon" href="/favicon.jpg" />
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
 
@@ -96,19 +120,22 @@ const articleSchema = isBlogPost ? {
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
   <meta property="og:image" content={fullOgImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:url" content={canonical} />
   <meta property="og:type" content={ogType} />
   <meta property="og:site_name" content="Antonio Cumberbatch" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content={fullOgImage} />
 
   <!-- Sitemap (generated by @astrojs/sitemap) -->
   <link rel="sitemap" href="/sitemap-index.xml" />
 
-  <!-- llms.txt — AI-readable site summary -->
+  <!-- llms.txt, an AI-readable site summary -->
   <link rel="alternate" type="text/plain" title="llms.txt" href="/llms.txt" />
 
   <!-- RSS Feed -->
-  <link rel="alternate" type="application/rss+xml" title="Antonio Cumberbatch — Blog" href="/rss.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Antonio Cumberbatch, blog" href="/rss.xml" />
 
   <!-- Google Fonts (async to avoid render-blocking) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -116,20 +143,27 @@ const articleSchema = isBlogPost ? {
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" /></noscript>
 
-  <!-- JSON-LD Schema — Person + WebSite on every page -->
+  <!-- JSON-LD: Person + WebSite on every page -->
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
   {isBlogPost && articleSchema && (
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   )}
 
-  <!-- Google Analytics 4 -->
+  <!-- Google Analytics 4. The measurement ID below is the one already configured
+       for this site and already serving in production. It is not a new property. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B7EJB7Y1HL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-B7EJB7Y1HL');
+    // IP anonymisation on, advertising signals off. This site has no advertising
+    // use case, so it should not ship one.
+    gtag('config', 'G-B7EJB7Y1HL', {
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false,
+    });
   </script>
 
   <!-- OneSignal Web Push -->
@@ -157,22 +191,57 @@ const articleSchema = isBlogPost ? {
   </main>
   <Footer />
 
-  <!-- n8n Chat Widget — lazy-loaded after page is idle to keep it off the critical path -->
+  <!-- Engagement event hooks.
+       These record intent signals worth reviewing: someone opening a contact
+       route, downloading the CV, or starting an enquiry from a specific case
+       study. A click is an intent signal and not a delivered lead, so the event
+       names say "intent" rather than calling themselves conversions. Browser
+       opt-out signals are honoured before anything is sent. -->
   <script>
-    function loadN8nChat() {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = 'https://cdn.jsdelivr.net/npm/@n8n/chat/dist/style.css';
-      document.head.appendChild(link);
-      import('https://cdn.jsdelivr.net/npm/@n8n/chat/dist/chat.bundle.es.js').then(({ createChat }) => {
-        createChat({ webhookUrl: 'https://automate.antoniocumberbatch.com/webhook/42b76170-0c5b-48b0-9932-78591565a136/chat' });
-      });
-    }
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadN8nChat, { timeout: 4000 });
-    } else {
-      window.addEventListener('load', function() { setTimeout(loadN8nChat, 1500); });
-    }
+    (function () {
+      const nav = navigator as Navigator & { globalPrivacyControl?: boolean; msDoNotTrack?: string };
+      const optedOut =
+        nav.globalPrivacyControl === true ||
+        nav.doNotTrack === '1' ||
+        nav.msDoNotTrack === '1';
+
+      function track(eventName: string, params: Record<string, unknown> = {}) {
+        if (optedOut) return;
+        const g = (window as any).gtag;
+        if (typeof g !== 'function') return;
+        g('event', eventName, params);
+      }
+      (window as any).arcTrack = track;
+
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement | null;
+        const link = target?.closest('a, button') as HTMLElement | null;
+        if (!link) return;
+
+        // An explicit annotation wins, so a page can name its own event.
+        const declared = link.getAttribute('data-track');
+        const context = link.getAttribute('data-track-context') || document.location.pathname;
+        if (declared) {
+          track(declared, { context });
+          return;
+        }
+
+        const href = link.getAttribute('href') || '';
+        if (!href) return;
+
+        if (/\.pdf($|\?)/i.test(href)) {
+          track('cv_download_intent', { context, file: href });
+        } else if (href.startsWith('mailto:')) {
+          track('contact_intent', { context, method: 'email' });
+        } else if (href.includes('api.whatsapp.com') || href.startsWith('tel:')) {
+          track('contact_intent', { context, method: 'whatsapp' });
+        } else if (href.includes('calendar.app.google')) {
+          track('contact_intent', { context, method: 'booking' });
+        } else if (href === '/contact' || href === '/contact/') {
+          track('contact_intent', { context, method: 'contact_page' });
+        }
+      }, { passive: true });
+    })();
   </script>
 
   <!-- Scroll reveal -->
@@ -187,7 +256,7 @@ const articleSchema = isBlogPost ? {
         (entries, obs) => entries.forEach(e => {
           if (e.isIntersecting) {
             e.target.classList.add('visible');
-            // Reveal is one-shot — stop observing so we don't pay for
+            // Reveal is one-shot, so stop observing and avoid paying for
             // intersection callbacks on every subsequent scroll.
             obs.unobserve(e.target);
           }

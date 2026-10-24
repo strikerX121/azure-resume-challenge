@@ -8,10 +8,11 @@ import nicoleImg from '../../assets/images/nicole-cumberbatch-sassi.jpg';
 import clientPortalImg from '../../assets/images/sassi-client-portal.png';
 import adminPortalImg from '../../assets/images/sassi-admin-portal.png';
 import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
+import rakibImg from '../../assets/images/rakib-hasan.jpg';
 ---
 
 <BaseLayout
-  title="SASSI Logistics Platform — Case Study"
+  title="SASSI Logistics Platform | Azure Case Study"
   description="How ARC Cloud Consulting built a full-stack logistics platform serving 200+ active users, replacing WhatsApp and spreadsheets with automated workflows."
 >
 
@@ -29,7 +30,7 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
       <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
       <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
         <div style="width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
-          <img src="/images/logos/sassi-logo.svg" alt="SASSI logo" width="64" height="64" style="width:64px;height:64px;object-fit:contain;" />
+          <img src="/images/logos/sassi-logo.svg" alt="SASSI logo" width="64" height="64" loading="eager" decoding="async" style="width:64px;height:64px;object-fit:contain;" />
         </div>
         <div>
           <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">SASSI Logistics</p>
@@ -60,13 +61,13 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
       <h2>About the Client</h2>
       <div style="display:flex;align-items:flex-start;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap;">
         <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;flex-shrink:0;">
-          <Image src={nicoleImg} width={96} height={96} alt="Nicole Cumberbatch — Founder, SASSI" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);" />
+          <Image src={nicoleImg} width={96} height={96} alt="Nicole Cumberbatch, Founder of SASSI" style="width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);" />
           <span style="font-size:0.6875rem;color:var(--color-text-muted);text-align:center;max-width:110px;line-height:1.4;">Nicole Cumberbatch<br/>Founder, SASSI</span>
         </div>
       </div>
 
       <h2>The Problem</h2>
-      <p>Caribbean package forwarding businesses are growing. The model &mdash; give customers a US warehouse address, receive packages, and ship them home &mdash; is simple and scalable in theory. In practice, most operations at this stage run on WhatsApp groups, spreadsheets, and phone calls. Notifying 50 customers about their shipments takes the same effort as notifying 5. There is no audit trail, no client portal, and every workflow is a manual one.</p>
+      <p>Caribbean package forwarding businesses are growing. The model is simple and scalable in theory: give customers a US warehouse address, receive packages, and ship them home. In practice, most operations at this stage run on WhatsApp groups, spreadsheets, and phone calls. Notifying 50 customers about their shipments takes the same effort as notifying 5. There is no audit trail, no client portal, and every workflow is a manual one.</p>
       <p>SASSI came to ARC with this exact problem and a clear goal: replace the informal stack with a real platform.</p>
 
       <h2>What Was Built</h2>
@@ -83,11 +84,11 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
 
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0.875rem;margin:1.75rem 0 0.5rem;">
         <div>
-          <Image src={clientPortalImg} width={560} height={350} alt="SASSI Client Portal — Pre-alerts and Invoice View" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--color-border);" />
+          <Image src={clientPortalImg} width={560} height={350} alt="SASSI client portal showing pre-alerts and the invoice view" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--color-border);" />
           <p style="font-size:0.75rem;color:var(--color-text-muted);text-align:center;margin:0.5rem 0 0;">Client Portal</p>
         </div>
         <div>
-          <Image src={adminPortalImg} width={560} height={350} alt="SASSI Admin Portal — Warehouse Receiving Dashboard" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--color-border);" />
+          <Image src={adminPortalImg} width={560} height={350} alt="SASSI admin portal showing the warehouse receiving dashboard" style="width:100%;height:auto;border-radius:8px;border:1px solid var(--color-border);" />
           <p style="font-size:0.75rem;color:var(--color-text-muted);text-align:center;margin:0.5rem 0 0;">Admin Portal</p>
         </div>
       </div>
@@ -126,7 +127,7 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">Design</p>
       <h2 class="reveal" style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0 0 1.25rem;">UI/UX</h2>
       <div class="card-lift reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap;">
-        <img src="/images/Rakib%20Hasan.jpeg" alt="Rakib Hasan" width="80" height="80" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);flex-shrink:0;" />
+        <Image src={rakibImg} width={80} height={80} alt="Rakib Hasan" loading="lazy" decoding="async" style="width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid var(--color-border);flex-shrink:0;" />
         <div style="flex:1;min-width:240px;">
           <p style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.25rem;">Rakib Hasan</p>
           <p style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);margin:0 0 1rem;">UI/UX Designer &amp; Frontend Developer</p>
@@ -140,7 +141,7 @@ import teamPhotoImg from '../../assets/images/sassi-team-photo.jpg';
     <div style="max-width:900px;margin:0 auto;text-align:center;">
       <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:1rem;">Running a logistics business on informal tools?</h2>
       <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">ARC builds purpose-built platforms for Caribbean logistics and forwarding operations. Let Antonio walk you through what this looks like.</p>
-      <a href="/contact" style="background:var(--color-accent);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-hover)'" onmouseout="this.style.background='var(--color-accent)'">
+      <a href="/contact" style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong-hover)'" onmouseout="this.style.background='var(--color-accent-strong)'">
         Start the Conversation
       </a>
     </div>

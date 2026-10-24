@@ -18,7 +18,7 @@ const currentPath = Astro.url.pathname;
 
     <!-- Logo -->
     <a href="/" style="display:flex;align-items:center;gap:0.625rem;text-decoration:none;min-height:44px;">
-      <span style="width:32px;height:32px;background:var(--color-accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:0.8125rem;color:#fff;letter-spacing:-0.5px;">AC</span>
+      <span style="width:32px;height:32px;background:var(--color-accent-strong);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:0.8125rem;color:#fff;letter-spacing:-0.5px;">AC</span>
       <span style="font-family:var(--font-display);font-weight:600;font-size:0.9375rem;color:#fff;">Antonio Cumberbatch</span>
     </a>
 
@@ -92,7 +92,7 @@ const currentPath = Astro.url.pathname;
   });
 
   // If the viewport grows past the mobile breakpoint while the menu is open,
-  // reset it — otherwise it stays stuck open underneath the desktop nav.
+  // reset it, otherwise it stays stuck open underneath the desktop nav.
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768 && menu?.style.display === 'flex') setMenu(false);
   });

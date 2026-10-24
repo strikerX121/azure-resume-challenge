@@ -26,7 +26,7 @@ This is the failure mode Notebooks exist to solve.
 
 ## What a Notebook actually is
 
-A Notebook is a bounded workspace. You load content into it — documents, notes, URLs, plain text — and Copilot works exclusively from what you've put in. It doesn't wander into your email. It doesn't pull from SharePoint. It stays inside the Notebook.
+A Notebook is a bounded workspace. You load content into it (documents, notes, URLs, plain text) and Copilot works exclusively from what you have put in. It doesn't wander into your email. It doesn't pull from SharePoint. It stays inside the Notebook.
 
 That constraint is the entire value. When you need Copilot to be a specialist on one specific thing rather than a generalist across your whole environment, a Notebook gives you that.
 
@@ -42,7 +42,7 @@ The practical test: if you'd want to hand a specific set of documents to a smart
 
 ## Setting one up
 
-Creating a Notebook is straightforward. In Copilot, look for the Notebooks option (it's in the left sidebar in Microsoft 365 Copilot). You give it a name, load in your content, and then interact with it exactly like regular Copilot chat — except Copilot stays inside what you've given it.
+Creating a Notebook is straightforward. In Copilot, look for the Notebooks option (it's in the left sidebar in Microsoft 365 Copilot). You give it a name, load in your content, and then interact with it exactly like regular Copilot chat, except that Copilot stays inside what you have given it.
 
 You can paste text directly, upload documents, or add links. The Notebook holds the content and persists between sessions, so you can return to it tomorrow and pick up where you left off without reloading everything.
 
@@ -62,4 +62,4 @@ If you've been frustrated by Copilot pulling information from places you didn't 
 
 Load your content in, work from it, and Copilot stays where you put it.
 
-This is the kind of thing I cover in Copilot adoption workshops — practical features that change how people actually work, not just feature walkthroughs. [See how I work with teams →](/services)
+This is the kind of thing I cover in Copilot adoption workshops: practical features that change how people actually work, not just feature walkthroughs. [See how I work with teams →](/services)

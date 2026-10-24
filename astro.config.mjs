@@ -35,7 +35,9 @@ const buildLastmod = new Date().toISOString();
 export default defineConfig({
   site: 'https://www.antoniocumberbatch.com',
   redirects: {
-    '/blog/four-ingredients-of-a-good-copilot-prompt': '/blog/good-chefs-saute-evenly-copilot-prompt-framework',
+    // Trailing slash on the target so the generated redirect stub's canonical
+    // matches the canonical the target page emits for itself.
+    '/blog/four-ingredients-of-a-good-copilot-prompt': '/blog/good-chefs-saute-evenly-copilot-prompt-framework/',
   },
   integrations: [
     sitemap({

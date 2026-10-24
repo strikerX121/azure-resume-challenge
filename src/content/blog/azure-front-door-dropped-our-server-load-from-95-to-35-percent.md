@@ -14,13 +14,13 @@ Then the CPU numbers started climbing.
 
 ## The Problem
 
-Three days after launch, the Azure App Service hosting the backend was sitting at 80–100% CPU utilisation. Not under load from real users — we had one clinic with 13 staff. Under load from bots.
+Three days after launch, the Azure App Service hosting the backend was sitting at 80–100% CPU utilisation. Not under load from real users; we had one clinic with 13 staff. Under load from bots.
 
-This is a common pattern that newer developers miss: as soon as you deploy a public endpoint, scanners and crawlers start hitting it. Most of them are looking for vulnerabilities — open redirects, exposed APIs, login forms to brute-force. They don't care that you're running a healthcare app with a handful of real users.
+This is a common pattern that newer developers miss: as soon as you deploy a public endpoint, scanners and crawlers start hitting it. Most of them are looking for vulnerabilities: open redirects, exposed APIs, login forms to brute-force. They don't care that you're running a healthcare app with a handful of real users.
 
 The frontend of the EMR is a React SPA deployed as static files on Azure Blob Storage. But the static file requests were being served directly from the storage account, and the API requests were hitting the App Service. With bots hammering both, the App Service was spending most of its compute time serving bot traffic.
 
-Real users — the doctors and receptionists — were experiencing slowdowns.
+Real users, the doctors and receptionists, were experiencing slowdowns.
 
 ## The Decision
 
@@ -36,13 +36,13 @@ We chose Option 3.
 
 ## What Azure Front Door Does Here
 
-Front Door sits between the internet and your origins. Every request goes through Front Door first, then gets routed to the appropriate backend — in our case, either Azure Blob Storage (for the frontend) or Azure App Service (for the API).
+Front Door sits between the internet and your origins. Every request goes through Front Door first, then gets routed to the appropriate backend, which in our case is either Azure Blob Storage (for the frontend) or Azure App Service (for the API).
 
 The WAF (Web Application Firewall) in Front Door has built-in managed rulesets for common attacks. We enabled the Microsoft-managed bot protection ruleset. This identifies and blocks known bad bots, scanners, and crawlers before they ever reach the origin.
 
 The setup took about four hours total: provisioning the Front Door profile, configuring the two origins, setting up the routing rules, enabling the WAF policy, and testing that the CORS headers and authentication flows still worked correctly through the proxy.
 
-The CORS configuration required some care — the frontend needed to send requests to the Front Door hostname, not directly to the App Service. One missed environment variable would have broken authentication entirely.
+The CORS configuration required some care: the frontend needed to send requests to the Front Door hostname, not directly to the App Service. One missed environment variable would have broken authentication entirely.
 
 ## The Numbers
 
@@ -62,10 +62,10 @@ The calculation is straightforward: what's the cost of degraded performance to r
 
 ## The Broader Lesson
 
-Every public endpoint gets hammered by scanners within hours of deployment. This is not a special risk for healthcare applications — it's the default state of anything on the public internet.
+Every public endpoint gets hammered by scanners within hours of deployment. This is not a special risk for healthcare applications; it is the default state of anything on the public internet.
 
 The question isn't whether to protect your app. It's where in the stack to put the protection. Doing it at the application layer (rate limiting in code) is cheaper but incomplete. Doing it at the network edge (WAF) is more expensive but stops traffic before it costs you anything.
 
-Front Door is Azure's answer to that second approach. For production applications that handle sensitive data or have SLA requirements, it should be the default architecture — not an afterthought added after the first production incident.
+Front Door is Azure's answer to that second approach. For production applications that handle sensitive data or have SLA requirements, it should be the default architecture, not an afterthought added after the first production incident.
 
 We added it after the first incident. We won't make that mistake on the next deployment.

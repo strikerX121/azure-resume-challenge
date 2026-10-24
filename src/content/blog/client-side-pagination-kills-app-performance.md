@@ -28,7 +28,7 @@ The original decision wasn't careless. It's a pattern that works until it doesn'
 
 ## The architectural fix
 
-Server-driven pagination means the query itself carries the limit and offset. The server returns exactly what the user needs to see — 25 records starting at page 3 — and nothing else crosses the wire.
+Server-driven pagination means the query itself carries the limit and offset. The server returns exactly what the user needs to see, 25 records starting at page 3, and nothing else crosses the wire.
 
 The API contract looks like:
 

@@ -1,6 +1,6 @@
 ---
 title: "Before You Build a Copilot Agent for Your Whole Company, Read This"
-description: "The most common instinct is to build a Copilot agent and share it immediately. That's the wrong order. Here's what to sort out first — licensing, governance, and why instructions are the entire product."
+description: "The most common instinct is to build a Copilot agent and share it immediately. That's the wrong order. Here's what to sort out first: licensing, governance, and why instructions are the entire product."
 pubDate: 2026-06-04
 category: "AI & Automation"
 tags: ["microsoft copilot", "copilot agents", "ai governance", "microsoft 365"]

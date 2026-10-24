@@ -34,13 +34,18 @@
 - Push prompt button on homepage (triggers `os.Slidedown.promptPush()`)
 - **Status:** Script is wired up. Verify site is added in the OneSignal dashboard and prompt is configured.
 
-## Visit Counter
+## Visit Counter (not called by the site as of 2026-10-23)
 
-- Azure Function: `GetResumeCounter` (C#, Cosmos DB binding)
+- Azure Function: `GetResumeCounter` (C#, Cosmos DB binding), still deployed
 - Cosmos DB: `AzureResume` database, `Counter` container, document `id="1"`
 - Returns pre-increment count; function increments on read
-- Displayed on homepage: `<span id="visit-counter">`
-- Fetched by `main.js` on page load; animates in via `window.animateCounter()`
+- **No longer displayed or fetched.** The function is declared
+  `AuthorizationLevel.Function`, so the browser call required its access key in
+  public page source. The homepage fetch, the `<span id="visit-counter">` label
+  and the legacy `main.js` call were removed instead of shipping that key.
+- The backend is intact, so the counter can return behind an anonymous endpoint
+  or a server-side proxy. Neither exists yet.
+- See `site/PUBLIC-CREDENTIAL-CLEANUP.md` for the rotation that is still owed.
 
 ## Multiple Payment Options (Shop page `/shop/`)
 

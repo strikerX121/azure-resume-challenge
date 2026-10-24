@@ -8,7 +8,7 @@ image: /images/blog/three-microsoft-365-problems-small-businesses-miss.svg
 draft: false
 ---
 
-Most businesses across the Caribbean adopt Microsoft 365 because a vendor recommended it, a staff member set it up, or it came bundled with a device purchase. What almost never happens is a proper configuration review after the initial setup. The result is the same pattern across Trinidad, Barbados, Jamaica, and beyond — a product that works well enough to stay invisible, right up until it doesn't.
+Most businesses across the Caribbean adopt Microsoft 365 because a vendor recommended it, a staff member set it up, or it came bundled with a device purchase. What almost never happens is a proper configuration review after the initial setup. The result is the same pattern across Trinidad, Barbados, Jamaica, and beyond: a product that works well enough to stay invisible, right up until it doesn't.
 
 When a small business buys Microsoft 365, someone sets it up, assigns licenses, and moves on. The apps work. Nobody looks at the underlying configuration again.
 
