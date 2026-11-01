@@ -66,6 +66,18 @@ Four payment tabs: PayPal, Wise, Payoneer, Other.
 - On submit: validates email, constructs `mailto:` to `antonio.cumberbatch@arccloudconsulting.com` with package details pre-filled
 - Shows confirmation message after click
 
+### Card via WAM (added 2026-11-01, UNVERIFIED end to end)
+- Tab "Card (WAM)" in the /shop payment modal. Account: the **3ST WAM Business** account (card acceptance, payment links and the API are business-only per docs.wam.money). Not the personal WAM account.
+- No WAM API call from the site: WAM's API needs a secret key and a webhook server, which a static site cannot hold.
+- Default flow: visitor requests a link by email (mailto), Antonio issues a Payment Request from the WAM Business Portal.
+- Optional: paste a pre-generated `https://wam.money/pay/...` link per package into `src/data/wam.ts`; the tab then shows a direct "Pay by card with WAM" button. Non-WAM URLs fail the build.
+- Open checks before trusting it: one real small card payment end to end, settlement timing, fees on TTD card payments, and whether a payment-request link can be reused by more than one customer.
+
+### Prices come from the ARC pricing playbook
+- `npm run build` runs `scripts/sync-pricing.mjs` first. Locally it reads `arc-client-os/references/pricing-and-playbook.md` and rewrites `src/data/pricing.snapshot.json`; in CI (no playbook) it uses the committed snapshot.
+- `src/data/shop-packages.ts` resolves each package: a fixed price from an optional `## Website Packages` table in the playbook, else hourly rate x hours, else quote-only.
+- `npm run verify` fails if the snapshot is stale relative to the playbook.
+
 ### Other / Bank Transfer
 - Static display card with booking link
 
