@@ -5,6 +5,8 @@ import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
 import { Image } from 'astro:assets';
 import rakibImg from '../../assets/images/rakib-hasan.jpg';
+import ConferenceGallery from '../../components/ConferenceGallery.astro';
+import { TTMA_2026 } from '../../data/events';
 
 const team = [
   {
@@ -51,7 +53,8 @@ const versions = [
 
 <BaseLayout
   title="3 Stripes Tech EMR | Caribbean Cloud EMR Case Study"
-  description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
+  description="A cloud-based EMR built from the ground up for Caribbean medical practices, in daily use at ABC Paediatrics: 11 doctors, 7,000+ patient records, near-paperless."
+  ogImage="/images/covers/3-stripes-tech.jpg"
 >
 
   <WorkSchema
@@ -64,12 +67,17 @@ const versions = [
 
 
   <!-- HERO BANNER -->
-  <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-    <div style="position:absolute;inset:0;background:rgba(15,22,36,0.75);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
-      <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Healthcare IT &middot; Azure &middot; Full-Stack Product</p>
+  <div class="reveal case-hero">
+    <!-- Generated abstract cover art (scripts/generate-covers.mjs), not a product screenshot. -->
+    <picture aria-hidden="true">
+      <source media="(max-width: 700px)" srcset="/images/covers/3-stripes-tech.jpg" />
+      <img src="/images/covers/3-stripes-tech-wide.jpg" alt="" width="1600" height="600" loading="eager" fetchpriority="high" decoding="async" class="case-hero__art" />
+    </picture>
+    <div class="case-hero__scrim">
+      <p class="case-hero__eyebrow" style="font-size:0.75rem;font-weight:600;text-transform:uppercase;color:var(--color-accent);margin:0 0 1rem;">Healthcare IT&nbsp;&middot; Azure&nbsp;&middot; Full-Stack Product</p>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.15;">3 Stripes Technologies EMR</h1>
       <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:600px;">A cloud-based EMR built from the ground up for Caribbean medical practices.</p>
-      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.5);margin:0;font-style:italic;">Three versions. Four years. One platform doctors actually use.</p>
+      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.62);margin:0;font-style:italic;">Three versions. Four years. One platform doctors actually use.</p>
     </div>
   </div>
 
@@ -83,7 +91,7 @@ const versions = [
         </div>
         <div>
           <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
-          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Healthcare IT &middot; Azure &middot; Full-Stack Product</span>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Healthcare IT&nbsp;&middot; Azure&nbsp;&middot; Full-Stack Product</span>
           <div style="margin-top:0.625rem;">
             <a href="https://www.3stripestech.com/" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
               Visit Site <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
@@ -92,7 +100,7 @@ const versions = [
         </div>
       </div>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records'], ['11', 'Doctors on Platform']].map(([val, label]) => (
+        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records at ABC Paediatrics'], ['11', 'Doctors at ABC Paediatrics']].map(([val, label]) => (
           <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
             <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
@@ -149,14 +157,24 @@ const versions = [
         </div>
       ))}
 
-      <h2>Current State</h2>
-      <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of 11 doctors.</p>
+      <div class="abc-focus">
+        <h2 style="margin-top:0;text-wrap:balance;">Client in focus: ABC Paediatrics</h2>
+        <p><strong>ABC Paediatrics</strong> in Trinidad runs on 3ST EMR every day. Eleven doctors work from the platform, more than 7,000 patient records live in it, and the practice operates near-paperless day to day. The system handles their multi-practitioner workflows, appointment management and clinical documentation.</p>
+        <p>The practice is also why the paediatric module is as mature as it is. It was shaped by their real use and feedback over time, rather than designed in the abstract and handed over.</p>
+      </div>
 
       <h2>Sound familiar?</h2>
       <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
       <p>3ST EMR was built from the ground up with local practices in mind. Three versions, real feedback from real doctors, and a product that's actually used day to day rather than bought and abandoned.</p>
       <p>If you're a medical practice still running on paper or a system that doesn't fit your workflow, Antonio leads the product and can walk you through the platform directly.</p>
 
+    </div>
+  </section>
+
+  <!-- CONFERENCE PRESENCE -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <ConferenceGallery event={TTMA_2026} heading="At the booth" level="h2" size="sub" />
     </div>
   </section>
 
@@ -211,3 +229,19 @@ const versions = [
   <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.qualitech]} />
 
 </BaseLayout>
+
+<style>
+  /* The named-client section reads as the case study's centrepiece, using the
+     same accent-tint callout the homepage and /work already use. */
+  .abc-focus {
+    margin: 2.5rem 0;
+    padding: 1.75rem 1.75rem 0.5rem;
+    background: rgba(255, 107, 43, 0.06);
+    border: 1px solid rgba(255, 107, 43, 0.18);
+    border-radius: 12px;
+    box-shadow: inset 3px 0 0 var(--color-accent);
+  }
+  @media (max-width: 480px) {
+    .abc-focus { padding: 1.25rem 1.25rem 0.25rem; }
+  }
+</style>

@@ -1,40 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SHOP_PACKAGES, PRICING_SOURCE } from '../data/shop-packages';
+import { WAM_PAYMENT_LINKS, WAM_LINK_PATTERN } from '../data/wam';
 
-const packages = [
-  {
-    title: 'Discovery Call',
-    priceUSD: 150,
-    priceTTD: '~TTD 1,020',
-    duration: '60 minutes',
-    desc: 'Strategy session covering cloud architecture, AI automation, or custom software. Walk away with a clear action plan.',
-    includes: ['60-min video call', 'Written action plan', 'Resource recommendations', 'Follow-up email'],
-    featured: false,
-  },
-  {
-    title: 'Cloud Readiness Audit',
-    priceUSD: 500,
-    priceTTD: '~TTD 3,400',
-    duration: '5-7 business days',
-    desc: 'Full Azure environment review with a written report and prioritised recommendations. Know exactly where you stand and what to fix.',
-    includes: ['Azure environment assessment', 'Security posture review', 'Written report (PDF)', 'Priority recommendations', '30-min debrief call'],
-    featured: true,
-  },
-  {
-    title: 'AI Workflow Consultation',
-    priceUSD: 200,
-    priceTTD: '~TTD 1,360',
-    duration: '90 minutes',
-    desc: 'Deep dive into automating a specific business process with n8n, GPT-4, or custom integrations. We map the workflow, identify the tools, and outline the build.',
-    includes: ['90-min working session', 'Workflow diagram', 'Tool recommendations', 'Build estimate'],
-    featured: false,
-  },
-];
+// Prices are resolved at build time from the ARC pricing playbook via
+// src/data/pricing.snapshot.json. See src/data/shop-packages.ts.
+const packages = SHOP_PACKAGES;
+
+// WAM card payment links (3ST WAM Business). Validated here so a mistyped or
+// non-WAM URL fails the build instead of shipping a broken pay button.
+for (const [title, link] of Object.entries(WAM_PAYMENT_LINKS)) {
+  if (link !== null && !WAM_LINK_PATTERN.test(link)) {
+    throw new Error(`src/data/wam.ts: WAM link for "${title}" is not a https://wam.money/pay/ URL.`);
+  }
+}
+const wamLinkFor = (title: string) => WAM_PAYMENT_LINKS[title] ?? '';
 ---
 
 <BaseLayout
   title="Shop | Consulting and Support Packages"
-  description="Book a discovery call, cloud audit, or AI consultation. Pay online via PayPal, Wise, or bank transfer."
+  description="Book a discovery call, cloud audit, or AI consultation. Pay by card through WAM, by Wise bank transfer, or through Payoneer."
 >
 
   <!-- PAGE HEADER -->
@@ -55,13 +40,23 @@ const packages = [
             <span style="position:absolute;top:-1px;left:1.5rem;transform:translateY(-50%);background:var(--color-accent-strong);color:#fff;font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:100px;">Most Popular</span>
           )}
           <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;margin:0 0 0.5rem;">{pkg.title}</h2>
-          <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.375rem;">
-            <span style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--color-accent);">${pkg.priceUSD}</span>
-            <span style="font-size:1rem;color:var(--color-text-muted);">USD</span>
-          </div>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">{pkg.priceTTD} &middot; {pkg.duration}</p>
-          <p style="font-size:0.9375rem;color:#D1CDC6;line-height:1.6;margin-bottom:1.5rem;flex:1;">{pkg.desc}</p>
-          <ul style="list-style:none;padding:0;margin:0 0 1.75rem;display:flex;flex-direction:column;gap:0.5rem;">
+          {pkg.price ? (
+            <Fragment>
+              <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.375rem;" data-price-basis={pkg.price.basis}>
+                <span style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--color-accent);">{pkg.price.primary} {(pkg.price.primary === 'USD' ? pkg.price.usd : pkg.price.ttd).toLocaleString('en-US')}</span>
+              </div>
+              <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">~{pkg.price.primary === 'USD' ? 'TTD' : 'USD'} {(pkg.price.primary === 'USD' ? pkg.price.ttd : pkg.price.usd).toLocaleString('en-US')}&nbsp;&middot; {pkg.duration}</p>
+            </Fragment>
+          ) : (
+            <Fragment>
+              <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.375rem;" data-price-basis="none in playbook, quote only">
+                <span style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;color:var(--color-accent);">Quoted</span>
+              </div>
+              <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Priced to your environment&nbsp;&middot; {pkg.duration}</p>
+            </Fragment>
+          )}
+          <p style="font-size:0.9375rem;color:#D1CDC6;line-height:1.6;margin-bottom:1.5rem;min-height:4.8em;">{pkg.desc}</p>
+          <ul style="list-style:none;padding:0;margin:0 0 1.75rem;display:flex;flex-direction:column;gap:0.5rem;flex:1;">
             {pkg.includes.map(item => (
               <li style="display:flex;align-items:center;gap:0.625rem;font-size:0.9rem;color:var(--color-text-muted);">
                 <span style="color:var(--color-accent);font-size:1rem;">&#x2713;</span>
@@ -69,23 +64,45 @@ const packages = [
               </li>
             ))}
           </ul>
+          {pkg.price ? (
           <button
-            class="pay-now-btn"
+            type="button"
+            class={`pay-now-btn btn btn-block ${pkg.featured ? 'btn-primary' : 'btn-outline'}`}
             data-title={pkg.title}
-            data-price={pkg.priceUSD}
-            data-ttd={pkg.priceTTD}
-            style={`width:100%;background:${pkg.featured ? 'var(--color-accent)' : 'transparent'};color:${pkg.featured ? '#fff' : 'var(--color-accent)'};border:${pkg.featured ? 'none' : '2px solid var(--color-accent)'};padding:0.875rem;border-radius:8px;font-weight:700;font-size:0.9375rem;cursor:pointer;transition:all 0.2s;`}
+            data-usd={pkg.price.usd}
+            data-ttd={pkg.price.ttd}
+            data-primary={pkg.price.primary}
+            data-wam={wamLinkFor(pkg.title)}
+            style="font-weight:700;padding:0.875rem;border-width:2px;"
           >
             Pay Now
           </button>
+          ) : (
+          <a
+            href="/contact/"
+            data-track="project_enquiry_intent"
+            data-track-context={`shop-quote-${pkg.title}`}
+            class={`btn btn-block ${pkg.featured ? 'btn-primary' : 'btn-outline'}`}
+            style="font-weight:700;padding:0.875rem;border-width:2px;"
+          >
+            Request a Quote
+          </a>
+          )}
         </div>
       ))}
     </div>
+    <p style="max-width:1200px;margin:1.5rem auto 0;font-size:0.8125rem;color:var(--color-text-muted);">
+      Prices are set in US dollars; TTD figures are approximate, at the current conversion rate. Card payments through WAM are charged in TTD.
+    </p>
   </section>
+  <Fragment set:html={`<!-- pricing source: ARC playbook snapshot ${PRICING_SOURCE.sha}, synced ${PRICING_SOURCE.syncedAt} -->`} />
 
   <!-- PAYMENT MODAL -->
   <div
     id="payment-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="payment-modal-title"
     style="display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;padding:1rem;"
   >
     <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;position:relative;display:flex;flex-direction:column;">
@@ -93,56 +110,47 @@ const packages = [
       <!-- Modal Header -->
       <div style="padding:1.5rem 1.5rem 1rem;border-bottom:1px solid var(--color-border);display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-shrink:0;">
         <div>
-          <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;margin:0 0 0.25rem;">Choose how to pay</h3>
+          <h2 id="payment-modal-title" style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;margin:0 0 0.25rem;">Choose how to pay</h2>
           <p id="modal-package-info" style="font-size:0.875rem;color:var(--color-accent);margin:0;font-weight:600;"></p>
         </div>
-        <button id="modal-close-btn" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:6px;cursor:pointer;padding:0.4375rem;line-height:0;flex-shrink:0;color:var(--color-text-muted);">
+        <button id="modal-close-btn" type="button" class="pay-close" aria-label="Close payment options" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:6px;cursor:pointer;padding:0.4375rem;line-height:0;flex-shrink:0;color:var(--color-text-muted);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
 
-      <!-- Tab Bar -->
-      <div style="display:flex;border-bottom:1px solid var(--color-border);flex-shrink:0;" id="modal-tab-bar">
-        <button class="modal-tab-btn" data-tab="paypal" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid var(--color-accent);color:#fff;transition:all 0.15s;">PayPal</button>
-        <button class="modal-tab-btn" data-tab="wise" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);transition:all 0.15s;">Wise / Bank</button>
-        <button class="modal-tab-btn" data-tab="other" style="flex:1;padding:0.875rem 0.5rem;font-size:0.8125rem;font-weight:600;background:transparent;border:none;cursor:pointer;border-bottom:2px solid transparent;color:rgba(255,255,255,0.45);transition:all 0.15s;">Other</button>
+      <!-- Tab Bar: three providers, an equal-width grid so nothing gaps or wraps -->
+      <div id="modal-tab-bar" class="pay-tabs" role="tablist" aria-label="Payment method">
+        <button type="button" class="modal-tab-btn pay-tab" role="tab" id="tab-wam" data-tab="wam" aria-controls="modal-tab-wam" aria-selected="true">Card (WAM)</button>
+        <button type="button" class="modal-tab-btn pay-tab" role="tab" id="tab-wise" data-tab="wise" aria-controls="modal-tab-wise" aria-selected="false" tabindex="-1">Wise / Bank</button>
+        <button type="button" class="modal-tab-btn pay-tab" role="tab" id="tab-payoneer" data-tab="payoneer" aria-controls="modal-tab-payoneer" aria-selected="false" tabindex="-1">Payoneer</button>
       </div>
 
-      <!-- Tab: PayPal -->
-      <div id="modal-tab-paypal" style="padding:1.5rem;display:block;">
-        <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Pay securely via PayPal. Credit/debit cards accepted through PayPal checkout.</p>
-        <div id="paypal-container-3NAMF9GC3ZGZS" style="min-height:48px;"></div>
-        <div style="margin-top:1.75rem;padding-top:1.5rem;border-top:1px solid var(--color-border);text-align:center;">
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Or scan to pay via PayPal app</p>
-          <img
-            src="/images/paypal-qr.png"
-            alt="PayPal QR code for AC Services"
-            width="180"
-            height="180"
-            loading="lazy"
-            decoding="async"
-            style="width:180px;height:180px;border-radius:10px;border:2px solid var(--color-border);display:block;margin:0 auto;"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-          />
-          <div style="display:none;width:180px;height:180px;border-radius:10px;border:2px dashed var(--color-border);align-items:center;justify-content:center;margin:0 auto;font-size:0.75rem;color:var(--color-text-muted);text-align:center;padding:1rem;">
-            Save QR image to<br/>public/images/paypal-qr.png
-          </div>
-          <p style="font-size:0.75rem;color:var(--color-text-muted);margin-top:0.5rem;">AC Services</p>
+      <!-- Tab: Card (WAM) -->
+      <div id="modal-tab-wam" class="pay-panel" role="tabpanel" aria-labelledby="tab-wam">
+        <p class="pay-lead">Pay by Visa or Mastercard, or from a WAM wallet, on WAM&apos;s secure hosted payment page. Payment is collected in TTD by 3 Stripes Technologies, Antonio&apos;s company, through its WAM Business account. No card details are entered on this site.</p>
+        <div id="wam-direct" style="display:none;margin-bottom:1rem;">
+          <a id="wam-direct-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-block">Pay by card with WAM &rarr;</a>
         </div>
-        <div id="paypal-success" style="display:none;text-align:center;padding:1.5rem 0;border-top:1px solid var(--color-border);margin-top:1.5rem;">
-          <p style="font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.5rem;">Payment received!</p>
-          <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Lock in your time slot below.</p>
-          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
-             style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;">
-            Book Your Session &rarr;
-          </a>
+        <div id="wam-request" class="pay-box">
+          <p class="pay-box-title">Request a card payment link</p>
+          <p class="pay-box-text">Enter your email and a WAM payment link for this package will be sent to you, usually within one business day. You do not need a WAM account to pay by card.</p>
+          <div class="pay-form">
+            <input id="wam-email" class="field-input" type="email" inputmode="email" autocomplete="email" placeholder="your@email.com" aria-label="Your email for the WAM payment link" />
+            <button id="wam-btn" type="button" class="btn btn-primary btn-sm">Request Link</button>
+          </div>
+          <p id="wam-status" class="pay-status" role="status" style="display:none;"></p>
+        </div>
+        <div class="pay-book">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Ready to lock in your slot?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;line-height:1.5;">Once your card payment is confirmed, book your time below.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Book Your Session &rarr;</a>
         </div>
       </div>
 
       <!-- Tab: Wise / Bank -->
-      <div id="modal-tab-wise" style="padding:1.5rem;display:none;">
-        <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 1.25rem;">Wire transfer in USD via Wise. Include your package name in the transfer reference.</p>
-        <div style="display:flex;flex-direction:column;gap:0.625rem;">
+      <div id="modal-tab-wise" class="pay-panel" role="tabpanel" aria-labelledby="tab-wise" hidden>
+        <p class="pay-lead">Wire transfer in USD via Wise. Include your package name in the transfer reference.</p>
+        <dl class="pay-kv">
           {[
             ['Account Name', 'Antonio Cumberbatch'],
             ['Routing (Wire &amp; ACH)', '084009519'],
@@ -150,139 +158,177 @@ const packages = [
             ['Swift / BIC', 'TRWIUS35XXX'],
             ['Bank Address', 'Wise US Inc, 108 W 13th St, Wilmington, DE 19801, US'],
           ].map(([label, value]) => (
-            <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:8px;padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:flex-start;gap:0.75rem;flex-wrap:wrap;">
-              <span style="font-size:0.75rem;color:var(--color-text-muted);min-width:120px;" set:html={label}></span>
-              <span style="font-size:0.875rem;font-weight:600;color:var(--color-text);text-align:right;" set:html={value}></span>
+            <div class="pay-kv-row">
+              <dt set:html={label}></dt>
+              <dd set:html={value}></dd>
             </div>
           ))}
-        </div>
-        <p style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:1.25rem;">After sending, email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> with your transfer reference so your booking can be confirmed.</p>
-        <div style="margin-top:1.25rem;padding:1.25rem;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;text-align:center;">
-          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Ready to lock in your slot?</p>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Send your transfer first, then book your time below. Antonio will confirm once payment clears.</p>
-          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
-             style="background:var(--color-accent-strong);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
-            Book Your Session &rarr;
-          </a>
+        </dl>
+        <p class="pay-note">After sending, email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@<wbr />arccloudconsulting.com</a> with your transfer reference so your booking can be confirmed.</p>
+        <div class="pay-book">
+          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Ready to lock in your slot?</p>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;line-height:1.5;">Send your transfer first, then book your time below. Antonio will confirm once payment clears.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Book Your Session &rarr;</a>
         </div>
       </div>
 
-      <!-- Tab: Other -->
-      <div id="modal-tab-other" style="padding:1.5rem;display:none;">
-        <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;margin-bottom:1rem;">
-          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Payoneer</p>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;line-height:1.5;">Enter your email below and Antonio will send you a Payoneer payment request directly. You can pay by card without needing a Payoneer account.</p>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-            <input id="payoneer-email" type="email" placeholder="your@email.com"
-              style="flex:1;min-width:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:6px;padding:0.5rem 0.75rem;color:var(--color-text);font-size:0.8125rem;outline:none;font-family:inherit;" />
-            <button id="payoneer-btn"
-              style="background:var(--color-accent-strong);color:#fff;border:none;border-radius:6px;padding:0.5rem 1rem;font-size:0.8125rem;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit;">
-              Request Link
-            </button>
+      <!-- Tab: Payoneer -->
+      <div id="modal-tab-payoneer" class="pay-panel" role="tabpanel" aria-labelledby="tab-payoneer" hidden>
+        <p class="pay-lead">Enter your email below and Antonio will send you a Payoneer payment request directly. You can pay by card without needing a Payoneer account.</p>
+        <div class="pay-box">
+          <p class="pay-box-title">Request a Payoneer payment</p>
+          <div class="pay-form">
+            <input id="payoneer-email" class="field-input" type="email" inputmode="email" autocomplete="email" placeholder="your@email.com" aria-label="Your email for the Payoneer payment request" />
+            <button id="payoneer-btn" type="button" class="btn btn-primary btn-sm">Request Link</button>
           </div>
-          <p id="payoneer-status" style="font-size:0.75rem;color:var(--color-text-muted);margin:0.625rem 0 0;display:none;"></p>
-          <p style="font-size:0.75rem;color:var(--color-text-muted);margin:0.875rem 0 0;line-height:1.55;">Once payment is confirmed, you&apos;ll receive an email with your booking link within 24 hours on business days. You can also email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> with your Payoneer transaction reference to speed up confirmation.</p>
+          <p id="payoneer-status" class="pay-status" role="status" style="display:none;"></p>
+          <p class="pay-box-text" style="margin:0.875rem 0 0;">Once payment is confirmed, you&apos;ll receive an email with your booking link within 24 hours on business days. You can also email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@<wbr />arccloudconsulting.com</a> with your Payoneer transaction reference to speed up confirmation.</p>
         </div>
-        <div style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;padding:1.25rem;margin-bottom:1rem;text-align:center;">
+        <div class="pay-book">
           <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.375rem;">Ready to lock in your slot?</p>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Once your payment is confirmed, book your time below.</p>
-          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
-             style="background:var(--color-accent-strong);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
-            Book Your Session &rarr;
-          </a>
+          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;line-height:1.5;">Once your payment is confirmed, book your time below.</p>
+          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Book Your Session &rarr;</a>
         </div>
-        <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:10px;padding:1.25rem;">
-          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Prefer something else?</p>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0;">Email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@arccloudconsulting.com</a> to arrange payment before booking.</p>
-        </div>
-        <div style="margin-top:1.25rem;padding:1.25rem;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:10px;text-align:center;">
-          <p style="font-size:0.875rem;font-weight:600;color:var(--color-text);margin:0 0 0.5rem;">Ready to lock in your slot?</p>
-          <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 1rem;">Once your payment is sorted, book your time below and Antonio will confirm the session.</p>
-          <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer"
-             style="background:var(--color-accent-strong);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-block;">
-            Book Your Session &rarr;
-          </a>
-        </div>
+        <p class="pay-note" style="margin-top:1rem;">Prefer something else? Email <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" style="color:var(--color-accent);">antonio.cumberbatch@<wbr />arccloudconsulting.com</a> to arrange payment before booking.</p>
       </div>
 
     </div>
   </div>
 
-  <!-- PayPal SDK -->
-  <script is:inline src="https://www.paypal.com/sdk/js?client-id=BAAj1g1FYZaMpXovU5cNihay3Ws4SxSWefAUtXGWKOFmCIh-yoyibJfZIYXk9ttMahuXUlIwyov7EQEDDY&components=hosted-buttons&enable-funding=venmo&currency=USD"></script>
+  <style>
+    /* Payment modal. Values come from the site tokens; the panels reuse the
+       same surface-2 box and accent-tint booking card the rest of /shop uses. */
+    .pay-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-bottom: 1px solid var(--color-border);
+      flex-shrink: 0;
+    }
+    .pay-tab {
+      padding: 0.875rem 0.5rem;
+      font-family: inherit;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      white-space: nowrap;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .pay-tab:hover { color: var(--color-text); background: rgba(255, 255, 255, 0.03); }
+    .pay-tab[aria-selected="true"] { color: #fff; border-bottom-color: var(--color-accent); }
+    .pay-tab:focus-visible { outline-offset: -2px; }
+    .pay-panel { padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .pay-panel[hidden] { display: none; }
+    .pay-lead { font-size: 0.875rem; color: var(--color-text-muted); line-height: 1.6; margin: 0; }
+    .pay-box {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+    .pay-box-title { font-size: 0.875rem; font-weight: 600; color: var(--color-text); margin: 0 0 0.375rem; }
+    .pay-box-text { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.55; margin: 0 0 1rem; }
+    .pay-form { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .pay-form .btn { white-space: nowrap; }
+    .pay-status { font-size: 0.75rem; color: var(--color-text-muted); margin: 0.625rem 0 0; }
+    .pay-note { font-size: 0.8125rem; color: var(--color-text-muted); line-height: 1.55; margin: 0; }
+    .pay-book {
+      background: rgba(255, 107, 43, 0.06);
+      border: 1px solid rgba(255, 107, 43, 0.15);
+      border-radius: 10px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+    .pay-kv { display: flex; flex-direction: column; gap: 0.5rem; margin: 0; }
+    .pay-kv-row {
+      background: var(--color-surface-2);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: grid;
+      grid-template-columns: 9rem minmax(0, 1fr);
+      gap: 0.75rem;
+      align-items: baseline;
+    }
+    .pay-kv-row dt { font-size: 0.75rem; color: var(--color-text-muted); }
+    .pay-kv-row dd { margin: 0; font-size: 0.875rem; font-weight: 600; color: var(--color-text); text-align: right; font-variant-numeric: tabular-nums; }
+    .pay-close { transition: color 0.15s ease, border-color 0.15s ease; }
+    .pay-close:hover { color: var(--color-text); border-color: rgba(255, 107, 43, 0.45); }
+    @media (max-width: 420px) {
+      .pay-panel { padding: 1.25rem; }
+      .pay-kv-row { grid-template-columns: 1fr; gap: 0.125rem; }
+      .pay-kv-row dd { text-align: left; }
+      .pay-form .btn { flex: 1 1 100%; }
+    }
+  </style>
 
   <!-- Modal logic -->
   <script is:inline>
     (function () {
-      var paypalInitialized = false;
-
-      function openModal(title, price, ttd) {
+      function openModal(title, usd, ttd, wamLink, primary) {
         var modal = document.getElementById('payment-modal');
-        document.getElementById('modal-package-info').textContent = title + ': $' + price + ' USD (' + ttd + ')';
+        var u = Number(usd).toLocaleString('en-US'), t = Number(ttd).toLocaleString('en-US');
+        // Keep each amount on one line so "(~TTD 1,125)" never splits on narrow screens.
+        var info = document.getElementById('modal-package-info');
+        var main = primary === 'USD' ? 'USD ' + u : 'TTD ' + t;
+        var alt = primary === 'USD' ? '(~TTD ' + t + ')' : '(~USD ' + u + ')';
+        info.textContent = title + ': ';
+        [main, alt].forEach(function (part, idx) {
+          if (idx) info.appendChild(document.createTextNode(' '));
+          var span = document.createElement('span');
+          span.style.whiteSpace = 'nowrap';
+          span.textContent = part;
+          info.appendChild(span);
+        });
+        var direct = document.getElementById('wam-direct');
+        var directLink = document.getElementById('wam-direct-link');
+        if (direct && directLink) {
+          if (wamLink) { directLink.href = wamLink; direct.style.display = 'block'; }
+          else { directLink.href = '#'; direct.style.display = 'none'; }
+        }
+        var wamStatus = document.getElementById('wam-status');
+        if (wamStatus) wamStatus.style.display = 'none';
         modal.style.display = 'flex';
         document.body.style.overflow = 'hidden';
-        switchTab('paypal');
+        switchTab('wam');
+        var closeBtn = document.getElementById('modal-close-btn');
+        if (closeBtn) closeBtn.focus();
       }
 
       function closeModal() {
-        document.getElementById('payment-modal').style.display = 'none';
+        var modal = document.getElementById('payment-modal');
+        if (modal.style.display === 'none') return;
+        modal.style.display = 'none';
         document.body.style.overflow = '';
+        if (lastTrigger) lastTrigger.focus();
       }
 
-      function switchTab(name) {
-        var tabs = ['paypal', 'wise', 'other'];
-        tabs.forEach(function (t) {
+      var TABS = ['wam', 'wise', 'payoneer'];
+      var lastTrigger = null;
+
+      function switchTab(name, focus) {
+        TABS.forEach(function (t) {
           var panel = document.getElementById('modal-tab-' + t);
-          var btn = document.querySelector('#modal-tab-bar [data-tab="' + t + '"]');
-          if (panel) panel.style.display = t === name ? 'block' : 'none';
+          var btn = document.getElementById('tab-' + t);
+          var on = t === name;
+          if (panel) panel.hidden = !on;
           if (btn) {
-            btn.style.borderBottom = t === name ? '2px solid var(--color-accent)' : '2px solid transparent';
-            btn.style.color = t === name ? '#fff' : 'rgba(255,255,255,0.45)';
+            btn.setAttribute('aria-selected', on ? 'true' : 'false');
+            btn.tabIndex = on ? 0 : -1;
+            if (on && focus) btn.focus();
           }
         });
-
-        if (name === 'paypal' && !paypalInitialized && typeof paypal !== 'undefined') {
-          try {
-            paypal.HostedButtons({
-              hostedButtonId: '3NAMF9GC3ZGZS',
-              onApprove: function () {
-                var container = document.getElementById('paypal-container-3NAMF9GC3ZGZS');
-                if (container) container.style.display = 'none';
-                var qrSection = container && container.nextElementSibling;
-                if (qrSection) qrSection.style.display = 'none';
-                var success = document.getElementById('paypal-success');
-                if (success) success.style.display = 'block';
-              }
-            }).render('#paypal-container-3NAMF9GC3ZGZS');
-            paypalInitialized = true;
-          } catch (e) {}
-        } else if (name === 'paypal' && !paypalInitialized) {
-          var poll = setInterval(function () {
-            if (typeof paypal !== 'undefined') {
-              clearInterval(poll);
-              try {
-                paypal.HostedButtons({
-                  hostedButtonId: '3NAMF9GC3ZGZS',
-                  onApprove: function () {
-                    var container = document.getElementById('paypal-container-3NAMF9GC3ZGZS');
-                    if (container) container.style.display = 'none';
-                    var qrSection = container && container.nextElementSibling;
-                    if (qrSection) qrSection.style.display = 'none';
-                    var success = document.getElementById('paypal-success');
-                    if (success) success.style.display = 'block';
-                  }
-                }).render('#paypal-container-3NAMF9GC3ZGZS');
-                paypalInitialized = true;
-              } catch (e) {}
-            }
-          }, 150);
-        }
       }
 
       document.addEventListener('click', function (e) {
         var btn = e.target.closest('.pay-now-btn');
         if (btn) {
-          openModal(btn.dataset.title, btn.dataset.price, btn.dataset.ttd);
+          lastTrigger = btn;
+          openModal(btn.dataset.title, btn.dataset.usd, btn.dataset.ttd, btn.dataset.wam, btn.dataset.primary);
           return;
         }
         var closeBtn = e.target.closest('#modal-close-btn');
@@ -290,6 +336,23 @@ const packages = [
 
         var tabBtn = e.target.closest('#modal-tab-bar [data-tab]');
         if (tabBtn) { switchTab(tabBtn.dataset.tab); return; }
+
+        var wamBtn = e.target.closest('#wam-btn');
+        if (wamBtn) {
+          var wamInput = document.getElementById('wam-email');
+          var wamStatusEl = document.getElementById('wam-status');
+          var wamEmail = wamInput ? wamInput.value.trim() : '';
+          if (!wamEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(wamEmail)) {
+            if (wamStatusEl) { wamStatusEl.textContent = 'Please enter a valid email address.'; wamStatusEl.style.display = 'block'; }
+            return;
+          }
+          var wamPkg = document.getElementById('modal-package-info') ? document.getElementById('modal-package-info').textContent : 'Package';
+          var wamSubject = encodeURIComponent('WAM card payment link request: ' + wamPkg);
+          var wamBody = encodeURIComponent('Hi Antonio,\n\nPlease send me a WAM card payment link for: ' + wamPkg + '\n\nMy email: ' + wamEmail + '\n\nThanks.');
+          window.location.href = 'mailto:antonio.cumberbatch@arccloudconsulting.com?subject=' + wamSubject + '&body=' + wamBody;
+          if (wamStatusEl) { wamStatusEl.textContent = 'Opening your email client. The WAM payment link will be sent to you, usually within one business day.'; wamStatusEl.style.display = 'block'; }
+          return;
+        }
 
         var payoneerBtn = e.target.closest('#payoneer-btn');
         if (payoneerBtn) {
@@ -313,7 +376,15 @@ const packages = [
       });
 
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') closeModal();
+        if (e.key === 'Escape') { closeModal(); return; }
+        // Arrow keys move between payment tabs (WAI-ARIA tabs pattern).
+        var tab = e.target.closest && e.target.closest('#modal-tab-bar [role="tab"]');
+        if (tab && (e.key === 'ArrowRight' || e.key === 'ArrowLeft')) {
+          var i = TABS.indexOf(tab.dataset.tab);
+          var next = TABS[(i + (e.key === 'ArrowRight' ? 1 : TABS.length - 1)) % TABS.length];
+          switchTab(next, true);
+          e.preventDefault();
+        }
       });
     })();
   </script>

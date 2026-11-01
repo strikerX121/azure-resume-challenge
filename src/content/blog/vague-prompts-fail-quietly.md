@@ -4,7 +4,7 @@ description: "Copilot won't tell you it used the wrong source. It answers confid
 pubDate: 2026-06-16
 category: "AI & Automation"
 tags: ["microsoft copilot", "prompting", "ai accuracy", "ai productivity"]
-image: /images/blog/vague-prompts-fail-quietly.svg
+image: /images/blog/vague-prompts-fail-quietly.jpg
 draft: false
 ---
 

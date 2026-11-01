@@ -15,16 +15,14 @@
 - Requires site verification and push prompt configuration in the dashboard
 - SDK loaded on every page; prompt triggered by button on homepage
 
-## PayPal (shop payments)
+## WAM (card payments, 3ST WAM Business)
 
-- Hosted Buttons SDK — button IDs managed in PayPal dashboard
-- No server-side code required; PayPal handles the transaction
-- `onApprove` callback shows a success state and booking link
+Hosted WAM payment links only; no keys on the site. See `src/data/wam.ts` and docs/features.md. `scripts/check-content-policy.mjs` fails the build if a WAM-shaped API key (64-hex or `sk_test_`/`sk_live_`) reaches `dist/`.
 
 ## Google Calendar (booking)
 
 - Public booking link: `https://calendar.app.google/hxSqa4yRVmLW5fubA`
-- Linked from: contact page sidebar, shop success states (PayPal, Wise, Other tabs)
+- Linked from: contact page sidebar, shop payment tabs (Card (WAM), Wise / Bank, Payoneer)
 - Managed via Google Calendar's "Appointment schedule" feature
 
 ## Google Analytics

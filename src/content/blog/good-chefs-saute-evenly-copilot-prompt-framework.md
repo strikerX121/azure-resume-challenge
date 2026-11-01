@@ -4,7 +4,7 @@ description: "The mnemonic that stuck with thousands of workshop participants: G
 pubDate: 2026-06-18
 category: "AI & Automation"
 tags: ["microsoft copilot", "prompting", "ai productivity", "prompt engineering"]
-image: /images/blog/good-chefs-saute-evenly-copilot-prompt-framework.svg
+image: /images/blog/good-chefs-saute-evenly-copilot-prompt-framework.jpg
 draft: false
 ---
 

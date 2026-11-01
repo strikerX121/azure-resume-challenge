@@ -4,7 +4,7 @@ description: "Most IT teams stop at readiness and call the Copilot rollout done.
 pubDate: 2026-06-12
 category: "AI & Automation"
 tags: ["microsoft copilot", "ai readiness", "microsoft 365", "ai strategy"]
-image: /images/blog/copilot-readiness-vs-adoption.svg
+image: /images/blog/copilot-readiness-vs-adoption.jpg
 draft: false
 ---
 

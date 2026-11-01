@@ -68,6 +68,7 @@ const modules = [
 <BaseLayout
   title="Enterprise Apps Masterview | Internal Operations Platform Case Study"
   description="An internal operations platform that replaced Azure Portal browsing, spreadsheet cost tracking, expense email chains and the Toggl UI, with atomic campaign claiming and guarded automation triggers underneath it."
+  ogImage="/images/covers/esvd-dashboard.jpg"
 >
 
   <WorkSchema
@@ -80,12 +81,17 @@ const modules = [
 
 
   <!-- HERO -->
-  <div class="reveal" style="position:relative;width:100%;height:500px;background:var(--color-surface-2);border-bottom:2px dashed var(--color-border);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-    <div style="position:absolute;inset:0;background:rgba(15,22,36,0.80);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;">
-      <p style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--color-accent);margin:0 0 1rem;">Internal Ops &middot; Azure &middot; Next.js 15</p>
+  <div class="reveal case-hero">
+    <!-- Generated abstract cover art (scripts/generate-covers.mjs), not a product screenshot. -->
+    <picture aria-hidden="true">
+      <source media="(max-width: 700px)" srcset="/images/covers/esvd-dashboard.jpg" />
+      <img src="/images/covers/esvd-dashboard-wide.jpg" alt="" width="1600" height="600" loading="eager" fetchpriority="high" decoding="async" class="case-hero__art" />
+    </picture>
+    <div class="case-hero__scrim">
+      <p class="case-hero__eyebrow" style="font-size:0.75rem;font-weight:600;text-transform:uppercase;color:var(--color-accent);margin:0 0 1rem;">Internal Ops&nbsp;&middot; Azure&nbsp;&middot; Next.js 15</p>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.15;">Enterprise Apps Masterview</h1>
       <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:640px;">One dashboard that replaced Azure Portal, Google Sheets, expense email chains, and the Toggl web UI.</p>
-      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.5);margin:0;font-style:italic;">Built by 3 Stripes Technologies for internal operations.</p>
+      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.62);margin:0;font-style:italic;">Built by 3 Stripes Technologies for internal operations.</p>
     </div>
   </div>
 
@@ -100,7 +106,7 @@ const modules = [
         </div>
         <div>
           <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">3 Stripes Technologies</p>
-          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Internal Ops &middot; Azure &middot; Next.js 15</span>
+          <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Internal Ops&nbsp;&middot; Azure&nbsp;&middot; Next.js 15</span>
           <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0.5rem 0 0;">Built for internal use: managing apps, costs, time and expenses from one place.</p>
         </div>
       </div>
