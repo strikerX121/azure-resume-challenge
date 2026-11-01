@@ -177,18 +177,21 @@ Logo display: white rounded square (40–44px), `object-fit: contain`, `padding:
 
 ### Employer logos (resume page)
 
-Fetched at runtime from the Clearbit logo API: `https://logo.clearbit.com/{domain}`
+Self-hosted PNGs in `public/images/logos/employers/`, served from our own origin. No third-party logo service is involved at runtime.
 
-| Employer | Domain used |
-|----------|------------|
-| Apeiron Sumus | `apeironsumus.com` |
-| Digicel Group | `digicelgroup.com` |
-| PBS Technologies | `pbs.group` |
-| St. Clair Medical Centre | `medcorpltd.com` |
-| Bishops Anstey High School East | `batce.edu.tt` |
-| Caura Hospital | `health.gov.tt` |
+These previously hotlinked `https://logo.clearbit.com/{domain}`. Clearbit's free Logo API was shut down and the hostname stopped resolving, so every employer logo disappeared from /resume. Do not reintroduce a runtime logo service.
 
-All logo `<img>` tags include `onerror="this.parentElement.style.display='none'"` — if Clearbit doesn't have a logo for a domain, the container hides cleanly rather than showing a broken image.
+| Employer | File | Source |
+|----------|------|--------|
+| ARC Cloud Consulting | `arc-cloud-consulting.png` | arccloudconsulting.com site icon |
+| 3 Stripes Technologies | `3-stripes-technologies.png` | 3stripestech.com `/icon.png` |
+| Apeiron Sumus | `apeiron-sumus.png` | apeironsumus.com header wordmark, "on" ligature (the site's own favicon mark) |
+| Digicel Group | `digicel.png` | digicelgroup.com header SVG, symbol only |
+| PBS Technologies | `pbs-technologies.png` | pbs.group header logo, blue "pbs" tile only |
+
+Masters are parked in `media-originals/employer-logos/`. Regenerate with `npm run optimize:logos` (`scripts/build-employer-logos.mjs`): each logo is trimmed and letterboxed to a 96x96 transparent PNG (3x the 30px render box), around 1 to 3 KB each.
+
+The `<img>` keeps `onerror="this.style.visibility='hidden'"` as a last-resort guard against a missing file.
 
 ## Certifications (displayed on homepage and about page)
 
