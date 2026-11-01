@@ -62,6 +62,14 @@ const EXCLUDED = [
   ['catalogue: staff handle', /Syedhamzashamim/i],
 ];
 
+// [label, regex, path regex]. Same as EXCLUDED, but only on the pages named.
+// /automations credits "our team", never a named individual (Antonio,
+// 2026-11-01). The name is still credited on /work/qualitech, which is out of
+// this rule's scope; widen the path regex to /./ to make it site-wide.
+const EXCLUDED_ON_PAGE = [
+  ['Hamza (no individual credit on /automations)', /\bHamza\b/i, /(^|\/)dist\/automations\//],
+];
+
 const SECRETS = [
   ['WAM production-style API key (64 hex)', /(?<![0-9a-fA-F])[0-9a-fA-F]{64}(?![0-9a-fA-F])/g],
   ['WAM test API key (sk_test_)', /\bsk_(test|live)_[A-Za-z0-9]{8,}/g],
@@ -72,6 +80,9 @@ function scan(text, file, problems) {
   lines.forEach((line, i) => {
     for (const [label, re] of EXCLUDED) {
       if (re.test(line)) problems.push(`${file}:${i + 1}: excluded content (${label})`);
+    }
+    for (const [label, re, where] of EXCLUDED_ON_PAGE) {
+      if (where.test(file) && re.test(line)) problems.push(`${file}:${i + 1}: excluded content (${label})`);
     }
     for (const [label, re] of SECRETS) {
       re.lastIndex = 0;
@@ -84,6 +95,9 @@ function scan(text, file, problems) {
 function selfTest() {
   const cases = [
     ['Our client Pierre Point Villa', /Pierre Point/],
+    ['compiled by <strong>Hamza</strong>', /Hamza/, 'dist/automations/index.html'],
+    ['built by hamza', /Hamza/, 'dist/automations/index.html'],
+    ['compiled by our team at 3 Stripes Technologies', null, 'dist/automations/index.html'],
     ['<p>Sales rep Robin Hosein</p>', /surnames/],
     ['<a href="https://www.3stripestech.com/ttma">', /intake page/],
     ['Certified AB-620', /AB-620/],
@@ -94,9 +108,9 @@ function selfTest() {
     ['ABC Paediatrics, 11 doctors, WhatsApp reminders', null],
   ];
   let fail = 0;
-  for (const [text, expect] of cases) {
+  for (const [text, expect, file = 'fixture'] of cases) {
     const found = [];
-    scan(text, 'fixture', found);
+    scan(text, file, found);
     const ok = expect ? found.some(f => expect.test(f)) : found.length === 0;
     console.log(`  ${ok ? 'ok  ' : 'FAIL'}  ${JSON.stringify(text).slice(0, 60)}`);
     if (!ok) { fail++; console.log('        got', found); }

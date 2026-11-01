@@ -28,6 +28,8 @@ export interface PricedPackage extends ShopPackageDef {
   price: null | {
     ttd: number;
     usd: number;
+    /** The currency the playbook sets the price in; the other figure is derived. */
+    primary: 'USD' | 'TTD';
     /** How the figure was obtained, kept for the build log and the page source. */
     basis: string;
   };
@@ -74,12 +76,12 @@ function resolve(def: ShopPackageDef): PricedPackage {
   if (fixed) {
     const usd = fixed.currency === 'USD' ? fixed.amount : Math.round(fixed.amount / snap.usdToTtd);
     const ttd = fixed.currency === 'TTD' ? fixed.amount : Math.round(fixed.amount * snap.usdToTtd);
-    return { ...def, price: { usd, ttd, basis: `playbook fixed price (${fixed.currency} ${fixed.amount})` } };
+    return { ...def, price: { usd, ttd, primary: fixed.currency, basis: `playbook fixed price (${fixed.currency} ${fixed.amount})` } };
   }
   if (def.hours) {
     const ttd = Math.round(def.hours * snap.antonioRateTTDPerHour);
     const usd = Math.round(ttd / snap.usdToTtd);
-    return { ...def, price: { usd, ttd, basis: `playbook hourly rate TTD ${snap.antonioRateTTDPerHour} x ${def.hours}h, USD at ${snap.usdToTtd}` } };
+    return { ...def, price: { usd, ttd, primary: 'TTD', basis: `playbook hourly rate TTD ${snap.antonioRateTTDPerHour} x ${def.hours}h, USD at ${snap.usdToTtd}` } };
   }
   return { ...def, price: null };
 }

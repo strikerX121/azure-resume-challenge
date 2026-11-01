@@ -1,6 +1,6 @@
 // 3 Stripes Technologies automation catalogue, public edition.
 //
-// Source: Hamza's cross-project n8n flow catalogue (25 October 2026), held in
+// Source: the 3ST team's cross-project n8n flow catalogue (25 October 2026), held in
 // the vault under Businesses/3 Stripes Technologies/Source Evidence/
 // Automation Catalog/. That document names clients, staff, sheets and
 // credentials. NONE of that belongs here. Every entry below is rewritten
@@ -33,8 +33,9 @@ export interface ShowcaseCategory {
 export const CATALOGUE_STATS = {
   workflows: 21,
   categories: 5,
-  compiledBy: 'Hamza',
-  compiledRole: 'Automation Engineer, 3 Stripes Technologies',
+  // Credit is to the team, not a named individual (Antonio, 2026-11-01).
+  // check-content-policy.mjs fails the build if an individual name returns.
+  compiledBy: 'our team at 3 Stripes Technologies',
   compiled: 'October 2026',
 };
 
