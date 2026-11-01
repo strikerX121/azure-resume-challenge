@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <g opacity="0.035" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/><line x1="0" y1="314" x2="1200" y2="314"/>
+    <line x1="0" y1="471" x2="1200" y2="471"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <!-- waveform with a gap/break in the middle -->
+  <g opacity="0.05" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round">
+    <polyline points="730,315 760,255 790,375 820,255 850,375"/>
+    <!-- gap here -->
+    <polyline points="910,315 940,255 970,375 1000,255 1030,315"/>
+  </g>
+  <!-- question mark hint in the gap -->
+  <g opacity="0.07" fill="#FF6B2B">
+    <circle cx="880" cy="295" r="6"/>
+    <text x="872" y="340" font-family="system-ui,sans-serif" font-size="52" font-weight="900" fill="#FF6B2B" opacity="0.25">?</text>
+  </g>
+  <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
+  <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
+  <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">AI &amp; AUTOMATION</text>
+  <text x="60" y="185" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">Vague Prompts Don't Fail Loudly.</text>
+  <text x="60" y="246" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">They Fail Quietly</text>
+  <text x="60" y="307" font-family="system-ui,-apple-system,sans-serif" font-size="46" font-weight="800" fill="#F0EEE8">and That's the Problem.</text>
+  <line x1="60" y1="585" x2="1140" y2="585" stroke="#1E1E1E" stroke-width="1"/>
+  <text x="1140" y="608" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#6B7280" text-anchor="end">antoniocumberbatch.com</text>
+</svg>

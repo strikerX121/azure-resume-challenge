@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#0A0A0A"/>
+  <g opacity="0.035" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="157" x2="1200" y2="157"/><line x1="0" y1="314" x2="1200" y2="314"/>
+    <line x1="0" y1="471" x2="1200" y2="471"/><line x1="300" y1="0" x2="300" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/><line x1="900" y1="0" x2="900" y2="630"/>
+  </g>
+  <!-- larger / denser neural network for flagship post -->
+  <g opacity="0.045" fill="none" stroke="#ffffff">
+    <circle cx="875" cy="195" r="34" stroke-width="7"/>
+    <circle cx="995" cy="275" r="26" stroke-width="7"/>
+    <circle cx="990" cy="380" r="28" stroke-width="7"/>
+    <circle cx="875" cy="415" r="22" stroke-width="7"/>
+    <circle cx="760" cy="360" r="26" stroke-width="7"/>
+    <circle cx="755" cy="240" r="22" stroke-width="7"/>
+    <circle cx="875" cy="310" r="14" fill="#ffffff" stroke="none"/>
+    <line x1="875" y1="195" x2="995" y2="275" stroke-width="5"/>
+    <line x1="875" y1="195" x2="755" y2="240" stroke-width="5"/>
+    <line x1="875" y1="195" x2="875" y2="310" stroke-width="5"/>
+    <line x1="995" y1="275" x2="990" y2="380" stroke-width="5"/>
+    <line x1="990" y1="380" x2="875" y2="415" stroke-width="5"/>
+    <line x1="875" y1="415" x2="760" y2="360" stroke-width="5"/>
+    <line x1="760" y1="360" x2="755" y2="240" stroke-width="5"/>
+    <line x1="875" y1="310" x2="995" y2="275" stroke-width="4"/>
+    <line x1="875" y1="310" x2="760" y2="360" stroke-width="4"/>
+    <line x1="875" y1="310" x2="990" y2="380" stroke-width="4"/>
+  </g>
+  <rect x="0" y="0" width="1200" height="5" fill="#FF6B2B"/>
+  <rect x="60" y="78" width="3" height="28" fill="#FF6B2B"/>
+  <text x="72" y="99" font-family="system-ui,-apple-system,sans-serif" font-size="13" font-weight="700" fill="#FF6B2B" letter-spacing="4">AI &amp; AUTOMATION</text>
+  <text x="60" y="185" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">I Trained 2,574 People on</text>
+  <text x="60" y="248" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">Microsoft Copilot. Here's</text>
+  <text x="60" y="311" font-family="system-ui,-apple-system,sans-serif" font-size="48" font-weight="800" fill="#F0EEE8">What Actually Drives Adoption.</text>
+  <line x1="60" y1="585" x2="1140" y2="585" stroke="#1E1E1E" stroke-width="1"/>
+  <text x="1140" y="608" font-family="system-ui,-apple-system,sans-serif" font-size="13" fill="#6B7280" text-anchor="end">antoniocumberbatch.com</text>
+</svg>
