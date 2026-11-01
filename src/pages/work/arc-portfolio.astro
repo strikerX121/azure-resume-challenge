@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverBanner from '../../components/CoverBanner.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
@@ -8,6 +9,7 @@ import { CASE_STUDIES } from '../../data/internal-links';
 <BaseLayout
   title="ARC Cloud Portfolio | Azure Static Site Case Study"
   description="How Antonio Cumberbatch built his personal portfolio on Azure, starting with the Cloud Resume Challenge and evolving it into a full production platform in 2026."
+  ogImage="/images/covers/arc-portfolio.jpg"
 >
 
   <WorkSchema
@@ -50,6 +52,8 @@ import { CASE_STUDIES } from '../../data/internal-links';
       </div>
     </div>
   </section>
+
+  <CoverBanner name="arc-portfolio" />
 
   <section style="padding:2rem 1.5rem 5rem;">
     <div class="prose" style="max-width:900px;margin:0 auto;">

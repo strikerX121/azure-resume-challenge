@@ -4,7 +4,7 @@ description: "Regular Copilot chat can wander into emails and SharePoint you did
 pubDate: 2026-06-14
 category: "AI & Automation"
 tags: ["microsoft copilot", "copilot notebooks", "microsoft 365", "ai productivity"]
-image: /images/blog/copilot-notebooks-give-it-one-place-to-look.svg
+image: /images/blog/copilot-notebooks-give-it-one-place-to-look.jpg
 draft: false
 ---
 

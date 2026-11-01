@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverBanner from '../../components/CoverBanner.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
@@ -39,6 +40,7 @@ const workstreams = [
 <BaseLayout
   title="Wiman | Microsoft 365 Identity and Endpoint Management"
   description="Identity federation, endpoint management, and M365 licensing architecture for Wiman Inc."
+  ogImage="/images/covers/wiman-dlp.jpg"
 >
 
   <WorkSchema
@@ -76,6 +78,8 @@ const workstreams = [
       </div>
     </div>
   </section>
+
+  <CoverBanner name="wiman-dlp" />
 
   <!-- THE PROBLEM -->
   <section style="padding:0 1.5rem 3rem;">

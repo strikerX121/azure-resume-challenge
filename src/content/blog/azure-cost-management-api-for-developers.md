@@ -4,6 +4,7 @@ description: "Azure's built-in cost views are fine if you're a finance person. F
 pubDate: 2026-06-16
 category: "Cloud & Azure"
 tags: ["azure", "cost-management", "multi-tenant", "internal-tools"]
+image: /images/blog/azure-cost-management-api-for-developers.jpg
 draft: false
 ---
 

@@ -190,6 +190,7 @@ npm run build && npm run preview
 | `npm run check:copy` | Fails if any em dash reaches public copy, including `&mdash;`, `&#8212;`, `\u2014` and percent-encoded forms. |
 | `npm run check:upload` | Replays the deploy workflow's upload selection against `dist/` and a fixture. Fails if any file would be missed, mis-cached, or left stale. Also hash-checks the approved CV. No Azure write, no network. |
 | `npm run optimize:images` | Re-runs the image pipeline. Reads parked masters, so it is safe to run twice. |
+| `npm run generate:covers` | Regenerates every blog and page cover from `scripts/covers/`. Deterministic, so an unchanged motif produces identical bytes. |
 
 ### Images
 
@@ -198,6 +199,17 @@ full-resolution masters live in `media-originals/`, which sits outside the Astro
 build and never reaches `dist/`. Prefer importing from `src/assets/` so Astro
 hashes and converts the file; only put something in `public/` when it needs a
 stable, directly fetchable URL (the social card, favicons, `robots.txt`).
+
+Cover art (blog posts, case-study heroes, the automations banner) is drawn as
+SVG in `scripts/covers/` and rasterised by `scripts/generate-covers.mjs` into
+`public/images/blog/` and `public/images/covers/`. These live in `public/` on
+purpose: each cover doubles as the page's `og:image`, which needs a stable URL
+and a raster format (most social scrapers ignore SVG). Each cover ships at
+1200x630 plus a 640px sibling for `srcset`; the three full-bleed case-study
+heroes also get a 1600x600 `-wide` variant. The art is abstract by rule: no
+mock product UI, nothing that could pass for a client screenshot, and no
+generated people. Real photos (team portraits, the T&TMA booth gallery) are
+never substituted with generated images.
 
 ## The serverless backend
 

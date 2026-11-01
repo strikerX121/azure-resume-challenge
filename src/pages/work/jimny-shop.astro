@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverBanner from '../../components/CoverBanner.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
@@ -52,6 +53,7 @@ function badgeStyle(status: string): string {
 <BaseLayout
   title="The Jimny Shop | WooCommerce and Azure Case Study"
   description="Full e-commerce and digital infrastructure for a Trinidad-based Suzuki Jimny specialist. Built from zero to live WooCommerce store under ARC Cloud Consulting."
+  ogImage="/images/covers/jimny-shop.jpg"
 >
 
   <WorkSchema
@@ -92,6 +94,8 @@ function badgeStyle(status: string): string {
       </div>
     </div>
   </section>
+
+  <CoverBanner name="jimny-shop" />
 
   <!-- MAIN CONTENT -->
   <section style="padding:0 1.5rem 3rem;">

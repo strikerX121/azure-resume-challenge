@@ -4,7 +4,7 @@ description: "People don't type keywords into search anymore. They ask questions
 pubDate: 2026-06-05
 category: "Digital Strategy"
 tags: ["ai search", "seo", "discoverability", "caribbean business", "digital strategy"]
-image: /images/blog/2019-visibility-strategy-2026-world.svg
+image: /images/blog/2019-visibility-strategy-2026-world.jpg
 draft: false
 ---
 

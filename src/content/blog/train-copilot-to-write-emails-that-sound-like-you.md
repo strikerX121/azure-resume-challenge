@@ -4,7 +4,7 @@ description: "Every AI-drafted email sounds like AI, until you do this. Your sen
 pubDate: 2026-06-11
 category: "AI & Automation"
 tags: ["microsoft copilot", "outlook", "email productivity", "ai writing"]
-image: /images/blog/train-copilot-to-write-emails-that-sound-like-you.svg
+image: /images/blog/train-copilot-to-write-emails-that-sound-like-you.jpg
 draft: false
 ---
 

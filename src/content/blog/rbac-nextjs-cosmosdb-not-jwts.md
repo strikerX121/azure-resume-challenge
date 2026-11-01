@@ -4,6 +4,7 @@ description: "Most auth tutorials store roles in the JWT and call it done. That 
 pubDate: 2026-06-09
 category: "Engineering"
 tags: ["nextjs", "auth", "rbac", "cosmosdb", "nextauth"]
+image: /images/blog/rbac-nextjs-cosmosdb-not-jwts.jpg
 draft: false
 ---
 

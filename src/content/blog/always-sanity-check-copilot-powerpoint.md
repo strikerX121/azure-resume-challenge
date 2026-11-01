@@ -4,7 +4,7 @@ description: "In Word and Excel, Copilot is reliable with numbers. In PowerPoint
 pubDate: 2026-06-08
 category: "AI & Automation"
 tags: ["microsoft copilot", "powerpoint", "ai accuracy", "microsoft 365"]
-image: /images/blog/always-sanity-check-copilot-powerpoint.svg
+image: /images/blog/always-sanity-check-copilot-powerpoint.jpg
 draft: false
 ---
 

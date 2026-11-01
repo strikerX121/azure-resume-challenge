@@ -4,6 +4,7 @@ description: "Every morning meant opening six tools that didn't talk to each oth
 pubDate: 2026-06-02
 category: "Cloud & Azure"
 tags: ["azure", "internal-tools", "ops", "cosmosdb", "nextjs"]
+image: /images/blog/enterprise-ops-dashboard-replaced-six-tools.jpg
 draft: false
 ---
 

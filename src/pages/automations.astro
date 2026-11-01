@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CoverBanner from '../components/CoverBanner.astro';
 import { SHOWCASE, IDEAS, CATALOGUE_STATS } from '../data/automations';
 
 const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
@@ -8,6 +9,7 @@ const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
 <BaseLayout
   title="Automations | Real n8n Workflows and Ideas for Your Business"
   description="A selection of the n8n automations 3 Stripes Technologies has built for sales, marketing, messaging, finance and support teams, plus practical automation ideas for clinics, logistics, sales and admin-heavy businesses."
+  ogImage="/images/covers/automations.jpg"
 >
 
   <!-- HEADER -->
@@ -33,6 +35,8 @@ const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
       </div>
     </div>
   </section>
+
+  <CoverBanner name="automations" maxWidth="1200px" />
 
   <!-- CREDIT -->
   <section style="padding:0 1.5rem 1.5rem;">

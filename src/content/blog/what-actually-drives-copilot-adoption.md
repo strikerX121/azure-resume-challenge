@@ -4,7 +4,7 @@ description: "After 95 workshops across banking, healthcare, government, and man
 pubDate: 2026-06-15
 category: "AI & Automation"
 tags: ["microsoft copilot", "ai adoption", "change management", "ai enablement"]
-image: /images/blog/what-actually-drives-copilot-adoption.svg
+image: /images/blog/what-actually-drives-copilot-adoption.jpg
 draft: false
 ---
 

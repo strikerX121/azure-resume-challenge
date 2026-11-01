@@ -14,6 +14,13 @@ function readTime(body: string) {
 }
 
 const categories = ['All', ...new Set(posts.map(p => p.data.category))];
+
+// Covers are generated at 1200px with a 640px sibling for cards (see
+// scripts/generate-covers.mjs). They are decorative: the card's own heading
+// carries the title, so the image alt is empty rather than repeating it.
+function cardSrcset(image?: string) {
+  return image && image.endsWith('.jpg') ? `${image.replace(/\.jpg$/, '-640.jpg')} 640w, ${image} 1200w` : undefined;
+}
 ---
 
 <BaseLayout
@@ -73,7 +80,9 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
             {featuredPost.data.image ? (
               <img
                 src={featuredPost.data.image}
-                alt={featuredPost.data.title}
+                srcset={cardSrcset(featuredPost.data.image)}
+                sizes="(max-width: 768px) 100vw, 600px"
+                alt=""
                 width="1200"
                 height="630"
                 loading="lazy"
@@ -124,7 +133,9 @@ const categories = ['All', ...new Set(posts.map(p => p.data.category))];
                 {post.data.image ? (
                   <img
                     src={post.data.image}
-                    alt={post.data.title}
+                    srcset={cardSrcset(post.data.image)}
+                    sizes="(max-width: 720px) 100vw, 400px"
+                    alt=""
                     width="600"
                     height="340"
                     loading="lazy"

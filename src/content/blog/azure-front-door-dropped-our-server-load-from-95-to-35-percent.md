@@ -4,7 +4,7 @@ description: "When bots hit the 3 Stripes Tech EMR frontend, CPU spiked to near-
 pubDate: 2026-04-10
 category: "Cloud & Azure"
 tags: ["azure", "front-door", "waf", "healthcare", "performance"]
-image: /images/blog/azure-front-door-dropped-our-server-load-from-95-to-35-percent.svg
+image: /images/blog/azure-front-door-dropped-our-server-load-from-95-to-35-percent.jpg
 draft: false
 ---
 

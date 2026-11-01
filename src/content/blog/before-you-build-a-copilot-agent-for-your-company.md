@@ -4,7 +4,7 @@ description: "The most common instinct is to build a Copilot agent and share it 
 pubDate: 2026-06-04
 category: "AI & Automation"
 tags: ["microsoft copilot", "copilot agents", "ai governance", "microsoft 365"]
-image: /images/blog/before-you-build-a-copilot-agent-for-your-company.svg
+image: /images/blog/before-you-build-a-copilot-agent-for-your-company.jpg
 draft: false
 ---
 

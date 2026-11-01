@@ -4,7 +4,7 @@ description: "AI answers often have no links. The goal isn't ranking for a click
 pubDate: 2026-05-30
 category: "Digital Strategy"
 tags: ["ai search", "entity seo", "generative engine optimization", "digital strategy"]
-image: /images/blog/build-to-be-recommended-not-found.svg
+image: /images/blog/build-to-be-recommended-not-found.jpg
 draft: false
 ---
 

@@ -14,7 +14,8 @@
     "sync:pricing": "node scripts/sync-pricing.mjs",
     "audit:build": "node scripts/audit-build.mjs",
     "verify": "node scripts/audit-build.mjs && node scripts/check-no-em-dashes.mjs && node scripts/check-upload-policy.mjs && node scripts/check-no-public-credentials.mjs && node scripts/check-critical-render.mjs && node scripts/check-content-policy.mjs && node scripts/sync-pricing.mjs --check",
-    "optimize:images": "node scripts/optimize-images.mjs"
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "generate:covers": "node scripts/generate-covers.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

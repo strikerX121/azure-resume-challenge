@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import CoverBanner from '../../components/CoverBanner.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
@@ -14,6 +15,7 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
 <BaseLayout
   title="SASSI Logistics Platform | Azure Case Study"
   description="How ARC Cloud Consulting built a full-stack logistics platform serving 200+ active users, replacing WhatsApp and spreadsheets with automated workflows."
+  ogImage="/images/covers/sassi.jpg"
 >
 
   <WorkSchema
@@ -53,6 +55,8 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
       </div>
     </div>
   </section>
+
+  <CoverBanner name="sassi" />
 
   <section style="padding:2rem 1.5rem 5rem;">
     <div class="prose" style="max-width:900px;margin:0 auto;">
