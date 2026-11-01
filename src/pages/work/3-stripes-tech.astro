@@ -151,9 +151,11 @@ const versions = [
         </div>
       ))}
 
-      <h2>Client in focus: ABC Paediatrics</h2>
-      <p><strong>ABC Paediatrics</strong> in Trinidad runs on 3ST EMR every day. Eleven doctors work from the platform, more than 7,000 patient records live in it, and the practice operates near-paperless day to day. The system handles their multi-practitioner workflows, appointment management and clinical documentation.</p>
-      <p>The practice is also why the paediatric module is as mature as it is. It was shaped by their real use and feedback over time, rather than designed in the abstract and handed over.</p>
+      <div class="abc-focus">
+        <h2 style="margin-top:0;text-wrap:balance;">Client in focus: ABC Paediatrics</h2>
+        <p><strong>ABC Paediatrics</strong> in Trinidad runs on 3ST EMR every day. Eleven doctors work from the platform, more than 7,000 patient records live in it, and the practice operates near-paperless day to day. The system handles their multi-practitioner workflows, appointment management and clinical documentation.</p>
+        <p>The practice is also why the paediatric module is as mature as it is. It was shaped by their real use and feedback over time, rather than designed in the abstract and handed over.</p>
+      </div>
 
       <h2>Sound familiar?</h2>
       <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
@@ -166,7 +168,7 @@ const versions = [
   <!-- CONFERENCE PRESENCE -->
   <section style="padding:0 1.5rem 4rem;">
     <div style="max-width:900px;margin:0 auto;">
-      <ConferenceGallery event={TTMA_2026} heading="At the booth" />
+      <ConferenceGallery event={TTMA_2026} heading="At the booth" level="h2" size="sub" />
     </div>
   </section>
 
@@ -221,3 +223,19 @@ const versions = [
   <CaseStudyLinks related={[CASE_STUDIES.esvd, CASE_STUDIES.qualitech]} />
 
 </BaseLayout>
+
+<style>
+  /* The named-client section reads as the case study's centrepiece, using the
+     same accent-tint callout the homepage and /work already use. */
+  .abc-focus {
+    margin: 2.5rem 0;
+    padding: 1.75rem 1.75rem 0.5rem;
+    background: rgba(255, 107, 43, 0.06);
+    border: 1px solid rgba(255, 107, 43, 0.18);
+    border-radius: 12px;
+    box-shadow: inset 3px 0 0 var(--color-accent);
+  }
+  @media (max-width: 480px) {
+    .abc-focus { padding: 1.25rem 1.25rem 0.25rem; }
+  }
+</style>

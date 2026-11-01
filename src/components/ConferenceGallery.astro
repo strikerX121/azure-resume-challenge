@@ -1,35 +1,75 @@
 ---
 // Conference presence block with a photo gallery. Renders real photos from
-// src/data/events.ts when they exist, otherwise clearly-marked placeholder
-// slots. Never fills the slots with stock or generated imagery.
+// src/data/events.ts when they exist, otherwise one clearly-marked reserved
+// photo area. Never fills it with stock or generated imagery.
+//
+// Layout follows the site's section-header pattern (orange eyebrow, then the
+// heading) instead of a "Label: Title" heading inside a box:
+//   compact  -> homepage teaser: text left, key-facts card right, no gallery.
+//   default  -> case-study block: header, summary, then the gallery.
 import type { PublicEvent } from '../data/events';
 
 interface Props {
   event: PublicEvent;
+  /** Eyebrow label above the event name. */
   heading?: string;
   compact?: boolean;
   link?: { href: string; label: string };
+  level?: 'h2' | 'h3';
+  /** 'section' matches homepage H2s (2.25rem + accent line); 'sub' matches case-study H2s (1.625rem). */
+  size?: 'section' | 'sub';
 }
 
-const { event, heading = 'Out in the field', compact = false, link } = Astro.props;
+const { event, heading = 'Out in the field', compact = false, link, level = 'h2', size = 'sub' } = Astro.props;
+const Heading = level;
 const hasPhotos = event.photos.length > 0;
-const slots = Array.from({ length: event.placeholderSlots }, (_, i) => i + 1);
+const headingStyle = size === 'section'
+  ? 'font-family:var(--font-display);font-size:2.25rem;font-weight:800;margin:0 0 0.75rem;'
+  : 'font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0 0 0.5rem;';
+const facts: [string, string][] = [
+  ['Role', event.role],
+  ['Date', event.date],
+  ['Where', event.location],
+];
 ---
 
-<div class="reveal conf-block" data-event={event.id} style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:14px;padding:2rem;">
-  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin-bottom:0.75rem;">
-    <span style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;background:rgba(255,107,43,0.12);color:var(--color-accent);border:1px solid rgba(255,107,43,0.25);">{event.role}</span>
-    <span style="font-size:0.8125rem;color:var(--color-text-muted);">{event.date} &middot; {event.location}</span>
+<div class={`conf-block${compact ? ' conf-compact' : ''}`} data-event={event.id}>
+  <div class="conf-main">
+    <div class="reveal">
+      <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.5rem;">{heading}</p>
+      <Heading class={size === 'section' ? 'accent-line' : undefined} style={headingStyle}>{event.name}</Heading>
+      {!compact && (
+        <p style="display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin:0.25rem 0 1rem;">
+          <span class="conf-badge">{event.role}</span>
+          <span style="font-size:0.8125rem;color:var(--color-text-muted);">{event.date} &middot; {event.location}</span>
+        </p>
+      )}
+      <p style={`font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:${compact ? '1rem' : '0'} 0 0;max-width:680px;`}>{event.summary}</p>
+      {link && !compact && (
+        <p style="margin:1.25rem 0 0;"><a href={link.href} class="text-link" style="font-size:0.9375rem;">{link.label} <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+      )}
+    </div>
+
+    {compact && (
+      <aside class="reveal conf-facts" aria-label={`${event.shortName} at a glance`}>
+        <dl style="margin:0;display:flex;flex-direction:column;gap:0.875rem;">
+          {facts.map(([k, v]) => (
+            <div>
+              <dt style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text-muted);margin:0 0 0.125rem;">{k}</dt>
+              <dd style="margin:0;font-size:0.9375rem;font-weight:600;color:var(--color-text);">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        {link && (
+          <a href={link.href} class="btn btn-outline btn-sm btn-block" style="margin-top:1.5rem;">{link.label} &rarr;</a>
+        )}
+      </aside>
+    )}
   </div>
-  <h3 style="font-family:var(--font-display);font-size:1.375rem;font-weight:800;color:var(--color-text);margin:0 0 0.625rem;">{heading}: {event.name}</h3>
-  <p style={`font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 ${compact && !link ? '0' : '1.5rem'};max-width:760px;`}>{event.summary}</p>
-  {link && (
-    <a href={link.href} style="font-size:0.875rem;font-weight:600;color:var(--color-accent);text-decoration:none;">{link.label} &rarr;</a>
-  )}
 
   {!compact && (
     hasPhotos ? (
-      <div class="conf-gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.875rem;">
+      <div class="reveal conf-gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.875rem;margin-top:1.75rem;">
         {event.photos.map(p => (
           <figure style="margin:0;">
             <img src={p.src} alt={p.alt} loading="lazy" decoding="async" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--color-border);display:block;" />
@@ -38,15 +78,83 @@ const slots = Array.from({ length: event.placeholderSlots }, (_, i) => i + 1);
         ))}
       </div>
     ) : (
-      <div class="conf-gallery" data-placeholder="true" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.875rem;">
-        {slots.map(n => (
-          <div role="img" aria-label={`Reserved photo slot ${n} of ${slots.length}: ${event.shortName} booth photos to be added`} style="aspect-ratio:16/10;border-radius:10px;border:2px dashed #3b4d73;background:var(--color-surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.375rem;text-align:center;padding:1rem;">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg>
-            <span style="font-size:0.75rem;font-weight:700;color:var(--color-text);text-transform:uppercase;letter-spacing:0.06em;">Reserved photo slot</span>
-            <span style="font-size:0.75rem;color:var(--color-text-muted);">Booth photos coming soon</span>
-          </div>
-        ))}
+      <div
+        class="reveal conf-gallery conf-reserved"
+        data-placeholder="true"
+        data-reserved-slots={event.placeholderSlots}
+        role="img"
+        aria-label={`Reserved photo area: ${event.shortName} booth photos to be added`}
+      >
+        <span class="conf-reserved-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="1.6"><rect x="3" y="6" width="18" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8.5 6l1.5-2h4l1.5 2"/></svg>
+        </span>
+        <div>
+          <p style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-text);margin:0 0 0.25rem;">Reserved for booth photos</p>
+          <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0;line-height:1.5;">Photos from the booth will be added here.</p>
+        </div>
       </div>
     )
   )}
 </div>
+
+<style>
+  .conf-compact .conf-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 3rem;
+    align-items: center;
+  }
+  .conf-facts {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+  }
+  .conf-badge {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    padding: 0.1875rem 0.625rem;
+    border-radius: 100px;
+    background: rgba(255, 107, 43, 0.12);
+    color: var(--color-accent);
+    border: 1px solid rgba(255, 107, 43, 0.25);
+  }
+  /* One reserved gallery area, sized like a photo strip so it reads as
+     "the gallery goes here" rather than as three empty skeleton boxes. */
+  .conf-reserved {
+    margin-top: 1.75rem;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.875rem;
+    padding: 2rem 1.75rem;
+    border-radius: 12px;
+    border: 1px solid var(--color-border);
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(255, 107, 43, 0.08) 0%, rgba(255, 107, 43, 0) 70%),
+      var(--color-surface);
+  }
+  .conf-reserved-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 107, 43, 0.12);
+    border: 1px solid rgba(255, 107, 43, 0.25);
+  }
+  @media (max-width: 860px) {
+    .conf-compact .conf-main { grid-template-columns: 1fr; gap: 1.75rem; }
+  }
+  @media (max-width: 480px) {
+    .conf-reserved { min-height: 170px; padding: 1.5rem 1.25rem; }
+  }
+</style>

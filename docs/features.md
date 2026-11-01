@@ -49,20 +49,15 @@
 
 ## Multiple Payment Options (Shop page `/shop/`)
 
-Four payment tabs: PayPal, Wise, Payoneer, Other.
-
-### PayPal
-- Hosted Buttons SDK: `https://www.paypal.com/sdk/js?components=hosted-buttons&...`
-- Two hosted button IDs (standard and poll path)
-- `onApprove` callback: hides payment container and QR code, shows `#paypal-success` div
-- Success div includes booking link to Google Calendar
-- QR code image: `public/images/paypal-qr.png`
+Three payment tabs, in this order: Card (WAM) (default), Wise / Bank, Payoneer.
+PayPal was removed entirely on 2026-11-01 (tab, hosted button, SDK script and QR image).
+Tabs follow the WAI-ARIA tabs pattern (role=tablist/tab/tabpanel, arrow keys switch tabs).
 
 ### Wise
-- Display-only card with QR code placeholder and booking link after payment
+- Account details as a definition list, plus a booking link after payment
 
 ### Payoneer
-- Email input + "Request Link" button
+- Email input + "Request Link" button. The "prefer something else?" email fallback lives at the bottom of this tab
 - On submit: validates email, constructs `mailto:` to `antonio.cumberbatch@arccloudconsulting.com` with package details pre-filled
 - Shows confirmation message after click
 
@@ -154,7 +149,7 @@ Remote images (Microsoft cert badges from `learn.microsoft.com`) are fetched and
 
 - Route: `/privacy/`
 - File: `src/pages/privacy.astro`
-- Covers: Google Analytics 4, follow.it email subscriptions, OneSignal push, contact form, payments (PayPal/Wise/Payoneer), n8n chat widget, cookies, data retention, user rights
+- Covers: Google Analytics 4, follow.it email subscriptions, OneSignal push, contact form, payments (WAM/Wise/Payoneer), n8n chat widget, cookies, data retention, user rights
 - Linked in the footer (`Privacy` link)
 - Last updated: June 2026 — update the `updated` constant at the top of the file if the policy changes
 

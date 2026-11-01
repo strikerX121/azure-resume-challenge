@@ -312,25 +312,27 @@ const services = [
           { k: '02', t: 'Verified before it counts', d: 'Nothing is done because an agent says so. Builds are run, pages are opened, figures are traced to their source. Anything that cannot be checked is reported as unverified, not rounded up to finished.' },
           { k: '03', t: 'Propose, then approve', d: 'Changes that touch money, production systems or a client go through a propose-and-approve pipeline. Agents prepare the change; a person signs it off. Slower than full autonomy, and much safer.' },
         ].map(c => (
-          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
-            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);">{c.k}</span>
-            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0.5rem 0 0.625rem;">{c.t}</h3>
+          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;box-shadow:var(--shadow-sm);">
+            <div style="display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:40px;padding:0 0.5rem;background:rgba(255,107,43,0.15);border:1px solid rgba(255,107,43,0.25);border-radius:10px;font-family:var(--font-display);font-size:0.75rem;font-weight:800;color:var(--color-accent);letter-spacing:0.05em;margin-bottom:1rem;" aria-hidden="true">{c.k}</div>
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{c.t}</h3>
             <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{c.d}</p>
           </div>
         ))}
       </div>
 
-      <p class="reveal" style="font-size:0.9375rem;color:var(--color-text-muted);margin:1.5rem 0 0;line-height:1.7;">
-        The same habits go into client work: scoped automation, clear guardrails and a named human owner for every system.{' '}
-        <a href="/automations/" style="color:var(--color-accent);font-weight:600;text-decoration:none;">See the automation catalogue &rarr;</a>
-      </p>
+      <div class="reveal" style="margin-top:2rem;padding-top:1.75rem;border-top:1px solid var(--color-border);display:flex;flex-wrap:wrap;align-items:center;gap:0.75rem 2rem;">
+        <p style="font-size:0.9375rem;color:var(--color-text-muted);margin:0;line-height:1.7;max-width:640px;">
+          The same habits go into client work: scoped automation, clear guardrails and a named human owner for every system.
+        </p>
+        <a href="/automations/" class="text-link" style="font-size:0.9375rem;white-space:nowrap;">See the automation catalogue <span class="arrow" aria-hidden="true">&rarr;</span></a>
+      </div>
     </div>
   </section>
 
   <!-- CONFERENCE PRESENCE -->
-  <section style="padding:4rem 1.5rem;">
+  <section style="padding:5rem 1.5rem;">
     <div style="max-width:1200px;margin:0 auto;">
-      <ConferenceGallery event={TTMA_2026} heading="Out in the field" compact={true} link={{ href: '/work/3-stripes-tech/', label: 'See the EMR case study and booth photos' }} />
+      <ConferenceGallery event={TTMA_2026} heading="Out in the field" compact={true} size="section" link={{ href: '/work/3-stripes-tech/', label: 'See the EMR case study' }} />
     </div>
   </section>
 
