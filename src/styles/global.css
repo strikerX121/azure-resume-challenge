@@ -348,6 +348,98 @@ button:focus-visible {
   background-size: 60px 60px;
 }
 
+/* Case-study hero (Masterview, 3ST EMR, Qualitech): generated cover art
+   (scripts/generate-covers.mjs) under a navy scrim, copy on top.
+
+   Desktop: the wide 1600x600 art keeps its motifs at the left and right
+   edges, so a dark centre ellipse under the copy with a lighter rim lets the
+   art show at the sides.
+
+   Mobile (<=700px, the breakpoint the <picture> uses to swap in the 1200x630
+   cover): a full-bleed portrait crop puts each cover's focal motif directly
+   behind the copy, so the art could only ever be either a faint texture under
+   a 0.86-0.94 scrim or a fight with the text. Instead the copy sits at the top
+   on a near-solid scrim and the art gets its own 15rem band at the bottom of
+   the hero, sized so the whole diagram fits the width, with only a light tint
+   over it. The band's empty top edge tucks under the copy's last 1.5rem and
+   its bottom fades back to navy so the glow is not cut off by the border. Same text-then-art order as CoverBanner on the other case
+   studies. */
+.case-hero {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  background: var(--color-surface-2);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.case-hero__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.case-hero__scrim {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background: radial-gradient(ellipse 70% 64% at 50% 50%, rgba(15, 22, 36, 0.94) 0%, rgba(15, 22, 36, 0.86) 60%, rgba(15, 22, 36, 0.4) 100%);
+}
+
+/* Long hero headlines (Qualitech) otherwise run nearly edge to edge at
+   1280px and land on the art clusters. Capping the measure wraps them onto
+   two balanced lines that stay inside the dark centre of the scrim. */
+.case-hero__title {
+  max-width: 680px;
+  text-wrap: balance;
+}
+
+/* Eyebrow above the hero headline. Separators carry a no-break space in the
+   markup so they stay on the line they close; balance keeps a wrap from
+   leaving one word (3ST's "PRODUCT") alone on the second line. */
+.case-hero__eyebrow {
+  letter-spacing: 0.12em;
+  text-wrap: balance;
+}
+
+@media (max-width: 700px) {
+  .case-hero__eyebrow {
+    letter-spacing: 0.06em;
+  }
+  .case-hero {
+    --case-hero-art: 15rem;
+    height: auto;
+    min-height: 500px;
+    align-items: stretch;
+  }
+  .case-hero__art {
+    top: auto;
+    bottom: -1rem; /* crops some of the art's empty bottom margin */
+    height: var(--case-hero-art);
+  }
+  .case-hero__scrim {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    justify-content: flex-start;
+    padding: 2.75rem 1.5rem calc(var(--case-hero-art) - 2.5rem);
+    background: linear-gradient(180deg,
+      rgba(15, 22, 36, 0.94) 0%,
+      rgba(15, 22, 36, 0.94) calc(100% - var(--case-hero-art) + 1.5rem),
+      rgba(15, 22, 36, 0.22) calc(100% - var(--case-hero-art) + 4.5rem),
+      rgba(15, 22, 36, 0.22) calc(100% - 3.5rem),
+      rgba(15, 22, 36, 0.7) 100%);
+  }
+}
+
 /* Accent underline */
 .accent-line {
   display: inline-block;

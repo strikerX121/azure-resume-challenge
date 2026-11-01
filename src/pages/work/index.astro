@@ -175,8 +175,10 @@ const BADGE_TONES = {
               <div style={`width:44px;height:44px;border-radius:8px;background:${p.logoBg};border:1px solid var(--color-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:4px;`}>
                 <img src={p.logo} alt={p.title + ' logo'} width="36" height="36" loading="lazy" decoding="async" style="width:36px;height:36px;object-fit:contain;" />
               </div>
-              <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category}</span>
-              <span style="font-size:0.75rem;color:var(--color-text-muted);">· {p.year}</span>
+              {/* Category and year share one text run, with a no-break space
+                  before every separator, so a wrap can never start a line
+                  with a stray middot (it used to orphan "· 2026" on mobile). */}
+              <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">{p.category.replaceAll(' · ', '\u00a0· ')}<span style="font-weight:400;text-transform:none;letter-spacing:normal;color:var(--color-text-muted);">{'\u00a0· '}{p.year}</span></span>
               <span style={`font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.1875rem 0.5rem;border-radius:100px;${badgeStyle}`}>{p.status}</span>
             </div>
             <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:700;color:var(--color-text);margin:0 0 0.75rem;">{p.title}</h2>

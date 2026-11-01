@@ -41,7 +41,7 @@ const facts: [string, string][] = [
       {!compact && (
         <p style="display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin:0.25rem 0 1rem;">
           <span class="conf-badge">{event.role}</span>
-          <span style="font-size:0.8125rem;color:var(--color-text-muted);">{event.date} &middot; {event.location}</span>
+          <span style="font-size:0.8125rem;color:var(--color-text-muted);">{event.date}&nbsp;&middot; {event.location}</span>
         </p>
       )}
       <p style={`font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:${compact ? '1rem' : '0'} 0 0;max-width:680px;`}>{event.summary}</p>

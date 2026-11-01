@@ -62,7 +62,7 @@ const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
     <section id={cat.id} style={`padding:3.5rem 1.5rem;scroll-margin-top:72px;${i % 2 === 0 ? '' : 'background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);'}`}>
       <div style="max-width:1200px;margin:0 auto;">
         <div class="reveal" style="margin-bottom:2rem;max-width:720px;">
-          <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">{String(i + 1).padStart(2, '0')} &middot; {cat.flows.length} {cat.flows.length === 1 ? 'workflow' : 'workflows'}</p>
+          <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">{String(i + 1).padStart(2, '0')}&nbsp;&middot; {cat.flows.length} {cat.flows.length === 1 ? 'workflow' : 'workflows'}</p>
           <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;margin:0 0 0.5rem;">{cat.label}</h2>
           <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{cat.intro}</p>
         </div>
