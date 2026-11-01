@@ -46,7 +46,7 @@ const projects = [
     year: 2025,
     status: 'Live in production',
     tone: 'live',
-    desc: 'A cloud-based electronic medical record system built for Caribbean healthcare providers, designed around how regional practices actually run a consultation. Co-founded and architected the V3 rebuild, from Azure infrastructure through the API layer; ongoing application development is delivered by the 3ST team.',
+    desc: 'A cloud-based electronic medical record system built for Caribbean healthcare providers, designed around how regional practices actually run a consultation. In daily use at ABC Paediatrics in Trinidad: 11 doctors, 7,000+ patient records, near-paperless. Co-founded and architected the V3 rebuild, from Azure infrastructure through the API layer; ongoing application development is delivered by the 3ST team.',
     tags: ['NestJS', 'React 19', 'Azure Front Door', 'PostgreSQL'],
     href: '/work/3-stripes-tech',
     stat: 'In clinical use',
@@ -198,6 +198,16 @@ const BADGE_TONES = {
         </Tag>
         );
       })}
+    </div>
+  </section>
+
+  <section style="padding:0 1.5rem 4rem;">
+    <div class="reveal" style="max-width:1200px;margin:0 auto;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:12px;padding:1.5rem 1.75rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;">
+      <div>
+        <p style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.25rem;">Automation catalogue</p>
+        <p style="font-size:0.9rem;color:var(--color-text-muted);margin:0;">21 n8n workflows from the 3 Stripes Technologies automation practice, plus ideas for your business.</p>
+      </div>
+      <a href="/automations/" style="background:var(--color-accent-strong);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;white-space:nowrap;">Browse automations &rarr;</a>
     </div>
   </section>
 

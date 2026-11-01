@@ -4,6 +4,8 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import meImg from '../assets/images/me.png';
 import { postSlug } from '../data/internal-links';
+import ConferenceGallery from '../components/ConferenceGallery.astro';
+import { TTMA_2026 } from '../data/events';
 
 let recentPosts = [];
 try {
@@ -46,7 +48,7 @@ const featuredWork = [
   {
     title: '3 Stripes Tech EMR',
     category: 'Healthcare IT',
-    desc: 'A cloud-based electronic medical record system built for Caribbean healthcare providers. Co-founded and architected the V3 rebuild, from Azure infrastructure through the API layer.',
+    desc: 'A cloud-based electronic medical record system built for Caribbean healthcare providers, in daily use at ABC Paediatrics: 11 doctors, 7,000+ patient records, near-paperless. Co-founded and architected the V3 rebuild.',
     tags: ['NestJS', 'React', 'Azure Front Door'],
     href: '/work/3-stripes-tech/',
     logo: '/images/logos/3st-logo.svg',
@@ -290,6 +292,45 @@ const services = [
           </div>
         ))}
       </div>
+    </div>
+  </section>
+
+  <!-- RUN WITH AI AGENTS -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);padding:5rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.5rem;max-width:720px;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">How I operate</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;margin-bottom:0.75rem;">Run with AI agents, checked by a human</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:0;">
+          ARC Cloud Consulting and 3 Stripes Technologies are small teams that deliver like bigger ones. A large share of the day-to-day operational load, from research and drafting to code changes and status tracking, is carried by AI agents I configure and supervise. They do the legwork. People make the decisions.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
+        {[
+          { k: '01', t: 'Agent-run delivery', d: 'Specialist agents take bounded jobs, each with a defined scope: research, drafting, code changes, documentation. When a job needs a judgement call, it comes back to a person instead of being guessed.' },
+          { k: '02', t: 'Verified before it counts', d: 'Nothing is done because an agent says so. Builds are run, pages are opened, figures are traced to their source. Anything that cannot be checked is reported as unverified, not rounded up to finished.' },
+          { k: '03', t: 'Propose, then approve', d: 'Changes that touch money, production systems or a client go through a propose-and-approve pipeline. Agents prepare the change; a person signs it off. Slower than full autonomy, and much safer.' },
+        ].map(c => (
+          <div class="reveal" style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
+            <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);">{c.k}</span>
+            <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0.5rem 0 0.625rem;">{c.t}</h3>
+            <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.65;margin:0;">{c.d}</p>
+          </div>
+        ))}
+      </div>
+
+      <p class="reveal" style="font-size:0.9375rem;color:var(--color-text-muted);margin:1.5rem 0 0;line-height:1.7;">
+        The same habits go into client work: scoped automation, clear guardrails and a named human owner for every system.{' '}
+        <a href="/automations/" style="color:var(--color-accent);font-weight:600;text-decoration:none;">See the automation catalogue &rarr;</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- CONFERENCE PRESENCE -->
+  <section style="padding:4rem 1.5rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <ConferenceGallery event={TTMA_2026} heading="Out in the field" compact={true} link={{ href: '/work/3-stripes-tech/', label: 'See the EMR case study and booth photos' }} />
     </div>
   </section>
 

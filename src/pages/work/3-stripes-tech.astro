@@ -5,6 +5,8 @@ import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
 import { Image } from 'astro:assets';
 import rakibImg from '../../assets/images/rakib-hasan.jpg';
+import ConferenceGallery from '../../components/ConferenceGallery.astro';
+import { TTMA_2026 } from '../../data/events';
 
 const team = [
   {
@@ -51,7 +53,7 @@ const versions = [
 
 <BaseLayout
   title="3 Stripes Tech EMR | Caribbean Cloud EMR Case Study"
-  description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
+  description="A cloud-based EMR built from the ground up for Caribbean medical practices, in daily use at ABC Paediatrics: 11 doctors, 7,000+ patient records, near-paperless."
 >
 
   <WorkSchema
@@ -92,7 +94,7 @@ const versions = [
         </div>
       </div>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records'], ['11', 'Doctors on Platform']].map(([val, label]) => (
+        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records at ABC Paediatrics'], ['11', 'Doctors at ABC Paediatrics']].map(([val, label]) => (
           <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
             <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
@@ -149,14 +151,22 @@ const versions = [
         </div>
       ))}
 
-      <h2>Current State</h2>
-      <p>The platform is live with an active medical practice managing 7,000+ patient records and near-paperless day-to-day operations. The system handles multi-practitioner workflows, appointment management, and clinical documentation across a team of 11 doctors.</p>
+      <h2>Client in focus: ABC Paediatrics</h2>
+      <p><strong>ABC Paediatrics</strong> in Trinidad runs on 3ST EMR every day. Eleven doctors work from the platform, more than 7,000 patient records live in it, and the practice operates near-paperless day to day. The system handles their multi-practitioner workflows, appointment management and clinical documentation.</p>
+      <p>The practice is also why the paediatric module is as mature as it is. It was shaped by their real use and feedback over time, rather than designed in the abstract and handed over.</p>
 
       <h2>Sound familiar?</h2>
       <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
       <p>3ST EMR was built from the ground up with local practices in mind. Three versions, real feedback from real doctors, and a product that's actually used day to day rather than bought and abandoned.</p>
       <p>If you're a medical practice still running on paper or a system that doesn't fit your workflow, Antonio leads the product and can walk you through the platform directly.</p>
 
+    </div>
+  </section>
+
+  <!-- CONFERENCE PRESENCE -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:900px;margin:0 auto;">
+      <ConferenceGallery event={TTMA_2026} heading="At the booth" />
     </div>
   </section>
 

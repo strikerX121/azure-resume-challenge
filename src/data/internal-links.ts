@@ -21,7 +21,7 @@ export const CASE_STUDIES: Record<string, InternalLink> = {
   threeStripes: {
     href: '/work/3-stripes-tech',
     label: '3 Stripes Tech EMR',
-    blurb: 'A cloud-based EMR built for Caribbean healthcare providers, running near-paperless consultations.',
+    blurb: 'A cloud-based EMR built for Caribbean healthcare providers, in daily use at ABC Paediatrics: 11 doctors, 7,000+ records, near-paperless.',
   },
   esvd: {
     href: '/work/esvd-dashboard',

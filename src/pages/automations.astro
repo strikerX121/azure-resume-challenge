@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SHOWCASE, IDEAS, CATALOGUE_STATS } from '../data/automations';
+
+const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
+---
+
+<BaseLayout
+  title="Automations | Real n8n Workflows and Ideas for Your Business"
+  description="A selection of the n8n automations 3 Stripes Technologies has built for sales, marketing, messaging, finance and support teams, plus practical automation ideas for clinics, logistics, sales and admin-heavy businesses."
+>
+
+  <!-- HEADER -->
+  <section style="padding:4rem 1.5rem 3rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <p class="reveal-immediate" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Automation catalogue</p>
+      <h1 class="reveal-immediate" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;max-width:820px;">Automations we have actually built, and the ones your business could run next.</h1>
+      <p class="reveal-immediate" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:680px;line-height:1.7;margin:0;">
+        These are real workflows from the 3 Stripes Technologies automation practice, built on n8n for teams in sales, distribution, healthcare, logistics and professional services. Client details are removed; what each flow does is not.
+      </p>
+
+      <div class="reveal-immediate auto-stats" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2.25rem;max-width:720px;">
+        {[
+          [String(CATALOGUE_STATS.workflows), 'Workflows in the catalogue'],
+          [String(CATALOGUE_STATS.categories), 'Business areas covered'],
+          [String(flowCount), 'Featured below'],
+        ].map(([val, label]) => (
+          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:10px;padding:1rem 1.125rem;">
+            <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;color:var(--color-accent);line-height:1;">{val}</div>
+            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.375rem;">{label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CREDIT -->
+  <section style="padding:0 1.5rem 2rem;">
+    <div class="reveal-immediate" style="max-width:1200px;margin:0 auto;background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.15);border-radius:12px;padding:1.25rem 1.5rem;">
+      <p style="font-size:0.9375rem;color:var(--color-text);line-height:1.7;margin:0;">
+        <strong>Credit where it is due.</strong> This catalogue was compiled by <strong>{CATALOGUE_STATS.compiledBy}</strong>, {CATALOGUE_STATS.compiledRole}, who builds and maintains much of the work in it. I set the architecture and scope; Hamza turns it into workflows that run.
+      </p>
+    </div>
+  </section>
+
+  <!-- CATEGORY JUMP LINKS -->
+  <section style="padding:0 1.5rem 1rem;">
+    <nav aria-label="Automation categories" style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:0.5rem;">
+      {SHOWCASE.map(c => (
+        <a href={`#${c.id}`} style="font-size:0.8125rem;font-weight:600;color:var(--color-text-muted);text-decoration:none;border:1px solid var(--color-border);border-radius:100px;padding:0.4375rem 0.875rem;min-height:36px;display:inline-flex;align-items:center;">{c.label}</a>
+      ))}
+      <a href="#ideas" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:100px;padding:0.4375rem 0.875rem;min-height:36px;display:inline-flex;align-items:center;">Ideas for your business &darr;</a>
+    </nav>
+  </section>
+
+  <!-- SHOWCASE -->
+  {SHOWCASE.map((cat, i) => (
+    <section id={cat.id} style={`padding:3.5rem 1.5rem;scroll-margin-top:72px;${i % 2 === 0 ? '' : 'background:var(--color-surface);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border);'}`}>
+      <div style="max-width:1200px;margin:0 auto;">
+        <div class="reveal" style="margin-bottom:1.75rem;max-width:720px;">
+          <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;margin:0 0 0.5rem;">{cat.label}</h2>
+          <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{cat.intro}</p>
+        </div>
+        <div class={`flow-grid flow-grid-${cat.flows.length === 1 ? 1 : cat.flows.length <= 2 || cat.flows.length === 4 ? 2 : 3}`} style={`display:grid;gap:1.25rem;${cat.flows.length === 1 ? 'max-width:760px;' : ''}`}>
+          {cat.flows.map(f => (
+            <article class="reveal card-lift" style={`background:${i % 2 === 0 ? 'var(--color-surface)' : 'var(--color-surface-2)'};border:1px solid var(--color-border);border-radius:12px;padding:1.5rem 1.625rem;display:flex;flex-direction:column;`}>
+              <p class="flow-for" style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--color-accent);margin:0 0 0.5rem;line-height:1.45;">{f.forWho}</p>
+              <h3 style="font-family:var(--font-display);font-size:1.125rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">{f.title}</h3>
+              <p style="font-size:0.9rem;color:var(--color-text-muted);line-height:1.65;margin:0 0 1rem;flex:1;">{f.what}</p>
+              <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 0.75rem;"><span style="color:var(--color-text);font-weight:600;">Trigger:</span> {f.trigger}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:0.375rem;">
+                {f.stack.map(t => (
+                  <span style="font-family:var(--font-mono);font-size:0.75rem;background:var(--color-bg);color:#B8C6E0;padding:0.25rem 0.5rem;border-radius:4px;border:1px solid var(--color-border);">{t}</span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <!-- IDEAS -->
+  <section id="ideas" style="padding:5rem 1.5rem 3rem;scroll-margin-top:72px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="margin-bottom:2.25rem;max-width:720px;">
+        <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.5rem;">For your business</p>
+        <h2 class="accent-line" style="font-family:var(--font-display);font-size:2.25rem;font-weight:800;margin:0 0 0.75rem;">Automations worth considering</h2>
+        <p style="font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:0;">Every idea here is a pattern already proven in the catalogue above, aimed at a different kind of business. If one of these describes a job someone on your team does every week, it is probably a good first automation.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
+        {IDEAS.map(g => (
+          <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.5rem;">
+            <h3 style="font-family:var(--font-display);font-size:1.0625rem;font-weight:700;color:var(--color-text);margin:0 0 1rem;">{g.business}</h3>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.875rem;">
+              {g.ideas.map(idea => (
+                <li>
+                  <p style="font-size:0.9rem;font-weight:600;color:var(--color-text);margin:0 0 0.1875rem;display:flex;gap:0.5rem;"><span style="color:var(--color-accent);" aria-hidden="true">&#x2713;</span>{idea.title}</p>
+                  <p style="font-size:0.8125rem;color:var(--color-text-muted);margin:0 0 0 1.375rem;line-height:1.5;">Replaces: {idea.replaces}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE SCOPE -->
+  <section style="padding:0 1.5rem 4rem;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:2rem;">
+        <h2 style="font-family:var(--font-display);font-size:1.375rem;font-weight:800;margin:0 0 1.25rem;">How an automation gets scoped</h2>
+        <ol class="auto-steps" style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem;">
+          {[
+            ['1', 'Find the repeated job', 'We map one process end to end and pick the step that costs the most time or goes wrong most often.'],
+            ['2', 'Centralise the data', 'Automation on top of scattered spreadsheets just moves the mess faster. The source of truth comes first.'],
+            ['3', 'Automate with a human owner', 'Every workflow has a person who owns it, a log of what it did, and a clear point where it hands off.'],
+          ].map(([n, t, d]) => (
+            <li>
+              <span style="display:inline-flex;width:28px;height:28px;border-radius:50%;background:rgba(255,107,43,0.15);color:var(--color-accent);font-weight:800;font-size:0.8125rem;align-items:center;justify-content:center;margin-bottom:0.625rem;">{n}</span>
+              <p style="font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">{t}</p>
+              <p style="font-size:0.875rem;color:var(--color-text-muted);line-height:1.6;margin:0;">{d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
+    <div style="max-width:720px;margin:0 auto;text-align:center;">
+      <h2 class="reveal" style="font-family:var(--font-display);font-size:2rem;font-weight:800;margin-bottom:1rem;">Have a process that should run itself?</h2>
+      <p class="reveal" style="font-size:1rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 2rem;">Tell me which job eats the most hours each week. A working session maps it, names the tools and gives you a build estimate.</p>
+      <div class="reveal" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;">
+        <a href="/contact/" data-track="project_enquiry_intent" data-track-context="automations-cta" style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;">Discuss an automation</a>
+        <a href="/shop/" style="background:transparent;color:var(--color-text);padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;border:1px solid var(--color-border);display:inline-block;">Book a workflow consultation</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .flow-grid-1 { grid-template-columns: 1fr; }
+  .flow-grid-1 .flow-for { min-height: 0; }
+  .flow-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .flow-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Two-line slot for the audience label so titles line up across a row. */
+  .flow-for { min-height: 2.9em; }
+  /* No orphaned last card: a short final row stretches to fill it. */
+  .flow-grid-3 > article:last-child:nth-child(3n+2) { grid-column: span 2; }
+  @media (max-width: 960px) {
+    .flow-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .flow-grid-3 > article:last-child:nth-child(3n+2) { grid-column: auto; }
+    .flow-grid-3 > article:last-child:nth-child(odd) { grid-column: span 2; }
+  }
+  @media (max-width: 640px) {
+    .flow-grid-2, .flow-grid-3 { grid-template-columns: 1fr; }
+    .flow-grid-3 > article:last-child:nth-child(odd) { grid-column: auto; }
+    .flow-for { min-height: 0; }
+    .auto-stats { grid-template-columns: 1fr 1fr 1fr !important; gap: 0.5rem !important; }
+    .auto-stats > div { padding: 0.75rem !important; }
+    .auto-steps { grid-template-columns: 1fr !important; }
+  }
+</style>

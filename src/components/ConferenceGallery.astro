@@ -1,0 +1,52 @@
+---
+// Conference presence block with a photo gallery. Renders real photos from
+// src/data/events.ts when they exist, otherwise clearly-marked placeholder
+// slots. Never fills the slots with stock or generated imagery.
+import type { PublicEvent } from '../data/events';
+
+interface Props {
+  event: PublicEvent;
+  heading?: string;
+  compact?: boolean;
+  link?: { href: string; label: string };
+}
+
+const { event, heading = 'Out in the field', compact = false, link } = Astro.props;
+const hasPhotos = event.photos.length > 0;
+const slots = Array.from({ length: event.placeholderSlots }, (_, i) => i + 1);
+---
+
+<div class="reveal conf-block" data-event={event.id} style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:14px;padding:2rem;">
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:0.625rem;margin-bottom:0.75rem;">
+    <span style="font-size:0.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;padding:0.1875rem 0.625rem;border-radius:100px;background:rgba(255,107,43,0.12);color:var(--color-accent);border:1px solid rgba(255,107,43,0.25);">{event.role}</span>
+    <span style="font-size:0.8125rem;color:var(--color-text-muted);">{event.date} &middot; {event.location}</span>
+  </div>
+  <h3 style="font-family:var(--font-display);font-size:1.375rem;font-weight:800;color:var(--color-text);margin:0 0 0.625rem;">{heading}: {event.name}</h3>
+  <p style={`font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0 0 ${compact && !link ? '0' : '1.5rem'};max-width:760px;`}>{event.summary}</p>
+  {link && (
+    <a href={link.href} style="font-size:0.875rem;font-weight:600;color:var(--color-accent);text-decoration:none;">{link.label} &rarr;</a>
+  )}
+
+  {!compact && (
+    hasPhotos ? (
+      <div class="conf-gallery" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.875rem;">
+        {event.photos.map(p => (
+          <figure style="margin:0;">
+            <img src={p.src} alt={p.alt} loading="lazy" decoding="async" style="width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;border:1px solid var(--color-border);display:block;" />
+            {p.caption && <figcaption style="font-size:0.75rem;color:var(--color-text-muted);margin-top:0.375rem;">{p.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+    ) : (
+      <div class="conf-gallery" data-placeholder="true" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.875rem;">
+        {slots.map(n => (
+          <div role="img" aria-label={`Reserved photo slot ${n} of ${slots.length}: ${event.shortName} booth photos to be added`} style="aspect-ratio:16/10;border-radius:10px;border:2px dashed #3b4d73;background:var(--color-surface-2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.375rem;text-align:center;padding:1rem;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg>
+            <span style="font-size:0.75rem;font-weight:700;color:var(--color-text);text-transform:uppercase;letter-spacing:0.06em;">Reserved photo slot</span>
+            <span style="font-size:0.75rem;color:var(--color-text-muted);">Booth photos coming soon</span>
+          </div>
+        ))}
+      </div>
+    )
+  )}
+</div>
