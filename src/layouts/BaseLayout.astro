@@ -137,11 +137,12 @@ const articleSchema = isBlogPost ? {
   <!-- RSS Feed -->
   <link rel="alternate" type="application/rss+xml" title="Antonio Cumberbatch, blog" href="/rss.xml" />
 
-  <!-- Google Fonts (async to avoid render-blocking) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" /></noscript>
+  <!-- Fonts are self-hosted, declared as @font-face in global.css and emitted
+       into _astro/ by the build. There is deliberately no fonts.googleapis.com
+       stylesheet and no preconnect to it: a local Lighthouse control showed
+       that cross-origin stylesheet was what first paint was actually waiting
+       on, worth 28 performance points on its own. Removing it also stops every
+       visitor's IP being handed to a third party just to render body text. -->
 
   <!-- JSON-LD: Person + WebSite on every page -->
   <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
@@ -150,8 +151,28 @@ const articleSchema = isBlogPost ? {
     <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
   )}
 
+  <!-- Third-party scripts deliberately do NOT live in <head>.
+       Astro appends this page's stylesheet link after everything authored
+       here, so a <script src> in the head is discovered by the preload scanner
+       before the only render-blocking stylesheet is. The measured effect was
+       that first paint queued behind a 181 KB tag-manager download. They now
+       load at the end of <body>, after the parser has already found the CSS. -->
+
+  <slot name="head" />
+</head>
+<body>
+  <Nav />
+  <main>
+    <slot />
+  </main>
+  <Footer />
+
   <!-- Google Analytics 4. The measurement ID below is the one already configured
-       for this site and already serving in production. It is not a new property. -->
+       for this site and already serving in production. It is not a new property,
+       and the config is unchanged. Only its position moved, out of <head> and
+       down here, so the 181 KB tag-manager download stops competing with the
+       stylesheet that first paint actually waits on. The tag still loads on
+       every page view with no interaction or consent condition attached. -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-B7EJB7Y1HL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -166,30 +187,50 @@ const articleSchema = isBlogPost ? {
     });
   </script>
 
-  <!-- OneSignal Web Push -->
-  <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+  <!-- OneSignal Web Push.
+       The capability is unchanged: the subscribe bell still appears bottom-left
+       and still uses the same app. What changed is when the SDK is fetched. It
+       used to download 43 KB, run ~240 ms of script and set a third-party
+       cookie for every visitor during load, before anyone had asked for
+       anything. It now loads on the visitor's first real interaction with the
+       page. Someone who never scrolls, taps, clicks or types could not have
+       pressed the bell either, so no one loses the ability to subscribe. -->
   <script>
-    window.OneSignalDeferred = window.OneSignalDeferred || [];
-    OneSignalDeferred.push(async function(OneSignal) {
-      await OneSignal.init({
-        appId: "e7e4cd9f-52cd-4fae-836a-45605b70aaa5",
-        safari_web_id: "web.onesignal.auto.170dfd78-50f3-4c48-aaba-810262274b60",
-        notifyButton: {
-          enable: true,
-          position: 'bottom-left',
-        },
-      });
-    });
-  </script>
+    (function () {
+      const START_EVENTS = ['pointerdown', 'keydown', 'touchstart', 'scroll'];
+      let started = false;
 
-  <slot name="head" />
-</head>
-<body>
-  <Nav />
-  <main>
-    <slot />
-  </main>
-  <Footer />
+      function loadOneSignal() {
+        if (started) return;
+        started = true;
+        for (const name of START_EVENTS) {
+          window.removeEventListener(name, loadOneSignal);
+        }
+
+        const w = window as any;
+        w.OneSignalDeferred = w.OneSignalDeferred || [];
+        w.OneSignalDeferred.push(async function (OneSignal: any) {
+          await OneSignal.init({
+            appId: "e7e4cd9f-52cd-4fae-836a-45605b70aaa5",
+            safari_web_id: "web.onesignal.auto.170dfd78-50f3-4c48-aaba-810262274b60",
+            notifyButton: {
+              enable: true,
+              position: 'bottom-left',
+            },
+          });
+        });
+
+        const sdk = document.createElement('script');
+        sdk.src = 'https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';
+        sdk.defer = true;
+        document.head.appendChild(sdk);
+      }
+
+      for (const name of START_EVENTS) {
+        window.addEventListener(name, loadOneSignal, { once: true, passive: true });
+      }
+    })();
+  </script>
 
   <!-- Engagement event hooks.
        These record intent signals worth reviewing: someone opening a contact

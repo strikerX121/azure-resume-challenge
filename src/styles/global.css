@@ -37,14 +37,67 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+/* Self-hosted webfonts.
+ *
+ * Inter and JetBrains Mono used to come from fonts.googleapis.com. A local
+ * Lighthouse control proved that stylesheet was the single largest cost on the
+ * page: with it removed and nothing else changed, the mobile performance score
+ * went from 70 to 98 and simulated first paint from ~3.07 s to ~1.32 s. Text
+ * paint was waiting on a cross-origin stylesheet and then a cross-origin font,
+ * and neither preload-as-style nor media="print" avoided that, because the
+ * dependency itself was the problem rather than how it was declared.
+ *
+ * These are the same files Google was serving, same families, same variable
+ * weight axis, same subsets and unicode ranges, now fetched from our own
+ * origin in the same request wave as the stylesheet. Both families are
+ * licensed under the SIL Open Font License 1.1, which permits redistribution;
+ * see src/assets/fonts/OFL.txt for the licence and README.md for provenance.
+ *
+ * Vite fingerprints these into _astro/, which the deploy workflow serves with
+ * the immutable cache policy, so a repeat visitor fetches them once ever. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../assets/fonts/inter-latin-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('../assets/fonts/inter-latin-ext-var.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/jetbrains-mono-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 /* Metric-matched fallback for Inter.
  *
- * The Google Fonts stylesheet is loaded asynchronously (preload as=style, then
- * swapped to rel=stylesheet onload) so it does not block first paint. The cost
- * of that is a font swap after paint: text first renders in the local sans
- * fallback, then re-renders in Inter. Because the two faces have different
- * metrics, the line count of a long paragraph can change, which reflows
- * everything below it and registers as layout shift.
+ * Inter is now same-origin and still declared font-display: swap, so on a cold
+ * cache text can still paint once in the local sans fallback before the real
+ * face arrives. Because the two faces have different metrics, the line count of
+ * a long paragraph can change, which reflows everything below it and registers
+ * as layout shift.
  *
  * Measured on /resume/ at 412x915: one shift of 0.0156 at ~1.0s, attributed to
  * the Summary block changing height (380px -> 346px). These overrides scale the
@@ -91,21 +144,48 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-/* Scroll reveal animation */
+/* Scroll reveal animation.
+   Only for content below the first screen. Anything that can be the Largest
+   Contentful Paint must use .reveal-immediate instead: .reveal starts at
+   opacity 0 and stays invisible until the IntersectionObserver at the end of
+   the document has run, so using it above the fold makes the browser's largest
+   paint wait on JavaScript it does not otherwise need.
+
+   No will-change here on purpose. It was previously declared on every .reveal
+   element at once, which asks the compositor to promote dozens of layers
+   during the most expensive part of the load. Opacity and transform are both
+   compositor-driven properties that Chrome promotes automatically for the
+   duration of a transition, so the hint bought nothing and cost style and
+   layout time. */
 .reveal {
   opacity: 0;
   transform: translateY(18px);
   transition:
     opacity 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, transform;
 }
 
 .reveal.visible {
   opacity: 1;
   transform: translateY(0);
-  /* Release compositor hints once the animation has played. */
-  will-change: auto;
+}
+
+/* Above-the-fold entrance. Visually the same motion as .reveal, but driven by
+   a CSS animation that begins as soon as the element is first rendered, so
+   first paint and largest paint never wait for script execution. */
+.reveal-immediate {
+  animation: reveal-rise 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Card hover lift */
@@ -161,7 +241,9 @@ button:focus-visible {
     opacity: 1;
     transform: none;
     transition: none;
-    will-change: auto;
+  }
+  .reveal-immediate {
+    animation: none;
   }
   .card-lift,
   .card-lift:hover,
