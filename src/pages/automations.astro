@@ -172,6 +172,7 @@ const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
   .flow-for { min-height: 2.9em; }
   .flow-grid-1 .flow-for { min-height: 0; }
   .ideas-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  .ideas-grid p, .flow-card p { text-wrap: pretty; }
   @media (max-width: 960px) {
     .flow-grid-3 > .flow-card { flex-basis: calc((100% - 1.25rem) / 2); }
   }
@@ -180,6 +181,7 @@ const flowCount = SHOWCASE.reduce((n, c) => n + c.flows.length, 0);
     .flow-card { padding: 1.375rem; }
     .flow-for { min-height: 0; }
     .ideas-grid { grid-template-columns: 1fr; }
+    .ideas-grid > div { padding: 1.375rem !important; }
     /* Three 100px tiles squeezed the labels onto 2-3 lines each; on phones
        the stats become compact rows, number left, label right. */
     .auto-stats { grid-template-columns: 1fr !important; gap: 0.5rem !important; margin-top: 1.75rem !important; }
