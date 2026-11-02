@@ -142,14 +142,23 @@ jobs:
             --content-cache-control "$IMMUTABLE_CACHE" \
             --overwrite true
 
-      - name: Purge Azure Front Door CDN
+      # Front Door has been replaced by a Cloudflare Worker reverse proxy in
+      # front of the same storage origin (see azure-resume migration notes).
+      # Purge Cloudflare's edge cache instead of Front Door's.
+      - name: Purge Cloudflare cache
         run: |
           set -euo pipefail
-          az afd endpoint purge \
-            --resource-group "${{ secrets.ARC_RESUME_RESOURCE_GROUP }}" \
-            --profile-name "${{ secrets.ARC_RESUME_FRONT_DOOR_PROFILE }}" \
-            --endpoint-name "${{ secrets.ARC_RESUME_FRONT_DOOR_ENDPOINT }}" \
-            --content-paths "/*"
+          response="$(curl -sS --max-time 20 --retry 2 --retry-delay 3 --retry-all-errors \
+            -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"purge_everything":true}')"
+          echo "$response"
+          success="$(echo "$response" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("success"))')"
+          if [ "$success" != "True" ]; then
+            echo "Cloudflare purge did not report success"
+            exit 1
+          fi
 
       # Read the headers back from the edge rather than trusting that setting a
       # blob property worked. Source inspection is not proof of a served header,
