@@ -19,6 +19,12 @@ interface Props {
 }
 
 const { title, description, pubDate, category, tags, image, related = [], proofLinks = [] } = Astro.props;
+// Only these measured covers have generated WebP alternatives. Other posts
+// keep their existing image path; social cards retain the original JPEG.
+const optimizedCover = image && [
+  '/images/blog/train-copilot-to-write-emails-that-sound-like-you.jpg',
+  '/images/blog/good-chefs-saute-evenly-copilot-prompt-framework.jpg',
+].includes(image) ? image.replace(/\.jpg$/, '.webp') : undefined;
 
 function readTime(body: string) {
   const words = body.split(/\s+/).length;
@@ -41,6 +47,8 @@ function readTime(body: string) {
          first thing in view, so it loads eagerly at high priority. -->
     {image && (
       <div class="post-hero" aria-hidden="true">
+        <picture>
+          {optimizedCover && <source type="image/webp" srcset={`${optimizedCover.replace(/\.webp$/, '-640.webp')} 640w, ${optimizedCover} 1200w`} sizes="100vw" />}
         <img
           src={image}
           srcset={image.endsWith('.jpg') ? `${image.replace(/\.jpg$/, '-640.jpg')} 640w, ${image} 1200w` : undefined}
@@ -52,6 +60,7 @@ function readTime(body: string) {
           fetchpriority="high"
           decoding="async"
         />
+        </picture>
       </div>
     )}
     <!-- Post header -->
@@ -231,6 +240,7 @@ function readTime(body: string) {
     background: var(--color-surface-2);
     border-bottom: 1px solid var(--color-border);
   }
+  .post-hero picture { display: block; width: 100%; height: 100%; }
   .post-hero img {
     width: 100%;
     height: 100%;
