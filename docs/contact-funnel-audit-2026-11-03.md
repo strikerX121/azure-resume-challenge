@@ -79,10 +79,10 @@ or key-event configuration proof.
 
 Screenshots were reviewed. The full-page capture scrolls to reveal below-fold
 content first; an earlier capture's empty form region was unrevealed content,
-not absent markup. The existing secondary contact-card email is truncated on
-narrow screens; the direct email button and fully selectable wrapping address
-in the fallback remain available. No claim of eliminating every historical
-visual imperfection is made.
+not absent markup. Parent visual review found the existing secondary contact-card
+email was clipped on narrow screens. It now wraps within the card without
+changing its address, with a browser regression assertion. No claim of
+eliminating every historical visual imperfection is made.
 
 ## Cover change and local performance evidence
 
@@ -168,6 +168,9 @@ python scripts/verify-live-intent-inclusion.py --reuse --artifacts "$AUDIT"
 node scripts/optimize-funnel-covers.mjs
 python scripts/lighthouse-contact-funnel.py --cli "$LIGHTHOUSE_CLI" --chrome "$CHROME_PATH" --artifacts "$AUDIT"
 ```
+
+Parent hardening restricts synthetic browser tests to loopback ports 4330/4331;
+remote origins are rejected before launching the browser.
 
 The browser suite fulfills the real cached GA SDK locally, fulfills collect
 requests with HTTP204 and blocks all other external requests. It does not use

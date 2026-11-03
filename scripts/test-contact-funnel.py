@@ -16,6 +16,11 @@ parser.add_argument('--artifacts', required=True)
 parser.add_argument('--baseline', action='store_true')
 parser.add_argument('--tracking-only', action='store_true')
 args = parser.parse_args()
+base_url = urlparse(args.base)
+if base_url.scheme != 'http' or base_url.hostname not in ('127.0.0.1', 'localhost') or base_url.port != 4331 or base_url.path or base_url.query or base_url.fragment or base_url.username or base_url.password:
+    # The frozen baseline intentionally uses the other reserved local port.
+    if not (args.baseline and args.base in ('http://127.0.0.1:4330', 'http://localhost:4330')):
+        parser.error('Local audit ports only: candidate 4331, baseline 4330. Never run synthetic clicks on production.')
 out = Path(args.artifacts)
 out.mkdir(parents=True, exist_ok=True)
 tag = (out / 'gtag.js').read_bytes()  # Real gtag downloaded by read-only HTTP, never a stub.
@@ -207,6 +212,8 @@ with sync_playwright() as p:
             }""")
             assert data['scrollWidth'] == width, (path, data)
             assert data['brokenImages'] == [], (path, data['brokenImages'])
+            if not args.baseline and path == '/contact/':
+                assert page.locator('.contact-link-text').evaluate_all('(es)=>es.every(e=>e.scrollWidth <= e.clientWidth)'), 'Contact identities must wrap without clipping'
             if not args.baseline and path == '/contact/':
                 assert len(data['actions']) == 3
                 assert all(a['y'] >= 64 and a['bottom'] <= height and a['height'] >= 44 for a in data['actions']), data

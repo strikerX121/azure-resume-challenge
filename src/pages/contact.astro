@@ -503,7 +503,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     flex-direction: column;
     gap: 0.125rem;
     min-width: 0;
-    overflow: hidden;
   }
 
   .contact-link-text strong {
@@ -516,9 +515,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .contact-link-text span,
   .contact-link-text {
     font-size: 0.8125rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   @media (max-width: 768px) {
