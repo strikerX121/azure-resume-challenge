@@ -115,7 +115,7 @@ function checkNoEagerThirdParty(html, page, problems) {
 
 // Rule 3: homepage hero must not be JS-gated.
 function checkHeroNotJsGated(html, page, problems) {
-  if (page !== '/index.html') return;
+  if (!['/index.html', '/contact/index.html', '/resume/index.html'].includes(page)) return;
   const h1 = html.match(/<h1\b[^>]*>/i);
   if (!h1) {
     problems.push(`${page}: no <h1> found, cannot verify the hero render path.`);
@@ -191,6 +191,18 @@ function selfTest() {
         '<html><head></head><body><h1 class="reveal-immediate">x</h1>' +
         '<script>fetch("/api/GetResumeCounter")</script></body></html>',
       expect: /counter is retired/,
+    },
+    {
+      name: 'contact hero must not wait for JS',
+      page: '/contact/index.html',
+      html: '<h1 class="reveal">Contact</h1>',
+      expect: /JS-gated \.reveal/,
+    },
+    {
+      name: 'resume hero must not wait for JS',
+      page: '/resume/index.html',
+      html: '<h1 class="reveal">Resume</h1>',
+      expect: /JS-gated \.reveal/,
     },
     {
       name: 'comment naming a host must NOT trip',
