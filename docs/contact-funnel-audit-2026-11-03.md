@@ -4,8 +4,9 @@
 
 Implemented on `fix/contact-funnel-audit-2026-11-03`, from
 `4312a4b26673dab4773e1ab7d702297a1784335c`, in the isolated audit worktree.
-No push, PR, merge, deploy, live configuration change or backend send is part
-of this work. `.github/workflows/deploy.yml` runs on a push to `main` or manual
+At the implementation checkpoint there was no push or PR. Parent verification
+may proceed to feature-branch push and review PR under Antonio's approval. No
+production merge, deploy, live configuration change or backend send is approved. `.github/workflows/deploy.yml` runs on a push to `main` or manual
 dispatch, so neither is a preview operation. The original checkout was not
 used for writes or shared dependencies. Legacy no-npm text in the instruction
 files conflicts with their current Astro build description; the existing
@@ -117,6 +118,9 @@ shared-host load and three samples limit any inference about small changes.
 | Resume | 98 / 98 | 2.115 / 2.115 s | 159,529 / 160,184 |
 | Train Copilot | 98 / 98 | 2.190 / 2.265 s | 160,490 / 149,360 |
 | Good Chefs | 97 / 98 | 2.340 / 2.265 s | 158,211 / 149,154 |
+
+These measurements precede the final parent-only secondary-card email wrapping
+repair and QA-origin guards; they are not claimed as a rerun of that CSS change.
 
 All 24 runs: accessibility, best-practices and SEO 100, TBT 0 in this isolated
 first-party control. Contact LCP was 150ms later and Train 75ms later despite
