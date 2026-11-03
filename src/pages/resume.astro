@@ -120,10 +120,10 @@ const skills = [
   <section style="padding:4rem 1.5rem 3rem;border-bottom:1px solid var(--color-border);">
     <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:flex-start;justify-content:space-between;gap:1.5rem;">
       <div>
-        <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Resume</p>
-        <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin:0 0 0.5rem;">Antonio Cumberbatch</h1>
-        <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);margin:0 0 1rem;">Cloud Solutions Architect | Automation & Integration | Technical Delivery</p>
-        <div class="reveal" style="display:flex;flex-wrap:wrap;gap:0.875rem;font-size:0.875rem;color:var(--color-text-muted);">
+        <p class="reveal-immediate" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Resume</p>
+        <h1 class="reveal-immediate" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin:0 0 0.5rem;">Antonio Cumberbatch</h1>
+        <p class="reveal-immediate" style="font-size:1.0625rem;color:var(--color-text-muted);margin:0 0 1rem;">Cloud Solutions Architect | Automation & Integration | Technical Delivery</p>
+        <div class="reveal-immediate" style="display:flex;flex-wrap:wrap;gap:0.875rem;font-size:0.875rem;color:var(--color-text-muted);">
           <span>Trinidad &amp; Tobago</span>
           <a href="mailto:antonio.cumberbatch2@gmail.com" style="color:var(--color-accent);text-decoration:none;">antonio.cumberbatch2@gmail.com</a>
           <a href="https://api.whatsapp.com/send/?phone=18683237810" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);text-decoration:none;">+1 (868) 323-7810</a>
@@ -131,11 +131,12 @@ const skills = [
           <a href="https://www.antoniocumberbatch.com" style="color:var(--color-accent);text-decoration:none;">antoniocumberbatch.com</a>
         </div>
       </div>
-      <div class="reveal" style="display:flex;flex-direction:column;gap:0.625rem;align-items:flex-start;">
+      <div class="reveal-immediate" style="display:flex;flex-direction:column;gap:0.625rem;align-items:flex-start;">
         <a href="/Antonio-Cumberbatch-CV-2026.pdf" download="Antonio-Cumberbatch-CV-2026.pdf" style="background:var(--color-accent-strong);color:#fff;padding:0.6875rem 1.375rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong-hover)'" onmouseout="this.style.background='var(--color-accent-strong)'">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Download PDF
         </a>
+        <a href="/contact" style="color:var(--color-accent);font-weight:600;min-height:44px;display:inline-flex;align-items:center;">Discuss a project &rarr;</a>
         <a href="/about" style="font-size:0.8125rem;color:var(--color-text-muted);text-decoration:none;padding:0.5rem 0;">View full profile &rarr;</a>
       </div>
     </div>
@@ -213,6 +214,11 @@ const skills = [
       </div>
     </section>
 
+    <section style="padding:0 0 3rem;" aria-labelledby="resume-contact-heading">
+      <h2 id="resume-contact-heading" style="font-family:var(--font-display);font-size:1.375rem;margin:0 0 0.75rem;">Have a cloud or automation project in mind?</h2>
+      <p style="color:var(--color-text-muted);margin:0 0 1rem;">Tell me what you need to solve, or book a short discovery call.</p>
+      <a href="/contact" style="color:var(--color-accent);font-weight:600;min-height:44px;display:inline-flex;align-items:center;">Discuss your project &rarr;</a>
+    </section>
   </div>
 
 </BaseLayout>

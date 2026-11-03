@@ -171,6 +171,7 @@ with sync_playwright() as p:
         for path in ['/contact/', '/resume/']:
             context, page, collect, blocked = setup(java_script_enabled=False, viewport={'width': 360, 'height': 640})
             page.goto(args.base + path)
+            page.wait_for_timeout(650)  # Existing CSS-only entrance, no JS observer.
             assert page.locator('h1').evaluate('(e)=>getComputedStyle(e).opacity') == '1'
             if path == '/contact/':
                 assert page.locator('.contact-actions a').count() == 3

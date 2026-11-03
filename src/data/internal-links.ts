@@ -46,8 +46,18 @@ export const CAPABILITIES_LINK: InternalLink = {
   blurb: 'AI consulting and business process automation for teams still running on spreadsheets, email and WhatsApp.',
 };
 
+// Existing resume evidence: Apeiron Sumus role, 95 FY26 engagements and
+// 2,574+ professionals trained. No new case-study claim is implied here.
+export const COPILOT_PROOF_LINK: InternalLink = {
+  href: '/resume',
+  label: 'Microsoft 365 Copilot workshop delivery',
+  blurb: 'My delivery experience at Apeiron Sumus: 95 customer engagements in FY26, training 2,574+ professionals across multiple sectors.',
+};
+
 // Post slug -> the proof pages that post should feed.
 export const POST_LINKS: Record<string, InternalLink[]> = {
+  'train-copilot-to-write-emails-that-sound-like-you': [COPILOT_PROOF_LINK],
+  'good-chefs-saute-evenly-copilot-prompt-framework': [COPILOT_PROOF_LINK],
   'azure-front-door-dropped-our-server-load-from-95-to-35-percent': [CASE_STUDIES.threeStripes],
   'client-side-pagination-kills-app-performance': [CASE_STUDIES.threeStripes],
   'how-we-built-a-logistics-platform-on-azure': [CASE_STUDIES.sassi],
