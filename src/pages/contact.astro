@@ -56,7 +56,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <label for="message">Message</label>
             <textarea id="message" name="message" required rows="5" placeholder="What is breaking, and what have you already tried?"></textarea>
           </div>
-          <button type="submit" class="btn-primary" data-track="contact_intent" data-track-context="contact-compose">Open draft in my email app</button>
+          <button type="submit" class="btn-primary">Open draft in my email app</button>
           <p id="form-status" class="form-status" role="status"></p>
         </form>
 
@@ -66,7 +66,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             The button above needs an email application registered in your browser. If it does nothing, use one of these instead. The address is selectable, so you can copy it into webmail.
           </p>
           <p class="fallback-address">
-            <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" data-track="contact_intent" data-track-context="contact-fallback-email">antonio.cumberbatch@arccloudconsulting.com</a>
+            <a href="mailto:antonio.cumberbatch@arccloudconsulting.com" data-track-context="contact-fallback-email">antonio.cumberbatch@arccloudconsulting.com</a>
           </p>
           <p class="fallback-note">
             Or <a href="https://calendar.app.google/hxSqa4yRVmLW5fubA" target="_blank" rel="noopener noreferrer" class="fallback-link">book a 30-minute call directly</a>, which needs no email at all.
@@ -504,6 +504,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
+    // Submit only fires after native validation. An invalid button click is
+    // not contact intent, and no visitor-entered content belongs in analytics.
+    (window as any).arcTrack?.('contact_intent', { context: 'contact-compose', method: 'email' });
     const name    = (form.elements.namedItem('name')    as HTMLInputElement).value;
     const email   = (form.elements.namedItem('email')   as HTMLInputElement).value;
     const subject = (form.elements.namedItem('subject') as HTMLSelectElement).value;
