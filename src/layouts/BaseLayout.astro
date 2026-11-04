@@ -177,6 +177,9 @@ const articleSchema = isBlogPost ? {
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    // Astro bundles this as a module. Expose the existing queue to the intent
+    // hooks explicitly; a module-local function is not window.gtag.
+    (window as any).gtag = gtag;
     gtag('js', new Date());
     // IP anonymisation on, advertising signals off. This site has no advertising
     // use case, so it should not ship one.
@@ -278,8 +281,6 @@ const articleSchema = isBlogPost ? {
           track('contact_intent', { context, method: 'whatsapp' });
         } else if (href.includes('calendar.app.google')) {
           track('contact_intent', { context, method: 'booking' });
-        } else if (href === '/contact' || href === '/contact/') {
-          track('contact_intent', { context, method: 'contact_page' });
         }
       }, { passive: true });
     })();

@@ -42,6 +42,9 @@ jobs:
       - name: Verify build output
         run: npm run verify
 
+      - name: Test release helpers (offline)
+        run: python3 scripts/test-release-prechecks.py
+
       - name: Log in to Azure
         run: |
           set -euo pipefail
@@ -146,23 +149,17 @@ jobs:
       # front of the same storage origin (see azure-resume migration notes).
       # Purge Cloudflare's edge cache instead of Front Door's.
       - name: Purge Cloudflare cache
+        env:
+          CF_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ZONE: ${{ secrets.CLOUDFLARE_ZONE_ID }}
         run: |
+          set +x
           set -euo pipefail
-          response="$(curl -sS --max-time 20 --retry 2 --retry-delay 3 --retry-all-errors \
-            -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CLOUDFLARE_ZONE_ID }}/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{"purge_everything":true}')"
-          echo "$response"
-          success="$(echo "$response" | python3 -c 'import json,sys;print(json.load(sys.stdin).get("success"))')"
-          if [ "$success" != "True" ]; then
-            echo "Cloudflare purge did not report success"
-            exit 1
-          fi
+          python3 scripts/purge-cloudflare.py
 
       # Read the headers back from the edge rather than trusting that setting a
       # blob property worked. Source inspection is not proof of a served header,
-      # and a Front Door rule can still override the origin.
+      # and Cloudflare browser TTL settings can still override the origin.
       #
       # A purge is asynchronous, so this retries with a bounded backoff instead
       # of racing the CDN and failing on the first miss. Every curl is bounded
@@ -175,14 +172,14 @@ jobs:
           delay=10
 
           header_of() {
-            curl -sS -I --max-time 20 --retry 2 --retry-delay 3 --retry-all-errors "$1" \
-              | tr -d '\r' | awk -F': ' 'tolower($1)=="cache-control"{print $2}'
+            curl -fsS -I --max-time 20 --retry 2 --retry-delay 3 --retry-all-errors "$1" \
+              | tr -d '\r' | awk -F': ' '/^HTTP\// {split($0,status,/[[:space:]]+/); code=status[2]; cache=""} tolower($1)=="cache-control" {cache=cache (cache ? ", " : "") $2} END {if(code!="200") exit 1; print cache}'
           }
 
           # Discover the real hashed asset URL from the deployed homepage rather
           # than guessing a filename that changes on every build.
           discover_hashed_asset() {
-            curl -sS --max-time 20 "$base/" \
+            curl -fsS --max-time 20 "$base/" \
               | grep -o '/_astro/[^"]*\.\(css\|js\)' | head -1
           }
 
@@ -190,31 +187,31 @@ jobs:
           check() {
             url="$1"; expect="$2"; got=""
             for i in $(seq 1 "$attempts"); do
-              got="$(header_of "$url")"
-              case "$got" in
-                *"$expect"*) echo "  OK       $url -> $got"; return 0 ;;
-              esac
+              if got="$(header_of "$url")" && python3 scripts/check-cache-header.py "$got" "$expect"; then
+                echo "  OK       $url -> $got"
+                return 0
+              fi
               [ "$i" -lt "$attempts" ] && sleep "$delay"
             done
             echo "  MISMATCH $url"
-            echo "      expected to contain: $expect"
+            echo "      expected directives: $expect"
             echo "      got                : ${got:-<none>}"
             fail=1
             return 1
           }
 
           echo "Cache-Control readback (up to $attempts attempts, ${delay}s apart):"
-          check "$base/"                                  "must-revalidate"
-          check "$base/404.html"                          "must-revalidate"
-          check "$base/resume/"                           "must-revalidate"
-          check "$base/Antonio-Cumberbatch-CV-2026.pdf"   "must-revalidate"
-          check "$base/resume.pdf"                        "must-revalidate"
-          check "$base/robots.txt"                        "max-age=3600"
-          check "$base/sitemap-0.xml"                     "max-age=3600"
+          check "$base/"                                  "$BASELINE_CACHE"
+          check "$base/404.html"                          "$BASELINE_CACHE"
+          check "$base/resume/"                           "$BASELINE_CACHE"
+          check "$base/Antonio-Cumberbatch-CV-2026.pdf"   "$BASELINE_CACHE"
+          check "$base/resume.pdf"                        "$BASELINE_CACHE"
+          check "$base/robots.txt"                        "$CRAWLER_CACHE"
+          check "$base/sitemap-0.xml"                     "$CRAWLER_CACHE"
 
           asset="$(discover_hashed_asset)"
           if [ -n "$asset" ]; then
-            check "$base$asset" "immutable"
+            check "$base$asset" "$IMMUTABLE_CACHE"
           else
             echo "  could not discover a hashed asset URL from the served homepage"
             fail=1
@@ -226,7 +223,7 @@ jobs:
           echo "Approved CV hash readback:"
           expected_cv="$(sha256sum dist/Antonio-Cumberbatch-CV-2026.pdf | awk '{print $1}')"
           for name in "Antonio-Cumberbatch-CV-2026.pdf" "resume.pdf"; do
-            served="$(curl -sS --max-time 60 --retry 2 --retry-delay 5 "$base/$name" | sha256sum | awk '{print $1}')"
+            served="$(curl -fsS --max-time 60 --retry 2 --retry-delay 5 "$base/$name" | sha256sum | awk '{print $1}')"
             if [ "$served" = "$expected_cv" ]; then
               echo "  OK       /$name $served"
             else
@@ -240,7 +237,7 @@ jobs:
           if [ "$fail" -ne 0 ]; then
             echo ""
             echo "Served state does not match policy. The upload already happened,"
-            echo "so investigate the upload passes or any Front Door rule"
+            echo "so investigate upload passes and Cloudflare cache settings"
             echo "overriding the origin before relying on this deploy."
             exit 1
           fi

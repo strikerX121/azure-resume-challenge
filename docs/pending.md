@@ -12,21 +12,18 @@
 
 ## Contact form email delivery
 
-**Problem:** The contact form on `/contact/` submits to `/api/contact` but this route cannot run on Azure Blob Storage (static hosting only). Form submissions are silently dropped.
+**Current state, verified 2026-11-03:** `/contact/` opens a pre-filled draft in
+the visitor's own email app. It does not POST to `/api/contact`, and it does
+not claim server delivery. Direct booking, WhatsApp and email remain available.
+The personal Gmail on `/resume/` and ARC business address on `/contact/` are
+intentional and must not be normalized.
 
-**Options:**
-
-### Option A — Brevo JS SDK (recommended, no server needed)
-Replace the form's `fetch('/api/contact')` call with a direct call to Brevo's transactional email API using a public API key. The key can be restricted to send-only so it's safe to expose client-side.
-
-Steps:
-1. Create a Brevo account, get a public Send API key
-2. Create a transactional email template in Brevo
-3. Replace the form submit handler in `contact.astro` with a `fetch` to `https://api.brevo.com/v3/smtp/email`
-4. No backend or server change needed
-
-### Option B — Azure Static Web Apps
-Migrate hosting from Azure Blob Storage to Azure Static Web Apps, which supports server-side API routes natively. The existing `src/pages/api/contact.ts` would then actually execute.
+A real sending path is a separate decision, not part of this frontend fix.
+See [the scoped backend recommendation](contact-form-backend-proposal.md) for
+Graph/ACS options, consent, validation, abuse controls and approval dependencies.
+Never expose transactional email API keys in browser JavaScript. The historical
+client-side API-key recommendation above this revision was unsafe and withdrawn.
+No backend, resource, permission or send has been implemented.
 
 ---
 

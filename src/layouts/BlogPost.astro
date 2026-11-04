@@ -19,6 +19,15 @@ interface Props {
 }
 
 const { title, description, pubDate, category, tags, image, related = [], proofLinks = [] } = Astro.props;
+// Tags, not the broad AI category: automation-only posts are not Copilot posts.
+const isCopilotPost = tags.includes('microsoft copilot');
+const ctaContext = `blog-author:${Astro.url.pathname.replace(/\/$/, '')}`;
+// Only these measured covers have generated WebP alternatives. Other posts
+// keep their existing image path; social cards retain the original JPEG.
+const optimizedCover = image && [
+  '/images/blog/train-copilot-to-write-emails-that-sound-like-you.jpg',
+  '/images/blog/good-chefs-saute-evenly-copilot-prompt-framework.jpg',
+].includes(image) ? image.replace(/\.jpg$/, '.webp') : undefined;
 
 function readTime(body: string) {
   const words = body.split(/\s+/).length;
@@ -41,6 +50,8 @@ function readTime(body: string) {
          first thing in view, so it loads eagerly at high priority. -->
     {image && (
       <div class="post-hero" aria-hidden="true">
+        <picture>
+          {optimizedCover && <source type="image/webp" srcset={`${optimizedCover.replace(/\.webp$/, '-640.webp')} 640w, ${optimizedCover} 1200w`} sizes="100vw" />}
         <img
           src={image}
           srcset={image.endsWith('.jpg') ? `${image.replace(/\.jpg$/, '-640.jpg')} 640w, ${image} 1200w` : undefined}
@@ -52,6 +63,7 @@ function readTime(body: string) {
           fetchpriority="high"
           decoding="async"
         />
+        </picture>
       </div>
     )}
     <!-- Post header -->
@@ -80,6 +92,17 @@ function readTime(body: string) {
     <div class="prose" style="padding:0 1.5rem 4rem;max-width:860px;margin:0 auto;">
       <slot />
     </div>
+
+    <section class="post-author-cta" aria-labelledby="post-author-heading">
+      <h2 id="post-author-heading">{isCopilotPost ? 'Put Copilot into practice with your team' : 'Discuss a project like this'}</h2>
+      <p>{isCopilotPost
+        ? 'I am Antonio Cumberbatch. At Apeiron Sumus, I served as the primary US delivery resource for a Microsoft 365 Copilot enablement programme, training 2,574+ professionals.'
+        : 'I am Antonio Cumberbatch, a Cloud Solutions Architect working across Azure architecture, automation, integration and technical delivery.'}</p>
+      <div class="post-author-actions">
+        <a href="/resume">See my resume &rarr;</a>
+        <a href="/contact" data-track="project_enquiry_intent" data-track-context={ctaContext}>Discuss your project &rarr;</a>
+      </div>
+    </section>
 
     <!-- Proof links: this post -> the case studies it describes -->
     {proofLinks.length > 0 && (
@@ -118,11 +141,13 @@ function readTime(body: string) {
     <footer style="border-top:1px solid var(--color-border);padding:2.5rem 1.5rem;max-width:860px;margin:2.5rem auto 0;">
       <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem;">
 
-        <div style="display:flex;align-items:center;gap:0.875rem;">
+        <div class="post-byline" style="display:flex;align-items:center;gap:0.875rem;">
+          <a href="/resume" aria-label="View Antonio Cumberbatch's resume" style="flex-shrink:0;">
           <Image src={meImg} width={48} height={48} alt="Antonio Cumberbatch" loading="lazy" decoding="async" style="width:48px;height:48px;border-radius:50%;object-fit:cover;object-position:center top;border:2px solid rgba(255,107,43,0.3);flex-shrink:0;" />
+          </a>
           <div>
             <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0 0 0.2rem;">Written by</p>
-            <p style="font-weight:600;color:var(--color-text);margin:0;">Antonio Cumberbatch</p>
+            <p style="font-weight:600;color:var(--color-text);margin:0;"><a href="/resume" style="color:inherit;">Antonio Cumberbatch</a></p>
             <p style="font-size:0.875rem;color:var(--color-text-muted);margin:0;">Cloud Solutions Architect</p>
           </div>
         </div>
@@ -200,6 +225,19 @@ function readTime(body: string) {
 </BaseLayout>
 
 <style>
+  .post-author-cta {
+    max-width: 812px;
+    margin: 0 1.5rem 1.5rem;
+    padding: 1.5rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+  }
+  .post-author-cta h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin: 0 0 0.75rem; }
+  .post-author-cta p { color: var(--color-text-muted); line-height: 1.7; margin: 0 0 1rem; }
+  .post-author-actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .post-author-actions a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-accent); font-weight: 600; }
+  @media (min-width: 860px) { .post-author-cta { margin-left: auto; margin-right: auto; } }
   .post-hero {
     width: 100%;
     height: clamp(200px, 32vw, 420px);
@@ -207,6 +245,7 @@ function readTime(body: string) {
     background: var(--color-surface-2);
     border-bottom: 1px solid var(--color-border);
   }
+  .post-hero picture { display: block; width: 100%; height: 100%; }
   .post-hero img {
     width: 100%;
     height: 100%;

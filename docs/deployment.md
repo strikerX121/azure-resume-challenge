@@ -1,7 +1,8 @@
 # Deployment
 
 The site is an **Astro static build** published to Azure Blob Storage and served
-through Azure Front Door. Deployment is automatic: pushing to `main` runs
+through the Cloudflare `portfolio-origin-proxy` Worker (Front Door was replaced).
+Deployment is automatic: pushing to `main` runs
 `.github/workflows/deploy.yml`, which builds, verifies, uploads and purges the
 CDN.
 
@@ -9,6 +10,9 @@ CDN.
 > default branch and production. Treat a merge as a release.
 
 ## Azure resources
+
+These are repository-recorded identifiers, not a fresh Azure resource inventory.
+The Front Door rows are legacy references, not the current serving/purge path.
 
 | Resource | Name |
 |----------|------|
@@ -20,8 +24,8 @@ CDN.
 | Front Door endpoint | `azureresumearc` |
 | Visit-counter function | `getresumecounterworking` (Azure Functions, Cosmos DB backed) |
 
-The workflow reads all of these from repository secrets (`ARC_RESUME_*`) rather
-than hardcoding them. Changing any Azure-side resource is a `cloud-ops` concern,
+The workflow reads its active Azure resource settings from repository secrets
+(`ARC_RESUME_*`) rather than hardcoding them. Changing any Azure-side resource is a `cloud-ops` concern,
 not a repo change.
 
 ## The normal path
@@ -40,11 +44,49 @@ Then merge to `main`. The workflow does the rest.
 2. `az login` with the service principal.
 3. Upload in **ordered passes**: a baseline that covers everything, then
    deliberate overrides that widen the cache for specific classes.
-4. Purge the Front Door endpoint.
+4. Purge Cloudflare using the release-only helper, which fails closed and logs
+   only HTTP status, JSON success and bounded numeric error codes. This does not
+   repair an unauthorized token.
 5. Read `Cache-Control` and the CV hash back from the edge, with bounded
    retries, and fail the run on a mismatch.
 
 ### Cache policy
+
+Cloudflare must preserve these origin headers. The November 4, 2026 read-only
+preflight confirmed that the live Worker only proxies the origin response and
+does not set `Cache-Control`. The zone's Browser Cache TTL was `14400`, raising
+`robots.txt` from the origin's `3600` to `14400`, and both mutable PDFs from `0`
+to `14400` at the public edge. The correct dependency is an owner-approved
+Cloudflare Browser Cache TTL change to **Respect Existing Headers**, followed by
+served readback on apex and www. It is not a Worker rewrite, DNS change, new app
+header, or permission to raise `CRAWLER_CACHE` to pass verification. Cache Rule
+overrides were not readable in preflight; if an override remains after the zone
+setting is corrected, the owner must inspect it. Do not assume a zone setting
+change alone proves the served result.
+
+This is separate from the proven purge authorization failure (HTTP 401,
+Cloudflare code `10000`) using the GitHub-held credential. Neither a code change
+nor a successful read-only API call clears that authorization gate. No repeat
+diagnostic purge is authorized by this runbook. Keep release blocked until the
+owner resolves effective authorization and the separately authorized validation
+confirms the actual purge succeeds. Purging the edge does not clear browsers'
+already-cached copies.
+
+The owner reported correcting the existing token and browser TTL on November 4.
+Independent pre-release GETs at 17:53 UTC confirmed robots `max-age=3600` and
+both approved CV aliases `max-age=0, must-revalidate` on apex and www, with
+unchanged approved hashes. Controlled validation run `41881818077` then proved
+one actual single-file purge using the existing GitHub secrets: HTTP 200,
+`success=true`, no error codes, and healthy before/after GETs. This clears the
+historical authorization/header prerequisites for PR6, not a substitute for its
+normal deployment purge and post-deploy readback. No credentials or settings
+were changed by that validation.
+
+The served-header check compares exact directive values and requires successful
+HTTP responses. It checks the complete baseline policy on HTML and mutable PDFs,
+not merely the presence of `must-revalidate`, and retains the CV byte check.
+Run `python scripts/test-release-prechecks.py` for offline purge/header fixtures;
+CI runs this before Azure login or upload.
 
 | Pass | Selects | `Cache-Control` |
 |---|---|---|
@@ -148,8 +190,8 @@ a force-push is neither.
 | Restored by a revert+redeploy | Not restored |
 |---|---|
 | HTML, CSS, JS, images and PDFs that still exist in the reverted tree | Files the bad deploy **added**. `upload-batch` never deletes, so a page added by the bad commit stays live at its URL until the blob is removed by hand. |
-| `Cache-Control` headers, which are re-applied by every upload pass | Front Door's cached copies, until the purge step completes. |
-| The approved CV bytes, which the workflow hash-checks after deploy | Anything changed outside this repo (DNS, Front Door rules, Functions app). |
+| `Cache-Control` headers, which are re-applied by every upload pass | Cloudflare's cached copies, until the purge step completes, and browser copies until their TTL expires. |
+| The approved CV bytes, which the workflow hash-checks after deploy | Anything changed outside this repo (DNS, Cloudflare settings/Worker, Functions app). |
 
 That first "not restored" row is the one that catches people. A rollback makes
 the old pages correct again; it does **not** make a newly introduced page

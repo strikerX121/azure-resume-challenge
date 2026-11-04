@@ -25,6 +25,9 @@ import * as M from './covers/motifs.mjs';
 
 const BLOG = 'public/images/blog';
 const COVERS = 'public/images/covers';
+const funnelOnly = process.argv.includes('--funnel-only');
+const checkOnly = process.argv.includes('--check');
+const webpSlugs = new Set(['train-copilot-to-write-emails-that-sound-like-you', 'good-chefs-saute-evenly-copilot-prompt-framework']);
 
 // Blog slug -> motif + topic hue. Every post gets a motif drawn from its own
 // subject rather than its category, so two posts in one category still look
@@ -68,9 +71,27 @@ const seedOf = (name) => [...name].reduce((a, ch) => (a * 31 + ch.charCodeAt(0))
 async function write(svg, out, width) {
   let img = sharp(Buffer.from(svg));
   if (width) img = img.resize({ width });
-  await img.jpeg({ quality: 80, mozjpeg: true, chromaSubsampling: '4:4:4' }).toFile(out);
-  const { size } = await fs.stat(out);
-  return size;
+  const buffer = await img.jpeg({ quality: 80, mozjpeg: true, chromaSubsampling: '4:4:4' }).toBuffer();
+  return saveOrCheck(buffer, out);
+}
+
+async function saveOrCheck(buffer, out) {
+  if (checkOnly) {
+    if (!buffer.equals(await fs.readFile(out))) throw new Error(`Stale generated cover: ${out}. Run npm run generate:covers.`);
+  } else {
+    await fs.writeFile(out, buffer);
+  }
+  return buffer.length;
+}
+
+async function writeWebp(svg, out, width) {
+  let img = sharp(Buffer.from(svg));
+  if (width) img = img.resize({ width });
+  // Lossy WebP is inherently 4:2:0, unlike our 4:4:4 JPEGs. Explicitly use
+  // high-quality chroma subsampling for thin coloured edges. Lossless RGB
+  // measured 63-133 KB here, larger than the JPEGs, so is not a byte win.
+  const buffer = await img.webp({ quality: 82, effort: 6, smartSubsample: true }).toBuffer();
+  return saveOrCheck(buffer, out);
 }
 
 function wide(hue, [left, right], seed) {
@@ -94,11 +115,16 @@ await fs.mkdir(COVERS, { recursive: true });
 
 const rows = [];
 for (const [slug, [motif, hue]] of Object.entries(blog)) {
+  if (funnelOnly && !webpSlugs.has(slug)) continue;
   const svg = frame(1200, 630, hue, motif(hue), { seed: seedOf(slug) });
   rows.push([`${BLOG}/${slug}.jpg`, await write(svg, `${BLOG}/${slug}.jpg`)]);
   rows.push([`${BLOG}/${slug}-640.jpg`, await write(svg, `${BLOG}/${slug}-640.jpg`, 640)]);
+  if (webpSlugs.has(slug)) {
+    rows.push([`${BLOG}/${slug}.webp`, await writeWebp(svg, `${BLOG}/${slug}.webp`)]);
+    rows.push([`${BLOG}/${slug}-640.webp`, await writeWebp(svg, `${BLOG}/${slug}-640.webp`, 640)]);
+  }
 }
-for (const [name, p] of Object.entries(pages)) {
+for (const [name, p] of Object.entries(funnelOnly ? {} : pages)) {
   const svg = frame(1200, 630, p.hue, p.motif(p.hue), { seed: seedOf(name) });
   rows.push([`${COVERS}/${name}.jpg`, await write(svg, `${COVERS}/${name}.jpg`)]);
   rows.push([`${COVERS}/${name}-640.jpg`, await write(svg, `${COVERS}/${name}-640.jpg`, 640)]);
@@ -113,4 +139,4 @@ for (const [file, size] of rows) {
   total += size;
   console.log(`  ${(size / 1024).toFixed(1).padStart(6)} KB  ${path.normalize(file)}`);
 }
-console.log(`\n${rows.length} files, ${(total / 1024).toFixed(0)} KB total.`);
+console.log(`\n${rows.length} files ${checkOnly ? 'verified byte-exact' : 'generated'}, ${(total / 1024).toFixed(0)} KB total.`);
