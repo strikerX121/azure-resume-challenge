@@ -70,4 +70,4 @@ Getting RBAC right early is cheap. Retrofitting it after you've shipped ad-hoc c
 
 ---
 
-*We build multi-role web applications on Azure for Caribbean businesses. If you're dealing with a similar access control problem, whether it's an internal tool or a client-facing product, [get in touch](/contact).*
+*We build multi-role web applications on Azure for Caribbean businesses. If you're dealing with a similar access control problem, whether it's an internal tool or a client-facing product, <a href="/contact" data-track="project_enquiry_intent" data-track-context="blog-body:rbac-nextjs-cosmosdb-not-jwts">get in touch</a>.*

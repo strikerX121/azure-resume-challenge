@@ -68,4 +68,4 @@ The platform is in daily use across the full team. It's Phase 1 of three: the ne
 
 ---
 
-*If you're managing a team, clients, and Azure infrastructure and dealing with the same tool sprawl, [let's talk about what this could look like for your business](/contact).*
+*If you're managing a team, clients, and Azure infrastructure and dealing with the same tool sprawl, <a href="/contact" data-track="project_enquiry_intent" data-track-context="blog-body:enterprise-ops-dashboard-replaced-six-tools">let's talk about what this could look like for your business</a>.*

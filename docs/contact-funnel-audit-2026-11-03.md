@@ -1,5 +1,131 @@
 # Contact funnel audit verification, 2026-11-03
 
+## PR6 review resolution, 2026-11-04 (current)
+
+This section supersedes the November 3 contract, counts and cover sizes below.
+Reviewed actual PR head `177f5a56e3efbeabea80af0db772dfa10aff81a7`, issue comment
+`6624229431` from `naeemdev360`, all issue comments, inline comments and reviews.
+There were no additional inline comments or submitted reviews at the final
+pre-push refresh. Same PR branch; no main push, merge or deployment is approved.
+
+### Feedback resolution
+
+1. **Contact navigation:** BlogPost, both resume CTAs and all 12 named existing
+   Footer/404/services/capabilities/case-study placements declare
+   `project_enquiry_intent` with contextual placement names. The new built-output
+   gate also found four article-body links and two generated service links;
+   these are annotated too. It checks 80 rendered CTA instances on 39 full
+   pages. Shared footer instances are counted per page, not as 80 source edits.
+   Main navigation remains navigation-only. Explicit event annotations return
+   before automatic contact classification: no navigation is also contact intent.
+2. **Relevant blog copy:** only posts tagged `microsoft copilot` get the Copilot
+   heading and training proof. All 18 built cards are checked against their
+   source tags, including non-Copilot automation, RBAC and Front Door posts.
+   Other cards describe cloud/automation/integration delivery without that stat.
+3. **Proof, not inference:** the approved 2026 CV's profile summary explicitly
+   attributes 2,574+ professionals trained to a Microsoft 365 Copilot enablement
+   programme. Its Apeiron Sumus role records **95 customer engagements in FY26**,
+   not 95 Copilot workshops. The authoritative profile and existing vault
+   evidence-refresh/CV notes were read; no reconfirmation was required. The card
+   retains the supported training claim, names Apeiron Sumus and omits 95.
+   Existing homepage, capability, service/framework schema and adoption-post
+   wording no longer equate those engagements with workshops or imply every
+   attendee learned the named prompt framework. The approved PDFs are unchanged.
+4. **Compose counting contract:** one `contact_intent` for the first valid
+   submit in a page-local compose interaction. Repeated submits without edits
+   may reopen the draft but add no event. An input/change starts a new
+   interaction; its next valid submit counts once. Invalid submits never count.
+   Reload/new page starts fresh. This is not once per GA session or a sent-lead
+   metric. No visitor ID, field contents, draft hash or storage is used for
+   deduplication. Direct email/booking/WhatsApp clicks remain per click. Tests
+   cover repeated valid submits, an invalid edit, a corrected/new draft, and
+   page reload. Privacy opt-outs continue to suppress custom events.
+5. **Placement attribution:** hero, sidebar and fallback direct actions have
+   distinct contexts. Blog author/body contexts include the post path/slug;
+   resume opening and closing links are distinct. Context is code-defined,
+   never visitor-entered data.
+6. **Built GA regression gate:** `check-analytics.mjs` executes emitted config
+   in module-like scope without network, checks global queue reachability and
+   existing privacy config, and verifies CTA annotations/copy. `npm run verify`
+   includes it, so the existing deployment verification step gates upload.
+   Five self-tests include the missing-global mutation. It also rejects the
+   actual frozen pre-fix built contact page. No workflow was dispatched and no
+   PR workflow has been added.
+7. **Actual fallback click:** the browser suite selects
+   `data-track-context="contact-fallback-email"`, physically clicks that link,
+   and asserts its exact context plus `method=email` in intercepted GA traffic.
+   It separately exercises hero/sidebar links, not an ambiguous `.first`.
+8. **Canonical cover generation:** `generate:covers` renders the two WebP sizes
+   from the same SVG motifs as the JPEGs. The old optimizer delegates to that
+   generator. `--check` validates all 59 outputs byte-exact without overwriting;
+   repeated full/compatibility runs agree. JPEGs remain byte-identical. Lossy
+   WebP uses explicit `smartSubsample:true` (high-quality chroma subsampling),
+   quality 82, effort 6. It is still 4:2:0, not falsely advertised as 4:4:4;
+   JPEG retains 4:4:4. Lossless WebP was measured at 63,100-132,616 bytes, larger
+   than the JPEGs, and rejected. Side-by-side visual review found consistent
+   motifs/edges/composition without obvious new artifacts, not pixel equality.
+9. **Python portability:** npm uses a Node launcher probing Python 3.9+ and
+   Playwright through `python3`, `python`, then `py -3`, with an explicit
+   executable-path `PYTHON` override. No shell splitting or auto-install.
+   Five launcher tests cover each selection, a spaced path and missing deps.
+   Windows actually selected working `python` after `python3` lacked Playwright.
+   macOS/Linux branches are unit-tested, not claimed as native platform runs.
+10. **Mobile polish:** remove sidebar's negative order, keeping form before the
+    supporting cards in DOM and visual order. This separates hero booking from
+    the later booking card rather than repeating it immediately. Form top is
+    702.2px at 320, 675.0px at 360, 593.1px at 390 and 522.6px at 768. All three
+    hero actions remain within the tested first screen, at least 44px high.
+    Blog and resume closing CTA headings explicitly use font-weight 700.
+
+### Verification and limits
+
+- `npm run build`: passes, 39 Astro pages, 40 HTML files including redirect.
+- `npm run verify`: passes, 1,406 links, 126 image tags, 38 sitemap URLs,
+  120 valid JSON-LD blocks. Existing policy/CV/credential/render/copy checks
+  pass; added analytics and picture/cover gates pass.
+- `npm test`: existing three self-test suites plus 5 analytics guard cases
+  and 5 Python-launcher tests pass.
+- Focused tracking suite: 13 records pass. Full intercepted real cached GA
+  suite: 42 records, including 66 contextual navigation clicks over 29 pages
+  and 24 DOM/viewport cases, zero page errors/overflow/broken local images.
+  Main sequence transports exactly 5 contact events (fallback email, hero
+  WhatsApp, hero booking, first valid draft, edited valid draft), not the old
+  four-event scenario. The 66 enquiry clicks produce enquiry events only;
+  CV intent remains separate. Extra hero/sidebar/fallback sequence verifies
+  5 distinct contexts. Tests use fresh browser contexts, not live users.
+- Viewports: 320x640, 360x640, 390x664, 390x844, 768x1024, 1280x900 on contact,
+  resume and the two audited posts. Both 390px/3x cover selections pass;
+  supplemental real-browser JPEG fallback checks pass for both posts.
+  Picture source sets, dimensions, eager priority, empty alt, JPEG OG URLs,
+  built/public bytes and absent conflicting preloads are verified by
+  `check-funnel-covers.mjs` in the existing verification gate.
+- Current WebP/JPEG bytes: Train 1200 12,908/26,387 (51.1% smaller), Train 640
+  5,006/10,446 (52.1%); Chefs 1200 12,034/23,458 (48.7%); Chefs 640
+  4,832/9,309 (48.1%). These replace the earlier transcode numbers below.
+- GPC, DNT and msDNT suppression, unavailable SDK queueing, keyboard actions,
+  reduced motion and no-JS heroes pass. **No consent gate exists or was added.**
+  Decline tests are inapplicable; consent remains explicitly parked. Existing
+  GA pageview behavior was not broadened or misrepresented as opt-out gated.
+- Every browser request outside the loopback test origin is fulfilled locally
+  (cached GA/collect) or aborted. Production-target refusal was exercised.
+  No production analytics, backend sends, real leads, new resources, spend,
+  permissions or outside tracking requests. Personal Gmail versus ARC contact
+  identity is preserved. No 3ST Landing Page PR32/EMR repository changes.
+- Actual iOS Safari, native macOS/Linux launcher execution, GA4 ingestion/key
+  event configuration and field/conversion performance remain unverified.
+  Lighthouse was not rerun for this review and old scores are not current-head
+  claims. The existing draft-only form and backend proposal remain unchanged.
+
+Sanitized durable evidence is in the existing audit artifact tree under
+`portfolio/review-2026-11-04/`: build/verify/tests/browser logs,
+`candidate-checks.json`, 24 viewport screenshots, additional-browser checks,
+cover consistency/regeneration/repeat checks, negative regression output and
+`cover-comparison.png`. Stored transport evidence is limited to event name,
+context, method and file, not GA client IDs or raw request URLs/payloads.
+`failures-and-limitations.md` records the failed intermediate checks and fixes.
+
+## Original implementation evidence (November 3, historical)
+
 ## Scope and release boundary
 
 Implemented on `fix/contact-funnel-audit-2026-11-03`, from

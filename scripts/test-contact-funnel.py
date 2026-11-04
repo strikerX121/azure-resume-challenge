@@ -36,9 +36,15 @@ def custom_collect(requests):
         # GA can batch multiple events as newline-separated POST bodies.
         for line in (request['body'].splitlines() if request['body'] else ['']):
             fields = query | parse_qs(line)
-            if fields.get('en', [''])[0] in ['contact_intent', 'cv_download_intent']:
+            if fields.get('en', [''])[0] in ['contact_intent', 'cv_download_intent', 'project_enquiry_intent']:
                 result.append({k: fields[k][0] for k in ['en', 'ep.context', 'ep.method', 'ep.file'] if k in fields})
     return result
+
+def wait_transport(page, collect, count):
+    # Real GA batches rapid events; fixed sleeps can assert before the flush.
+    deadline = time.monotonic() + 10
+    while len(custom_collect(collect)) < count and time.monotonic() < deadline:
+        page.wait_for_timeout(100)
 
 with sync_playwright() as p:
     browser = p.chromium.launch()
@@ -75,7 +81,7 @@ with sync_playwright() as p:
     page.goto(args.base + '/contact/')
     page.wait_for_timeout(1200)
     state = page.evaluate("({gtag:typeof window.gtag,arcTrack:typeof window.arcTrack})")
-    email = page.locator('a[href^="mailto:"]').first
+    email = page.locator('a[data-track-context="contact-fallback-email"]')
     email.click()
     page.wait_for_timeout(1200)
     records.append({'test': 'real-email-click', 'globals': state, 'events': events(page)})
@@ -83,11 +89,13 @@ with sync_playwright() as p:
         assert state['gtag'] == 'function'
         assert len(events(page)) == 1
         assert events(page)[0]['params']['method'] == 'email'
+        assert events(page)[0]['params']['context'] == 'contact-fallback-email'
     # Baseline's globals can be repaired in the harness ONLY to prove the
     # separately masked false-positive internal navigation/invalid-form defect.
     if args.baseline:
         page.evaluate("window.gtag = function(){window.dataLayer.push(arguments)}")
-    for selector, method in [('a[href*="api.whatsapp.com"]', 'whatsapp'), ('a[href*="calendar.app.google"]', 'booking')]:
+    direct_selectors = [('a[href*="api.whatsapp.com"]', 'whatsapp'), ('a[href*="calendar.app.google"]', 'booking')] if args.baseline else [('a[data-track-context="contact-hero-whatsapp"]', 'whatsapp'), ('a[data-track-context="contact-hero-booking"]', 'booking')]
+    for selector, method in direct_selectors:
         before = len(events(page))
         page.locator(selector).first.click()
         assert len(events(page)) == before + 1
@@ -117,8 +125,23 @@ with sync_playwright() as p:
     if not args.baseline:
         assert len(events(page)) == before + 1
         assert events(page)[-1]['params'] == {'context': 'contact-compose', 'method': 'email'}
+        # Unedited valid resubmits reopen the same draft but do not recount it.
+        page.locator('#contact-form button').click()
+        page.locator('#contact-form button').click()
+        assert len(events(page)) == before + 1
+        # An edit starts a new interaction; invalid submits still never count.
+        page.locator('#email').fill('invalid')
+        page.locator('#contact-form button').click()
+        assert len(events(page)) == before + 1
+        page.locator('#email').fill('local@example.invalid')
+        page.locator('#message').fill('Another local draft, never sent.')
+        page.locator('#contact-form button').click()
+        page.locator('#contact-form button').click()
+        assert len(events(page)) == before + 2
+        wait_transport(page, collect, 5)
+        records.append({'test': 'compose-interaction-dedup', 'composeEvents': [e for e in events(page) if e['params'].get('context') == 'contact-compose']})
     assert all('local@example.invalid' not in json.dumps(e) for e in events(page))
-    records.append({'test': 'collect-contact', 'requests': collect, 'blocked': blocked, 'events': events(page)})
+    records.append({'test': 'collect-contact', 'transportEvents': custom_collect(collect), 'blockedHosts': sorted(set(urlparse(u).netloc for u in blocked)), 'events': events(page)})
     if not args.baseline:
         encoded = json.dumps(collect)
         for method in ['email', 'whatsapp', 'booking']:
@@ -126,9 +149,10 @@ with sync_playwright() as p:
         assert 'contact_intent' in encoded
         assert 'local%40example.invalid' not in encoded
         assert custom_collect(collect) == [
-            {'en': 'contact_intent', 'ep.context': '/contact/', 'ep.method': 'email'},
-            {'en': 'contact_intent', 'ep.context': '/contact/', 'ep.method': 'whatsapp'},
-            {'en': 'contact_intent', 'ep.context': '/contact/', 'ep.method': 'booking'},
+            {'en': 'contact_intent', 'ep.context': 'contact-fallback-email', 'ep.method': 'email'},
+            {'en': 'contact_intent', 'ep.context': 'contact-hero-whatsapp', 'ep.method': 'whatsapp'},
+            {'en': 'contact_intent', 'ep.context': 'contact-hero-booking', 'ep.method': 'booking'},
+            {'en': 'contact_intent', 'ep.context': 'contact-compose', 'ep.method': 'email'},
             {'en': 'contact_intent', 'ep.context': 'contact-compose', 'ep.method': 'email'},
         ], custom_collect(collect)
     context.close()
@@ -138,7 +162,7 @@ with sync_playwright() as p:
     page.wait_for_timeout(500)
     page.locator('a[download]').first.click()
     page.wait_for_timeout(1400)
-    records.append({'test': 'cv-download', 'events': events(page), 'collect': collect})
+    records.append({'test': 'cv-download', 'events': events(page), 'collect': custom_collect(collect)})
     if not args.baseline:
         assert [e['name'] for e in events(page)] == ['cv_download_intent']
         assert 'cv_download_intent' in json.dumps(collect)
@@ -146,10 +170,60 @@ with sync_playwright() as p:
         before = len(events(page))
         if not args.tracking_only:
             page.locator('main a[href="/contact"]').first.click()
-            assert len(events(page)) == before
+            assert len(events(page)) == before + 1
+            assert events(page)[-1] == {'name': 'project_enquiry_intent', 'params': {'context': 'resume-hero'}}
             assert page.locator('main a[href="/contact"]').count() == 2
     assert page.locator('a[href="mailto:antonio.cumberbatch2@gmail.com"]').count() == 1
     context.close()
+
+    if not args.baseline:
+        # Exercise all newly annotated placements, including all 18 blog cards
+        # and the 12 pre-existing Footer/404/service/case-study contact paths.
+        from pathlib import Path
+        pages = ['/resume/', '/404.html', '/services/', '/capabilities/']
+        pages += ['/work/' + s + '/' for s in ['3-stripes-tech', 'arc-portfolio', 'esvd-dashboard', 'jimny-shop', 'qualitech', 'sassi', 'wiman-dlp']]
+        pages += ['/blog/' + f.stem + '/' for f in Path('src/content/blog').glob('*.md')]
+        placements = []
+        for path in pages:
+            context, page, collect, blocked = setup()
+            page.goto(args.base + path)
+            for link in page.locator('a[data-track="project_enquiry_intent"][href="/contact"]').all():
+                before = len(events(page))
+                expected_context = link.get_attribute('data-track-context')
+                link.click()
+                assert events(page)[before:] == [{'name': 'project_enquiry_intent', 'params': {'context': expected_context}}]
+                placements.append({'path': path, 'context': expected_context})
+            wait_transport(page, collect, len(events(page)))
+            assert all(e['en'] == 'project_enquiry_intent' for e in custom_collect(collect))
+            assert len(custom_collect(collect)) == len(events(page)), (path, custom_collect(collect))
+            context.close()
+        records.append({'test': 'all-contact-cta-clicks', 'placements': placements})
+
+        context, page, collect, blocked = setup()
+        page.goto(args.base + '/contact/')
+        contexts = ['contact-hero-email', 'contact-sidebar-email', 'contact-sidebar-whatsapp', 'contact-sidebar-booking', 'contact-fallback-booking']
+        for placement in contexts:
+            link = page.locator(f'a[data-track-context="{placement}"]')
+            before = len(events(page))
+            link.click()
+            assert len(events(page)) == before + 1
+            assert events(page)[-1]['params']['context'] == placement
+        wait_transport(page, collect, len(contexts))
+        assert [e['ep.context'] for e in custom_collect(collect)] == contexts
+        records.append({'test': 'hero-sidebar-fallback-contexts', 'collect': custom_collect(collect)})
+        context.close()
+
+        context, page, collect, blocked = setup()
+        for repeat in range(2):
+            page.goto(args.base + '/contact/')
+            page.locator('#name').fill('Local reload test')
+            page.locator('#email').fill('reload@example.invalid')
+            page.locator('#message').fill('Local only.')
+            page.locator('#contact-form button').click()
+            page.locator('#contact-form button').click()
+            assert len(events(page)) == 1
+        records.append({'test': 'compose-new-page-resets-interaction', 'pageLoads': 2, 'eventsPerLoad': 1})
+        context.close()
 
     for signal in ['globalPrivacyControl', 'doNotTrack', 'msDoNotTrack']:
         context, page, collect, blocked = setup()
@@ -167,6 +241,8 @@ with sync_playwright() as p:
         contact_events = events(page)
         page.goto(args.base + '/resume/')
         page.locator('a[download]').first.click()
+        if not args.baseline:
+            page.locator('a[data-track-context="resume-hero"]').click()
         assert events(page) == []
         records.append({'test': 'privacy-' + signal, 'contactCustomEvents': contact_events, 'cvCustomEvents': events(page)})
         context.close()
@@ -201,7 +277,7 @@ with sync_playwright() as p:
             records.append({'test': 'responsive-cover-3x', 'slug': slug, 'image': current})
             context.close()
 
-    for width, height in ([] if args.tracking_only else [(360, 640), (390, 664), (390, 844), (1280, 900)]):
+    for width, height in ([] if args.tracking_only else [(320, 640), (360, 640), (390, 664), (390, 844), (768, 1024), (1280, 900)]):
         for path in ['/contact/', '/resume/'] + ['/blog/' + s + '/' for s in slugs]:
             context, page, collect, blocked = setup(viewport={'width': width, 'height': height}, is_mobile=width < 768, device_scale_factor=1)
             page.goto(args.base + path)
@@ -214,6 +290,10 @@ with sync_playwright() as p:
             assert data['brokenImages'] == [], (path, data['brokenImages'])
             if not args.baseline and path == '/contact/':
                 assert page.locator('.contact-link-text').evaluate_all('(es)=>es.every(e=>e.scrollWidth <= e.clientWidth)'), 'Contact identities must wrap without clipping'
+                if width <= 768:
+                    positions = page.evaluate("({form:document.querySelector('#contact-form').getBoundingClientRect().top,sidebar:document.querySelector('.contact-sidebar').getBoundingClientRect().top})")
+                    assert positions['form'] < 850 and positions['form'] < positions['sidebar'], positions
+                    data['formPlacement'] = positions
             if not args.baseline and path == '/contact/':
                 assert len(data['actions']) == 3
                 assert all(a['y'] >= 64 and a['bottom'] <= height and a['height'] >= 44 for a in data['actions']), data
@@ -227,7 +307,8 @@ with sync_playwright() as p:
                 # Actual article reader path, not just a source-level annotation check.
                 page.locator('.post-author-cta a[href="/resume"]').click()
                 page.locator('.post-author-cta a[href="/contact"]').click()
-                assert events(page) == []
+                assert events(page) == [{'name': 'project_enquiry_intent', 'params': {'context': 'blog-author:' + path.rstrip('/')}}]
+                assert page.locator('#post-author-heading').evaluate('(e)=>getComputedStyle(e).fontWeight') == '700'
                 page.evaluate("window.scrollTo({top:document.querySelector('.post-author-cta').getBoundingClientRect().top+scrollY-88,behavior:'instant'})")
                 page.wait_for_timeout(100)
             label = ('baseline' if args.baseline else 'candidate') + '-' + path.strip('/').replace('/', '-') + f'-{width}x{height}'

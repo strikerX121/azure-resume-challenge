@@ -64,4 +64,4 @@ Done well, it means your finance person never needs to log into Azure Portal. Do
 
 ---
 
-*We've built this for 3 Stripes Technologies' internal operations, and we can build it for yours. If you're managing Azure costs across multiple subscriptions and want visibility that doesn't require Azure access, [let's talk](/contact).*
+*We've built this for 3 Stripes Technologies' internal operations, and we can build it for yours. If you're managing Azure costs across multiple subscriptions and want visibility that doesn't require Azure access, <a href="/contact" data-track="project_enquiry_intent" data-track-context="blog-body:azure-cost-management-api-for-developers">let's talk</a>.*

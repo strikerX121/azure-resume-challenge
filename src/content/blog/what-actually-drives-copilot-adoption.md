@@ -1,6 +1,6 @@
 ---
 title: "I Trained 2,574 People on Microsoft Copilot. Here's What Actually Drives Adoption."
-description: "After 95 workshops across banking, healthcare, government, and manufacturing, the pattern is clear: access to Copilot changes nothing. Adoption is a people problem, not a technology problem."
+description: "After training professionals across banking, healthcare, government, and manufacturing, the pattern is clear: access to Copilot changes nothing. Adoption is a people problem, not a technology problem."
 pubDate: 2026-06-15
 category: "AI & Automation"
 tags: ["microsoft copilot", "ai adoption", "change management", "ai enablement"]
@@ -8,7 +8,7 @@ image: /images/blog/what-actually-drives-copilot-adoption.jpg
 draft: false
 ---
 
-Over the course of one fiscal year, I ran 95 Microsoft 365 Copilot workshops as the primary US delivery resource for the Microsoft 365 Copilot workshop programme. By the end, I had trained 2,574 professionals across banking, healthcare, government, education, manufacturing, and nonprofit. We hit 136% of the annual target and received 10 accolades from Microsoft for the delivery.
+At Apeiron Sumus, I served as the primary US delivery resource for a Microsoft 365 Copilot enablement programme. In FY26, I completed 95 customer engagements at 136% of annual target, training 2,574+ professionals across banking, healthcare, government, education, manufacturing, and nonprofit. I received 10 unsolicited customer accolades for delivery quality and adaptability.
 
 The thing I took away from all of it wasn't about Copilot's features. It was about why some teams actually change how they work and why others walk away from a workshop, go back to their desks, and never open Copilot again.
 
@@ -26,7 +26,7 @@ The organizations that saw real behavior change after a workshop had done someth
 
 ## What Separates Teams That Use Copilot From Teams That Don't
 
-After 95 workshops and 2,574 participants, the patterns are consistent enough that I can describe them plainly.
+After training 2,574+ professionals, the patterns are consistent enough that I can describe them plainly.
 
 **Leaders use it visibly, not just endorse it.** There's a meaningful difference between a manager sending an email that says "we're investing in AI tools" and a manager who opens Copilot in a meeting and shows the team what they built with it. Endorsement is easy. Visible use communicates that this is real, that it's safe, and that the expectation isn't just participation but actual adoption. Teams where a senior person was using Copilot regularly before the workshop always had higher post-training engagement.
 

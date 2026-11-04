@@ -54,4 +54,4 @@ All three are invisible until there's a specific incident: an account compromise
 
 The work to fix all three is a half-day at most for a typical small business environment. For businesses in the Caribbean running M365 without a dedicated IT function, this kind of review once a year is worth doing. Not because catastrophe is imminent, but because the cost of fixing it reactively is always higher than doing it right beforehand.
 
-If you want to run through what this looks like for your own environment, [reach out](/contact).
+If you want to run through what this looks like for your own environment, <a href="/contact" data-track="project_enquiry_intent" data-track-context="blog-body:three-microsoft-365-problems-small-businesses-miss">reach out</a>.

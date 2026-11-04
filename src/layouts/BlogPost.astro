@@ -19,6 +19,9 @@ interface Props {
 }
 
 const { title, description, pubDate, category, tags, image, related = [], proofLinks = [] } = Astro.props;
+// Tags, not the broad AI category: automation-only posts are not Copilot posts.
+const isCopilotPost = tags.includes('microsoft copilot');
+const ctaContext = `blog-author:${Astro.url.pathname.replace(/\/$/, '')}`;
 // Only these measured covers have generated WebP alternatives. Other posts
 // keep their existing image path; social cards retain the original JPEG.
 const optimizedCover = image && [
@@ -91,11 +94,13 @@ function readTime(body: string) {
     </div>
 
     <section class="post-author-cta" aria-labelledby="post-author-heading">
-      <h2 id="post-author-heading">Put this into practice with your team</h2>
-      <p>I am Antonio Cumberbatch, a Cloud Solutions Architect working across automation, integration and technical delivery. I delivered Microsoft 365 Copilot training to 2,574+ professionals.</p>
+      <h2 id="post-author-heading">{isCopilotPost ? 'Put Copilot into practice with your team' : 'Discuss a project like this'}</h2>
+      <p>{isCopilotPost
+        ? 'I am Antonio Cumberbatch. At Apeiron Sumus, I served as the primary US delivery resource for a Microsoft 365 Copilot enablement programme, training 2,574+ professionals.'
+        : 'I am Antonio Cumberbatch, a Cloud Solutions Architect working across Azure architecture, automation, integration and technical delivery.'}</p>
       <div class="post-author-actions">
         <a href="/resume">See my resume &rarr;</a>
-        <a href="/contact">Discuss your project &rarr;</a>
+        <a href="/contact" data-track="project_enquiry_intent" data-track-context={ctaContext}>Discuss your project &rarr;</a>
       </div>
     </section>
 
@@ -228,7 +233,7 @@ function readTime(body: string) {
     border: 1px solid var(--color-border);
     border-radius: 12px;
   }
-  .post-author-cta h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0 0 0.75rem; }
+  .post-author-cta h2 { font-family: var(--font-display); font-size: 1.25rem; font-weight: 700; margin: 0 0 0.75rem; }
   .post-author-cta p { color: var(--color-text-muted); line-height: 1.7; margin: 0 0 1rem; }
   .post-author-actions { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
   .post-author-actions a { display: inline-flex; align-items: center; min-height: 44px; color: var(--color-accent); font-weight: 600; }
