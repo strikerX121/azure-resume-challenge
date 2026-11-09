@@ -15,12 +15,13 @@ const services = [
   {
     num: '02',
     label: '3 Stripes Tech EMR',
-    tagline: 'A cloud-based EMR built for Caribbean healthcare providers.',
-    desc: 'Cloud-based Electronic Medical Records designed around how Caribbean doctors actually work. 25-day free trial. Pricing starts at $99 USD/user/month.',
-    for: 'Medical practices, clinics, and hospitals across the Caribbean.',
-    engagement: '$99 USD/user/month.',
-    cta: 'Visit 3 Stripes Tech',
-    href: 'https://www.3stripestech.com/',
+    tagline: 'Cloud-based EMR software for Caribbean practices.',
+    desc: "Explore 3ST's electronic medical records and clinic-management software. Visit the product site for current plans and rollout options.",
+    for: 'Caribbean practices evaluating digital patient records and clinic workflows.',
+    engagement: "Review current plans and discuss your clinic's rollout with 3ST.",
+    cta: 'View 3ST plans and rollout options',
+    href: 'https://www.3stripestech.com/pricing',
+    referral: true,
     target: '_blank',
     rel: 'noopener noreferrer',
     extraNote: 'Or email <a href="mailto:antonio.cumberbatch@3stripestech.com" style="color:var(--color-accent);">antonio.cumberbatch@3stripestech.com</a> to arrange a demo directly.',
@@ -91,7 +92,14 @@ const serviceSchema = {
   itemListElement: services.map((s, i) => ({
     '@type': 'ListItem',
     position: i + 1,
-    item: {
+    // A product referral is not Antonio's consulting Offer. Derive its
+    // description from the same visible description and engagement fields.
+    item: s.referral ? {
+      '@type': 'Service',
+      name: s.label,
+      description: `${s.desc} ${s.engagement}`,
+      url: s.href,
+    } : {
       '@type': 'Service',
       name: s.label,
       description: s.tagline,
@@ -111,14 +119,6 @@ const serviceSchema = {
         description: s.engagement,
         availability: 'https://schema.org/InStock',
         url: s.href.startsWith('http') ? s.href : 'https://www.antoniocumberbatch.com' + s.href,
-        ...(s.label === '3 Stripes Tech EMR'
-          ? { price: '99', priceCurrency: 'USD', priceSpecification: {
-                '@type': 'UnitPriceSpecification',
-                price: '99',
-                priceCurrency: 'USD',
-                unitText: 'user per month',
-              } }
-          : {}),
       },
     },
   })),
@@ -230,6 +230,11 @@ const faqSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(frameworkSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <noscript>
+    <style is:global>
+      .emr-referral { opacity: 1; transform: none; }
+    </style>
+  </noscript>
 
   <section style="padding:4rem 1.5rem 3rem;">
     <div style="max-width:1200px;margin:0 auto;">
@@ -242,7 +247,7 @@ const faqSchema = {
   <section style="padding:0 1.5rem 5rem;">
     <div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:2rem;">
       {services.map((s) => (
-        <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;overflow:hidden;">
+        <div class:list={['reveal', { 'emr-referral': s.referral }]} style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:16px;overflow:hidden;">
           <div style="padding:2.5rem;border-bottom:1px solid var(--color-border);">
             <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--color-accent);display:block;margin-bottom:0.625rem;">{s.num}</span>
             <h2 style="font-family:var(--font-display);font-size:1.75rem;font-weight:800;margin:0 0 0.5rem;">{s.label}</h2>
@@ -320,6 +325,16 @@ const faqSchema = {
 </BaseLayout>
 
 <style>
+  /* The longer referral CTA and preserved demo address must not widen the
+     grid or clip inside this card. Other service cards retain their styles. */
+  .emr-referral :global(a) {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+  .emr-referral > div > div {
+    min-width: 0;
+  }
   @media (max-width: 768px) {
     [style*="grid-template-columns:1fr 1fr auto"] {
       grid-template-columns: 1fr !important;
