@@ -50,12 +50,12 @@ with sync_playwright() as p:
     browser = p.chromium.launch()
 
     def setup(**kwargs):
-        context = browser.new_context(**kwargs)
+        context = browser.new_context(service_workers='block', **kwargs)
         collect = []
         blocked = []
         def route(r):
             u = urlparse(r.request.url)
-            if u.netloc == origin and u.scheme == 'http':
+            if u.netloc == origin and u.scheme == 'http' and r.request.method in ('GET', 'HEAD') and not u.path.startswith('/api/'):
                 r.continue_()
             elif u.hostname == 'www.googletagmanager.com' and u.path == '/gtag/js':
                 r.fulfill(status=200, content_type='application/javascript', body=tag)
@@ -66,6 +66,7 @@ with sync_playwright() as p:
                 blocked.append(r.request.url)
                 r.abort()
         context.route('**/*', route)
+        context.route_web_socket('**/*', lambda ws: ws.close())
         page = context.new_page()
         page.on('pageerror', lambda e: errors.append(str(e)))
         # Prevent actual mailto, download, internal navigation and new-tab opens.

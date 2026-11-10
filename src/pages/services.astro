@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import CollaborationGuidance from '../components/CollaborationGuidance.astro';
+import StaticContentFallback from '../components/StaticContentFallback.astro';
 
 const services = [
   {
@@ -230,6 +232,7 @@ const faqSchema = {
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(frameworkSchema)} />
   <script slot="head" type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <StaticContentFallback />
   <noscript>
     <style is:global>
       .emr-referral { opacity: 1; transform: none; }
@@ -241,6 +244,7 @@ const faqSchema = {
       <p class="reveal" style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin-bottom:0.5rem;">Services</p>
       <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3rem);font-weight:800;margin-bottom:1rem;">Four Ways to Work Together</h1>
       <p class="reveal" style="font-size:1.0625rem;color:var(--color-text-muted);max-width:620px;">Cloud architecture and assessments, automation and integration, Microsoft 365 and identity, and Copilot enablement. Based in Trinidad and Tobago, delivered remotely across the Caribbean and North America.</p>
+      <CollaborationGuidance />
     </div>
   </section>
 
@@ -336,6 +340,8 @@ const faqSchema = {
     min-width: 0;
   }
   @media (max-width: 768px) {
+    [style*="grid-template-columns:1fr 1fr auto"] > div { min-width: 0; }
+    [style*="grid-template-columns:1fr 1fr auto"] a { white-space: normal !important; overflow-wrap: anywhere; max-width: 100%; }
     [style*="grid-template-columns:1fr 1fr auto"] {
       grid-template-columns: 1fr !important;
     }

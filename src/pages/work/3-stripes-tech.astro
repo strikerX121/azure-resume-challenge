@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StaticContentFallback from '../../components/StaticContentFallback.astro';
 import WorkSchema from '../../components/WorkSchema.astro';
 import CaseStudyLinks from '../../components/CaseStudyLinks.astro';
 import { CASE_STUDIES } from '../../data/internal-links';
@@ -11,14 +12,14 @@ import { TTMA_2026 } from '../../data/events';
 const team = [
   {
     name: 'Antonio Cumberbatch',
-    role: 'Founder & Technical Lead',
-    bio: 'Antonio architected and led the full V3 rebuild, from infrastructure design on Azure through the API layer to product strategy. He holds 5 active Microsoft Azure certifications including Expert-level Solutions Architect, and previously managed cloud infrastructure at Digicel Group.',
+    role: 'Co-founder & Technical Lead',
+    bio: 'Antonio led scoping, project management, product strategy and customer success, with hands-on Azure cloud architecture and engineering. He architected and coordinated the V3 rebuild; application implementation and design were team contributions.',
     photo: null,
   },
   {
     name: 'Rakib Hasan',
     role: 'UI/UX Designer & Frontend Developer',
-    bio: 'For 3 Stripes Technology, I designed a comprehensive healthcare management system centered around the user. From structuring complex Electronic Medical Records (EMR) to crafting an accessible patient portal, my goal was to create a clean, minimalist interface that reduces cognitive load for medical professionals and patients alike.',
+    bio: 'Rakib designed the EMR user experience and interface, including record layouts and patient-portal designs. A design contribution is not a claim that every designed module is available in the current product.',
     photo: rakibImg,
   },
   {
@@ -40,28 +41,36 @@ const versions = [
     label: 'V2',
     status: 'Retired',
     heading: 'V2, retired',
-    body: 'V2 was a proper web application and was publicly presented at the T&T Medical Research Conference at the Radisson Hotel. Feedback from the medical community was positive. But the product had a critical architectural problem: patient record lists loaded the entire dataset client-side on every request. At 7,000+ records, that meant 5–10 second load times on a core workflow. The codebase wasn\'t built to fix that without a full rewrite. So we did a full rewrite.',
+    body: 'V2 was a web application publicly presented at the T&T Medical Research Conference at the Radisson Hotel. Its patient record lists loaded the entire dataset client-side. The delivery team identified that approach as a scaling constraint and replaced it in V3.',
   },
   {
     label: 'V3',
     status: 'Live',
     heading: 'V3, current (launched 2025)',
-    body: 'V3 is not an iteration of V2. It\'s a complete ground-up rebuild with a monorepo architecture, TypeScript end-to-end, and a properly separated API and frontend layer. The core technical decision was moving to server-driven pagination: list views query only what they need, with server-enforced limits and validated response contracts. Load times on the same dataset dropped from 5–10 seconds to under a second.\n\nThe platform runs on Azure with a WAF layer in front of the frontend. During early production, automated bot traffic was spiking compute usage to 80–100% CPU. Adding a WAF dropped baseline resource usage to 30–40% and eliminated the impact on real users entirely. That removed an entire class of infrastructure risk.',
+    body: 'V3 is a ground-up rebuild with a monorepo architecture, TypeScript end-to-end and separate API and frontend layers. The core technical decision was server-driven pagination: list views query bounded pages rather than the entire dataset.\n\nThe Azure infrastructure includes a WAF layer in front of the frontend to help manage unwanted traffic. These are architectural decisions, not a new performance benchmark or a guarantee against infrastructure risk.',
   },
+];
+
+// Commercial terms belong to 3ST. Visible FAQ and schema share this source.
+const faq = [
+  { q: 'Where can a practice evaluate the EMR and current plans?', a: 'Visit 3 Stripes Technologies for current plans and rollout options. This portfolio case study does not set product pricing or plan terms.' },
+  { q: 'Can I enquire about architecture or delivery work instead?', a: 'Yes. Use the portfolio contact page for individual architecture, integration or technical delivery work, or collaboration with an existing team. Product enquiries belong with 3ST.' },
 ];
 ---
 
 <BaseLayout
   title="3 Stripes Tech EMR | Caribbean Cloud EMR Case Study"
-  description="A cloud-based EMR built from the ground up for Caribbean medical practices, in daily use at ABC Paediatrics: 11 doctors, 7,000+ patient records, near-paperless."
+  description="A co-founded Caribbean EMR product: Antonio's cloud architecture and delivery leadership, project-specific team contributions and reported practice use."
   ogImage="/images/covers/3-stripes-tech.jpg"
 >
 
+  <StaticContentFallback />
   <WorkSchema
     name="3 Stripes Technologies EMR"
-    description="A cloud-based EMR built from the ground up for Caribbean medical practices. Three versions, four years, one platform doctors actually use."
+    description="A co-founded Caribbean EMR product: Antonio's cloud architecture and delivery leadership, project-specific team contributions and reported practice use."
     path="/work/3-stripes-tech"
     breadcrumbLabel="3 Stripes Tech EMR"
+    creator={{ '@type': 'Person', name: 'Antonio Cumberbatch', url: 'https://www.antoniocumberbatch.com' }}
     about={['Electronic Medical Records', 'Healthcare IT', 'Microsoft Azure', 'NestJS', 'Azure Front Door', 'Caribbean Healthcare']}
   />
 
@@ -100,7 +109,7 @@ const versions = [
         </div>
       </div>
       <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['V3 Live', 'Platform Status'], ['7,000+', 'Patient Records at ABC Paediatrics'], ['11', 'Doctors at ABC Paediatrics']].map(([val, label]) => (
+        {[['Co-founded product', '3 Stripes Technologies'], ['V3', 'Reported live since 2025'], ['Team delivery', 'Architecture, design and application']].map(([val, label]) => (
           <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
             <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
             <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
@@ -110,12 +119,19 @@ const versions = [
     </div>
   </section>
 
+  <section style="padding:0 1.5rem 1rem;">
+    <div class="prose" style="max-width:900px;margin:0 auto;">
+      <h2>At a glance</h2>
+      <p><strong>Evidence reviewed: November 10, 2026.</strong> This is product and architecture work at 3 Stripes Technologies, distinct from an independently led client engagement such as SASSI. V3 availability and practice use are reported by the product team, not newly audited here. Current plans and rollout options remain on the product site.</p>
+    </div>
+  </section>
+
   <!-- TEAM -->
   <section style="padding:2rem 1.5rem 3rem;">
     <div style="max-width:900px;margin:0 auto;">
       <div class="reveal" style="margin-bottom:1.75rem;">
         <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">The Team</p>
-        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Built by three people.</h2>
+        <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Project responsibilities</h2>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;">
         {team.map(person => (
@@ -143,6 +159,14 @@ const versions = [
       <h2>The Problem</h2>
       <p>Caribbean medical practices were managing patient records on paper or on foreign EMR systems that weren't built for how regional doctors actually work, whether that is the documentation patterns, the practice sizes, or the local infrastructure constraints. We built 3ST EMR to close that gap.</p>
 
+      <h2>Delivered workflow</h2>
+      <ol>
+        <li>Manage appointments for the practice's practitioners.</li>
+        <li>Find an existing patient record through server-paginated lists.</li>
+        <li>Document the consultation in the clinical record for practitioner review.</li>
+      </ol>
+      <p>This case covers the appointment, record and documentation workflow. Patient-portal designs and other roadmap modules are not evidence of current availability; evaluate the current product with 3ST.</p>
+
       <h2>Three Versions to Get It Right</h2>
 
       {versions.map(v => (
@@ -159,14 +183,12 @@ const versions = [
 
       <div class="abc-focus">
         <h2 style="margin-top:0;text-wrap:balance;">Client in focus: ABC Paediatrics</h2>
-        <p><strong>ABC Paediatrics</strong> in Trinidad runs on 3ST EMR every day. Eleven doctors work from the platform, more than 7,000 patient records live in it, and the practice operates near-paperless day to day. The system handles their multi-practitioner workflows, appointment management and clinical documentation.</p>
-        <p>The practice is also why the paediatric module is as mature as it is. It was shaped by their real use and feedback over time, rather than designed in the abstract and handed over.</p>
+        <p>The product team's existing account of <strong>ABC Paediatrics</strong> in Trinidad describes daily use across multiple practitioners, appointment management and clinical documentation. That reported use and feedback shaped the paediatric workflow.</p>
+        <p>This November 2026 portfolio review did not query patient records, verify current doctor or record totals, or measure clinical outcomes. The practice example is attributed product-team evidence, not a new client endorsement or acceptance test.</p>
       </div>
 
-      <h2>Sound familiar?</h2>
-      <p>Caribbean healthcare has been behind on tech for a long time. Not because doctors don't care about efficiency, but because the tools that exist weren't built for the region. Most EMR platforms are designed for US billing codes, US practice sizes, and US compliance requirements. They don't fit how a Caribbean clinic actually runs.</p>
-      <p>3ST EMR was built from the ground up with local practices in mind. Three versions, real feedback from real doctors, and a product that's actually used day to day rather than bought and abandoned.</p>
-      <p>If you're a medical practice still running on paper or a system that doesn't fit your workflow, Antonio leads the product and can walk you through the platform directly.</p>
+      <h2>What this work demonstrates</h2>
+      <p>Product iteration informed by practice feedback, a bounded record-list architecture and coordinated cloud, design and application delivery. For a clinic evaluating the software, use the existing 3ST product route. For a specialist contribution or team collaboration, contact me through this portfolio.</p>
 
     </div>
   </section>
@@ -184,28 +206,14 @@ const versions = [
       <script type="application/ld+json" set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: [
-          {
-            '@type': 'Question',
-            name: 'How much does an EMR cost for a Caribbean medical practice?',
-            acceptedAnswer: { '@type': 'Answer', text: '3 Stripes Tech EMR is priced at $99 USD per user per month, with a founding partner rate available. Pricing is per active user, so it scales with your practice.' },
-          },
-          {
-            '@type': 'Question',
-            name: 'Is the 3 Stripes EMR built for Caribbean healthcare specifically?',
-            acceptedAnswer: { '@type': 'Answer', text: 'Yes. It was designed around how Caribbean doctors actually work, rather than adapting a foreign system. It runs in the cloud on Azure with a 25-day free trial.' },
-          },
-        ],
+        mainEntity: faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
       })} />
       <div class="reveal" style="margin-bottom:2rem;">
         <p style="font-size:0.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:var(--color-accent);margin:0 0 0.375rem;">FAQ</p>
         <h2 style="font-family:var(--font-display);font-size:1.625rem;font-weight:800;margin:0;">Common Questions</h2>
       </div>
       <div style="display:flex;flex-direction:column;gap:1rem;">
-        {[
-          { q: 'How much does an EMR cost for a Caribbean medical practice?', a: '3 Stripes Tech EMR is priced at $99 USD per user per month, with a founding partner rate available. Pricing is per active user, so it scales with your practice.' },
-          { q: 'Is the 3 Stripes EMR built for Caribbean healthcare specifically?', a: 'Yes. It was designed around how Caribbean doctors actually work, rather than adapting a foreign system. It runs in the cloud on Azure with a 25-day free trial.' },
-        ].map(item => (
+        {faq.map(item => (
           <div class="reveal" style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:12px;padding:1.75rem;">
             <h3 style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--color-text);margin:0 0 0.625rem;">{item.q}</h3>
             <p style="font-size:0.9375rem;color:var(--color-text-muted);line-height:1.7;margin:0;">{item.a}</p>
@@ -218,11 +226,12 @@ const versions = [
   <!-- CTA -->
   <section style="background:var(--color-surface);border-top:1px solid var(--color-border);padding:4rem 1.5rem;">
     <div style="max-width:900px;margin:0 auto;text-align:center;">
-      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Built for Caribbean practices. Ready to scale.</h2>
-      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">If you're a medical practice in the region and want to see the platform live, reach out.</p>
+      <h2 style="font-family:var(--font-display);font-size:1.875rem;font-weight:800;margin-bottom:0.875rem;">Choose your next step</h2>
+      <p style="color:var(--color-text-muted);margin-bottom:1.75rem;max-width:520px;margin-left:auto;margin-right:auto;">For individual architecture, integration or delivery leadership, or a scoped contribution alongside your existing team, contact me here. For the EMR itself, evaluate current plans with 3ST.</p>
       <a href="/contact" data-track="project_enquiry_intent" data-track-context="work-3-stripes-tech-cta" style="background:var(--color-accent-strong);color:#fff;padding:0.8125rem 1.75rem;border-radius:8px;font-weight:600;text-decoration:none;font-size:0.9375rem;display:inline-block;transition:background 0.2s;" onmouseover="this.style.background='var(--color-accent-strong-hover)'" onmouseout="this.style.background='var(--color-accent-strong)'">
-        Book a Demo
+        Discuss architecture or team delivery
       </a>
+      <p style="margin-top:1.5rem;"><a href="https://www.3stripestech.com/pricing" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);">Evaluate the EMR at 3ST</a> · <a href="https://www.3stripestech.com/contact" target="_blank" rel="noopener noreferrer" style="color:var(--color-accent);">Ask 3ST about rollout</a></p>
     </div>
   </section>
 

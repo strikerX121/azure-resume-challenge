@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import StaticContentFallback from '../components/StaticContentFallback.astro';
 ---
 
 <BaseLayout
@@ -7,6 +8,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="Book a discovery call, send a project brief, or just say hello. Based in Trinidad, working remotely across the Caribbean and beyond."
 >
 
+  <StaticContentFallback />
   <section class="contact-hero">
     <div class="container">
       <p class="reveal-immediate eyebrow">Contact</p>
@@ -64,6 +66,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <button type="submit" class="btn-primary">Open draft in my email app</button>
           <p id="form-status" class="form-status" role="status"></p>
         </form>
+
+        <p class="compose-note" style="margin-top:1.5rem;">For a business project, describe the operational problem. For collaboration, describe your existing team and the responsibility gap. For an individual contribution, choose Specialist contracting and outline the architecture, integration or delivery work you need. I review the enquiry personally and agree roles before work is scoped.</p>
 
         <div class="fallback">
           <h3 class="fallback-heading">No mail app on this device?</h3>

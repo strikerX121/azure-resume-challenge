@@ -18,9 +18,11 @@ interface Props {
   breadcrumbLabel: string;
   /** Subject areas this case study evidences. */
   about?: string[];
+  /** Case-study authorship, not software IP ownership or sole implementation. */
+  creator?: { '@type': 'Person' | 'Organization'; name: string; url: string };
 }
 
-const { name, description, path, breadcrumbLabel, about = [] } = Astro.props;
+const { name, description, path, breadcrumbLabel, about = [], creator = { '@type': 'Organization', name: 'ARC Cloud Consulting', url: 'https://www.arccloudconsulting.com' } } = Astro.props;
 
 const siteUrl = 'https://www.antoniocumberbatch.com';
 const pageUrl = siteUrl + path;
@@ -42,7 +44,7 @@ const workSchema = {
   description,
   url: pageUrl + '/',
   author: { '@type': 'Person', name: 'Antonio Cumberbatch', url: siteUrl },
-  creator: { '@type': 'Organization', name: 'ARC Cloud Consulting', url: 'https://www.arccloudconsulting.com' },
+  creator,
   inLanguage: 'en',
   ...(about.length ? { about: about.map((a) => ({ '@type': 'Thing', name: a })) } : {}),
   isPartOf: { '@type': 'CollectionPage', name: 'Work', url: siteUrl + '/work/' },
