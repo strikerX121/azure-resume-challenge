@@ -33,12 +33,17 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
   <section style="padding:4rem 1.5rem 2rem;">
     <div style="max-width:900px;margin:0 auto;">
       <a href="/work" style="font-size:0.875rem;color:var(--color-text-muted);text-decoration:none;display:inline-flex;align-items:center;gap:0.375rem;margin-bottom:1.5rem;">&larr; All Work</a>
+      <div class="prose case-intro">
+        <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin:0 0 1rem;">SASSI Logistics Platform</h1>
+        <p>SASSI needed to connect US warehouse receiving with customer pre-alerts, invoices and onward shipping to Trinidad, instead of coordinating the same information across WhatsApp and spreadsheets.</p>
+        <p><strong>Antonio-led, team-delivered client work.</strong> I led scoping, cloud architecture and delivery coordination. Together, we built customer and staff portals around the package-forwarding workflow.</p>
+      </div>
       <div class="reveal" style="background:rgba(255,107,43,0.06);border:1px solid rgba(255,107,43,0.18);border-radius:14px;padding:1.25rem 1.75rem;display:flex;align-items:center;gap:1.5rem;margin-bottom:1.75rem;">
         <div style="width:80px;height:80px;border-radius:12px;background:#fff;border:1px solid rgba(0,0,0,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;padding:8px;">
           <img src="/images/logos/sassi-logo.svg" alt="SASSI logo" width="64" height="64" loading="eager" decoding="async" style="width:64px;height:64px;object-fit:contain;" />
         </div>
         <div>
-          <p style="font-family:var(--font-display);font-size:1.25rem;font-weight:700;color:var(--color-text);margin:0 0 0.375rem;">SASSI Logistics</p>
+
           <span style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--color-accent);">Logistics &amp; Supply Chain&nbsp;&middot; Azure&nbsp;&middot; Full-Stack</span>
           <div style="margin-top:0.625rem;">
             <a href="https://sassi4trinis.com/" target="_blank" rel="noopener noreferrer" style="font-size:0.8125rem;font-weight:600;color:var(--color-accent);text-decoration:none;border:1px solid rgba(255,107,43,0.35);border-radius:6px;padding:0.25rem 0.75rem;display:inline-flex;align-items:center;gap:0.375rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,107,43,0.1)'" onmouseout="this.style.background='transparent'">
@@ -47,15 +52,7 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
           </div>
         </div>
       </div>
-      <h1 class="reveal" style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;line-height:1.2;margin-bottom:1.5rem;">SASSI Logistics Platform</h1>
-      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['Client delivery', 'Logistics platform'], ['Antonio-led', 'Team-delivered'], ['Azure', 'Cloud architecture']].map(([val, label]) => (
-          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
-            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
-            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
-          </div>
-        ))}
-      </div>
+
     </div>
   </section>
 
@@ -66,13 +63,13 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
 
       <!-- ABOUT THE CLIENT -->
       <h2>At a glance</h2>
-      <p><strong>Antonio-led, team-delivered client work.</strong> SASSI is a package-forwarding business, not a software product offered here. I independently led the engagement, bringing together the same delivery team I engaged for the EMR.</p>
-      <p><strong>Evidence reviewed: November 10, 2026.</strong> This case describes delivered platform workflows. Later warehouse changes were reported released by the developer in October 2026, with client acknowledgement of visible updates. That is not full acceptance of every change or a fresh operational audit. Current usage totals are not asserted here.</p>
+      <p>The client portal brings pre-alerts, invoices and payment information together; the admin portal supports receiving and matching packages. SASSI is the shipping business. This is a custom client platform, not a software product offered here.</p>
+      <p><strong>Warehouse update:</strong> The client acknowledged visible updates in October 2026. Follow-up fixes and client review remain open.</p>
       <h2>Responsibilities</h2>
       <ul>
         <li><strong>Antonio Cumberbatch:</strong> Project management and scoping, hands-on cloud architecture and engineering, delivery coordination and customer success.</li>
         <li><strong>Naeem:</strong> primary application developer on the SASSI account.</li>
-        <li><strong>Rakib Hasan:</strong> UI/UX and user-portal design, with his existing contribution below.</li>
+        <li><strong>Rakib Hasan:</strong> UI/UX and user-portal design.</li>
         <li><strong>Automation:</strong> team-delivered n8n support workflow implementation.</li>
       </ul>
       <h2>About the Client</h2>
@@ -95,7 +92,7 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
         <li><strong>Client portal:</strong> pre-alerts, invoice management, wallet and payment tracking</li>
         <li><strong>Admin portal:</strong> warehouse receiving, pre-alert management, invoicing, reporting</li>
         <li><strong>SNS (Shop &amp; Ship):</strong> purchase-on-behalf service for US vendor purchases</li>
-        <li><strong>Warehouse Receipt changes:</strong> October 2026 release reported by the developer; follow-up fixes and client review remain distinct from blanket completion</li>
+
         <li><strong>Support automation:</strong> an n8n workflow designed to check duplicates, create and assign Trello tickets and notify the delivery team</li>
       </ul>
 
@@ -121,13 +118,10 @@ import rakibImg from '../../assets/images/rakib-hasan.jpg';
         <li>Shop &amp; Ship supports purchases made on a customer's behalf.</li>
       </ol>
       <h3>Support workflow design</h3>
-      <p>Request → duplicate check → ticket creation → assignment and team notification → customer reference. This describes the implemented automation mechanism, not a response-time or staffing result. I remain the point of contact for routing customer requests; automated intake is not a promise of hands-off support.</p>
-
-      <h2>Proof and current limits</h2>
-      <p>The existing portal views above illustrate the customer and staff surfaces delivered by the team. The client acknowledged visible warehouse updates in October 2026; subsequent fixes and acceptance are separate. This portfolio review did not exercise the client system or verify support performance.</p>
+      <p>Request → duplicate check → ticket creation → assignment and team notification → customer reference. The automation routes requests to the delivery team; I remain the customer point of contact.</p>
 
       <h2>What this work demonstrates</h2>
-      <p>Scoping a connected operational workflow, designing the cloud foundation and coordinating application, design and automation contributors around a client's process. A similar engagement would be scoped for its own requirements, not a sale of SASSI's platform.</p>
+      <p>Scoping a connected operational workflow, designing the cloud foundation and coordinating application, design and automation contributors around a client's process. A similar engagement starts with your own workflow and requirements.</p>
 
       <div style="margin-top:2rem;">
         <Image src={teamPhotoImg} width={900} height={500} alt="SASSI team" style="width:100%;height:auto;border-radius:10px;border:1px solid var(--color-border);object-fit:cover;" />

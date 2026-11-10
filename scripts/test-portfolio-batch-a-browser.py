@@ -55,6 +55,15 @@ with sync_playwright() as p:
                 screenshot = f'{slug}-{width}-js-{javascript}-initial.png'
                 capture(screenshot, 'initial')
                 proof['screenshot'] = screenshot
+                if route.startswith('/work/'):
+                    intro = page.locator('.case-intro' if 'sassi' in route else '.case-hero__scrim')
+                    text = intro.inner_text().lower()
+                    for concept in (['warehouse', 'pre-alerts', 'invoices', 'cloud architecture', 'team'] if 'sassi' in route else ['appointments', 'patient records', 'consultation notes', 'cloud architecture', 'team']):
+                        check(concept in text, key + ': initial workflow/role ' + concept)
+                    role = intro.locator('p').last
+                    box = role.bounding_box()
+                    check(box and box['y'] >= 60 and box['y'] + box['height'] <= height, key + ': role readable on initial screen')
+                    check(page.locator('main h1').count() == 1, key + ': one case title')
                 if route == '/':
                     actions = []
                     for label in ['Discuss your project', 'See relevant work']:
@@ -113,6 +122,32 @@ with sync_playwright() as p:
                 capture(f'{slug}-{width}-js-{javascript}-scrolled.png', 'scrolled')
                 proof['geometry'] = geometry
                 cases.append(proof | {'javascript': javascript, 'width': width})
+            if javascript and not args.home_only:
+                # Heuristic journeys use actual existing links. External product
+                # navigation remains intercepted; no form is sent or consent saved.
+                page.goto(base, wait_until='networkidle')
+                page.get_by_role('link', name='See relevant work', exact=True).click()
+                check(urlsplit(page.url).path.rstrip('/') == '/work', f'{width}: owner work route')
+                page.locator('main a[href="/work/sassi"]').first.click()
+                check(urlsplit(page.url).path.rstrip('/') == '/work/sassi', f'{width}: owner relevant case')
+                page.locator('a[data-track-context="work-sassi-cta"]').click()
+                check(page.locator('#contact-form').count() == 1, f'{width}: owner enquiry destination')
+                journeys.append({'scenario':'business-owner','width':width,'path':['/','/work','/work/sassi','/contact']})
+                page.goto(base + '/services/', wait_until='networkidle')
+                guidance = page.locator('aside[aria-label="Collaboration and specialist engagements"]')
+                check(all(term in guidance.inner_text().lower() for term in ['individually','existing team','team-delivered']), f'{width}: partner delivery choices')
+                guidance.locator('a').click()
+                check(urlsplit(page.url).path.rstrip('/') == '/contact', f'{width}: partner destination')
+                journeys.append({'scenario':'partner','width':width,'path':['/services','/contact']})
+                page.goto(base + '/work/sassi/', wait_until='networkidle')
+                if width < 769:
+                    page.locator('#nav-toggle').click()
+                    page.locator('#mobile-menu a[href="/resume"]').click()
+                else:
+                    page.locator('.desktop-nav a[href="/resume"]').click()
+                check(urlsplit(page.url).path.rstrip('/') == '/resume', f'{width}: specialist resume destination')
+                check(page.locator('a[href$="Antonio-Cumberbatch-CV-2026.pdf"]').count() > 0, f'{width}: CV available')
+                journeys.append({'scenario':'specialist-evaluator','width':width,'path':['/work/sassi','/resume']})
             context.close()
     browser.close()
 check(not errors, 'page errors: ' + repr(errors))

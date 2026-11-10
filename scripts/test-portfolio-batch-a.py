@@ -42,7 +42,7 @@ class Page(HTMLParser):
 class BatchA(unittest.TestCase):
     def test_sassi_client_delivery_roles_and_status(self):
         p = Page('work/sassi')
-        for text in ['Client delivery', 'Antonio-led, team-delivered', 'Project management', 'cloud architecture', 'customer success', 'Naeem', 'Rakib', 'Delivered workflow', 'Evidence reviewed: November 10, 2026', 'reported', 'client review', 'Discuss a similar workflow or delivery role']:
+        for text in ['Antonio-led, team-delivered', 'Project management', 'cloud architecture', 'customer success', 'Naeem', 'Rakib', 'Delivered workflow', 'October 2026', 'client review', 'Discuss a similar workflow or delivery role']:
             self.assertIn(text, p.visible)
         self.assertNotRegex(p.visible, r'(?i)200\+|active users|managed by ARC|built entirely by ARC|came to ARC|fully managed SaaS|without Antonio|currently in active development')
         self.assertTrue(any(a.get('href') == '/contact' and a.get('data-track-context') == 'work-sassi-cta' for a in p.links))
@@ -61,7 +61,7 @@ class BatchA(unittest.TestCase):
             self.assertIn(q['name'], p.visible)
             self.assertIn(q['acceptedAnswer']['text'], p.visible)
         self.assertNotRegex(p.visible + json.dumps(faqs), r'(?i)\$99|25[- ]day|free trial|founding partner|founding rate|per user per month')
-        for text in ['Co-founded product', 'Delivered workflow', 'Evidence reviewed: November 10, 2026', 'Antonio', 'Naeem', 'Rakib', 'reported', 'Evaluate the EMR', 'Discuss architecture or team delivery']:
+        for text in ['Co-founded product', 'Delivered workflow', 'Antonio', 'Naeem', 'Rakib', 'reported', 'Evaluate the EMR', 'Discuss architecture or team delivery']:
             self.assertIn(text, p.visible)
         self.assertTrue(any(a.get('href') == 'https://www.3stripestech.com/pricing' for a in p.links))
         self.assertTrue(any(a.get('href') == '/contact' and a.get('data-track-context') == 'work-3-stripes-tech-cta' for a in p.links))
@@ -89,6 +89,27 @@ class BatchA(unittest.TestCase):
         for root in ['public', 'dist']:
             for name in ['Antonio-Cumberbatch-CV-2026.pdf', 'resume.pdf']:
                 self.assertEqual(hashlib.sha256((ROOT / root / name).read_bytes()).hexdigest(), 'a7afbd123e6edca84bcdef7d902e44f91432ef40779e7e7496c36fb4b06da1a4')
+
+    def test_human_decisions_precede_case_detail(self):
+        # Outcome checks, not an obligation to publish internal audit language.
+        for route, concepts in [('work/sassi', ['warehouse', 'pre-alerts', 'invoices', 'cloud architecture', 'team']), ('work/3-stripes-tech', ['appointments', 'patient records', 'consultation notes', 'cloud architecture', 'team'])]:
+            p = Page(route)
+            intro = p.visible.split('At a glance')[0].lower()
+            for concept in concepts:
+                self.assertIn(concept, intro)
+            self.assertNotRegex(p.visible, r'(?i)200\+|7,000\+|11 doctors|near-paperless')
+        sassi = Page('work/sassi').visible.lower()
+        self.assertRegex(sassi, r'follow-up fixes.*client review.*open')
+        emr = Page('work/3-stripes-tech')
+        self.assertIn('roadmap modules are not current product features', emr.visible)
+        self.assertTrue(any(a.get('href') == 'https://www.3stripestech.com/pricing' for a in emr.links))
+        contact = Page('contact')
+        hero = contact.visible.split('Draft an enquiry')[0].lower()
+        self.assertIn('goal', hero)
+        self.assertIn('contribution', hero)
+        source = (ROOT / 'src/pages/contact.astro').read_text(encoding='utf-8')
+        self.assertRegex(source, r'placeholder="[^"]*project, collaboration or specialist contribution')
+        self.assertIn('<option value="Specialist contracting">', source)
 
     def test_other_case_creators_keep_existing_default(self):
         for slug in ['arc-portfolio', 'esvd-dashboard', 'jimny-shop', 'qualitech', 'wiman-dlp']:

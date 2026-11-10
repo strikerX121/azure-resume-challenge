@@ -19,7 +19,7 @@ const team = [
   {
     name: 'Rakib Hasan',
     role: 'UI/UX Designer & Frontend Developer',
-    bio: 'Rakib designed the EMR user experience and interface, including record layouts and patient-portal designs. A design contribution is not a claim that every designed module is available in the current product.',
+    bio: 'Rakib designed the EMR user experience and interface, including clinical record layouts and patient-portal concepts.',
     photo: rakibImg,
   },
   {
@@ -47,7 +47,7 @@ const versions = [
     label: 'V3',
     status: 'Live',
     heading: 'V3, current (launched 2025)',
-    body: 'V3 is a ground-up rebuild with a monorepo architecture, TypeScript end-to-end and separate API and frontend layers. The core technical decision was server-driven pagination: list views query bounded pages rather than the entire dataset.\n\nThe Azure infrastructure includes a WAF layer in front of the frontend to help manage unwanted traffic. These are architectural decisions, not a new performance benchmark or a guarantee against infrastructure risk.',
+    body: 'V3 is a ground-up rebuild with a monorepo architecture, TypeScript end-to-end and separate API and frontend layers. The core technical decision was server-driven pagination: list views query bounded pages rather than the entire dataset.\n\nThe Azure infrastructure includes a WAF layer in front of the frontend to help manage unwanted traffic.',
   },
 ];
 
@@ -83,10 +83,10 @@ const faq = [
       <img src="/images/covers/3-stripes-tech-wide.jpg" alt="" width="1600" height="600" loading="eager" fetchpriority="high" decoding="async" class="case-hero__art" />
     </picture>
     <div class="case-hero__scrim">
-      <p class="case-hero__eyebrow" style="font-size:0.75rem;font-weight:600;text-transform:uppercase;color:var(--color-accent);margin:0 0 1rem;">Healthcare IT&nbsp;&middot; Azure&nbsp;&middot; Full-Stack Product</p>
+      <p class="case-hero__eyebrow" style="font-size:0.75rem;font-weight:600;text-transform:uppercase;color:var(--color-accent);margin:0 0 1rem;">Co-founded product&nbsp;&middot; Healthcare IT</p>
       <h1 style="font-family:var(--font-display);font-size:clamp(2rem,5vw,3.25rem);font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.15;">3 Stripes Technologies EMR</h1>
-      <p style="font-size:1.125rem;color:rgba(255,255,255,0.75);margin:0 0 0.625rem;max-width:600px;">A cloud-based EMR built from the ground up for Caribbean medical practices.</p>
-      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.62);margin:0;font-style:italic;">Three versions. Four years. One platform doctors actually use.</p>
+      <p style="font-size:1.125rem;color:rgba(255,255,255,0.85);margin:0 0 0.875rem;max-width:600px;">Bringing appointments, patient records and consultation notes into one workflow for Caribbean medical practices.</p>
+      <p style="font-size:0.9375rem;color:rgba(255,255,255,0.8);margin:0;max-width:600px;">I co-founded 3ST and led scoping, cloud architecture and the V3 rebuild, with application development and design delivered by the team.</p>
     </div>
   </div>
 
@@ -108,21 +108,15 @@ const faq = [
           </div>
         </div>
       </div>
-      <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;">
-        {[['Co-founded product', '3 Stripes Technologies'], ['V3', 'Reported live since 2025'], ['Team delivery', 'Architecture, design and application']].map(([val, label]) => (
-          <div style="background:var(--color-surface);border:1px solid var(--color-border);border-radius:8px;padding:1rem;text-align:center;">
-            <div style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;color:var(--color-accent);">{val}</div>
-            <div style="font-size:0.8125rem;color:var(--color-text-muted);margin-top:0.25rem;">{label}</div>
-          </div>
-        ))}
-      </div>
+
     </div>
   </section>
 
   <section style="padding:0 1.5rem 1rem;">
     <div class="prose" style="max-width:900px;margin:0 auto;">
       <h2>At a glance</h2>
-      <p><strong>Evidence reviewed: November 10, 2026.</strong> This is product and architecture work at 3 Stripes Technologies, distinct from an independently led client engagement such as SASSI. V3 availability and practice use are reported by the product team, not newly audited here. Current plans and rollout options remain on the product site.</p>
+      <p>V3 launched in 2025. The product team reports practice use at ABC Paediatrics in Trinidad for appointments and clinical documentation. This is a co-founded 3ST product, distinct from my client-delivery work.</p>
+      <p>For your clinic, <a href="https://www.3stripestech.com/pricing" target="_blank" rel="noopener noreferrer">view current plans and rollout options at 3ST</a>. This case covers appointments, patient records and consultation notes; patient-portal designs and other roadmap modules are not current product features.</p>
     </div>
   </section>
 
@@ -184,7 +178,7 @@ const faq = [
       <div class="abc-focus">
         <h2 style="margin-top:0;text-wrap:balance;">Client in focus: ABC Paediatrics</h2>
         <p>The product team's existing account of <strong>ABC Paediatrics</strong> in Trinidad describes daily use across multiple practitioners, appointment management and clinical documentation. That reported use and feedback shaped the paediatric workflow.</p>
-        <p>This November 2026 portfolio review did not query patient records, verify current doctor or record totals, or measure clinical outcomes. The practice example is attributed product-team evidence, not a new client endorsement or acceptance test.</p>
+
       </div>
 
       <h2>What this work demonstrates</h2>
